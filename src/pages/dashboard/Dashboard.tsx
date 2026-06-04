@@ -12,15 +12,15 @@ export default function Dashboard() {
   const { user, profile } = useAuth()
   const { loadPage } = usePage()
   const { page, items } = useEditorStore()
-  const { summary, fetch: fetchAnalytics } = useAnalytics(page?.id || null)
+  const { summary, fetch: fetchAnalytics } = useAnalytics()
 
   useEffect(() => {
     if (user?.id) loadPage(user.id)
   }, [user?.id])
 
   useEffect(() => {
-    if (page?.id) fetchAnalytics(7)
-  }, [page?.id])
+    if (page?.id) fetchAnalytics(page.id, 7)
+  }, [page?.id, fetchAnalytics])
 
   return (
     <div className="space-y-6">

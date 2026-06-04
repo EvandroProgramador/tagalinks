@@ -13,7 +13,7 @@ export default function Analytics() {
   const { user, profile } = useAuth()
   const { loadPage } = usePage()
   const { page } = useEditorStore()
-  const { summary, loading, fetch: fetchAnalytics } = useAnalytics(page?.id || null)
+  const { summary, loading, fetch: fetchAnalytics } = useAnalytics()
   const [days, setDays] = useState(30)
 
   useEffect(() => {
@@ -21,8 +21,8 @@ export default function Analytics() {
   }, [user?.id])
 
   useEffect(() => {
-    if (page?.id) fetchAnalytics(days)
-  }, [page?.id, days])
+    if (page?.id) fetchAnalytics(page.id, days)
+  }, [page?.id, days, fetchAnalytics])
 
   return (
     <div className="space-y-6">
@@ -46,7 +46,7 @@ export default function Analytics() {
           <StatsCards summary={summary} />
 
           <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Gráfico de tendências">
-            <ClicksChart data={summary.views_by_day} />
+            <ClicksChart data={summary.views_by_day} days={days} />
           </UpgradeGate>
 
           <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Origens de tráfego">

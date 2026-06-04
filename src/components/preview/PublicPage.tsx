@@ -1,16 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { ExternalLink, MessageCircle, Store } from 'lucide-react'
+import { ExternalLink, Store } from 'lucide-react'
 import { YouTubeEmbed } from '@/components/ui/YouTubeEmbed'
+import { SOCIAL_BRAND_ICONS, WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { computeTheme } from '@/lib/theme'
 import { generateSessionId, detectReferrer } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
 import type { LinkPage, LinkItem } from '@/types'
-
-const SOCIAL_ICONS: Record<string, string> = {
-  instagram: '📸', tiktok: '🎵', youtube: '▶️', facebook: '👤',
-  twitter: '🐦', linkedin: '💼', spotify: '🎧', telegram: '✈️',
-}
 
 interface Props {
   page:    LinkPage
@@ -187,19 +183,19 @@ function LinkBlock({ item, theme, plan, onTrack }:
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
          className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
          style={{ background: '#25D366', color: '#fff', borderRadius: radius, boxShadow: shadow }}>
-        <MessageCircle className="w-5 h-5" />
+        <WhatsAppIcon className="w-5 h-5" />
         <span>{item.label}</span>
       </a>
     )
   }
 
   if (item.type === 'social') {
-    const icon = SOCIAL_ICONS[item.social_network || ''] || '🔗'
+    const BrandIcon = SOCIAL_BRAND_ICONS[item.social_network || '']
     return (
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
          className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
          style={baseStyle}>
-        <span>{icon}</span>
+        {BrandIcon && <BrandIcon className="w-5 h-5 flex-shrink-0" />}
         <span>{item.label}</span>
       </a>
     )

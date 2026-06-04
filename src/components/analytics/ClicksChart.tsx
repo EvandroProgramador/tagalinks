@@ -3,12 +3,13 @@ import type { AnalyticsSummary } from '@/types'
 
 interface Props {
   data: AnalyticsSummary['views_by_day']
+  days: number
 }
 
-export function ClicksChart({ data }: Props) {
+export function ClicksChart({ data, days }: Props) {
   return (
     <div className="card">
-      <h3 className="text-sm font-semibold text-gray-300 mb-4">Visualizações e cliques (30 dias)</h3>
+      <h3 className="text-sm font-semibold text-gray-300 mb-4">Visualizações e cliques ({days} dias)</h3>
       <ResponsiveContainer width="100%" height={200}>
         <LineChart data={data} margin={{ top: 0, right: 10, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#2A2A3A" vertical={false} />
