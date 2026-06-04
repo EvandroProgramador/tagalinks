@@ -2,11 +2,8 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
-import { useTagarela } from '@/hooks/useTagarela'
 import { supabase } from '@/lib/supabase'
-import { Toggle } from '@/components/ui/Toggle'
-import { UpgradeGate } from '@/components/ui/UpgradeGate'
-import { Save, Bot, ExternalLink } from 'lucide-react'
+import { Save } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface ProfileForm {
@@ -18,9 +15,7 @@ interface ProfileForm {
 export default function Settings() {
   const { user, profile } = useAuth()
   const { fetchProfile }  = useAuthStore()
-  const { connectTagarela, disconnectTagarela, tagarelaBotUrl } = useTagarela()
   const [saving, setSaving] = useState(false)
-  const [tagarelaBotId, setTagarelaBotId] = useState('')
 
   const { register, handleSubmit, reset } = useForm<ProfileForm>()
 
@@ -37,17 +32,6 @@ export default function Settings() {
     if (error) { toast.error(error.message) }
     else { toast.success('Definições guardadas!'); fetchProfile(user.id) }
     setSaving(false)
-  }
-
-  async function handleTagarela() {
-    if (!user?.id) return
-    if (profile?.tagarela_enabled) {
-      await disconnectTagarela(user.id)
-      fetchProfile(user.id)
-    } else if (tagarelaBotId.trim()) {
-      const ok = await connectTagarela(user.id, tagarelaBotId.trim())
-      if (ok) fetchProfile(user.id)
-    }
   }
 
   return (
@@ -84,40 +68,6 @@ export default function Settings() {
           </button>
         </form>
       </div>
-
-      {/* Tagarela */}
-      <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Bot Tagarela">
-        <div className="card space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-accent-500/15 flex items-center justify-center">
-                <Bot className="w-5 h-5 text-accent-400" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white">Bot Tagarela</p>
-                <p className="text-xs text-gray-500">Automação de respostas no WhatsApp</p>
-              </div>
-            </div>
-            <Toggle checked={profile?.tagarela_enabled || false} onChange={handleTagarela} />
-          </div>
-
-          {!profile?.tagarela_enabled && (
-            <div className="space-y-2">
-              <input
-                className="input text-sm"
-                placeholder="ID do bot Tagarela"
-                value={tagarelaBotId}
-                onChange={(e) => setTagarelaBotId(e.target.value)}
-              />
-              <a href={tagarelaBotUrl} target="_blank" rel="noopener noreferrer"
-                 className="flex items-center gap-1.5 text-xs text-accent-400 hover:text-accent-300">
-                <ExternalLink className="w-3.5 h-3.5" />
-                Criar bot no Tagarela
-              </a>
-            </div>
-          )}
-        </div>
-      </UpgradeGate>
 
       {/* Zona perigosa */}
       <div className="card border-red-500/20">

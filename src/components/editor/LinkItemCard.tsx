@@ -10,7 +10,8 @@ import type { LinkItem, SubscriptionPlan } from '@/types'
 
 const TYPE_LABELS: Record<string, string> = {
   link: 'Link', social: 'Rede social', whatsapp: 'WhatsApp', youtube: 'YouTube',
-  product: 'Produto', email: 'E-mail', phone: 'Telefone', header: 'Título', divider: 'Linha',
+  product: 'Produto TagaShop', tagashop: 'Loja TagaShop',
+  email: 'E-mail', phone: 'Telefone', header: 'Título', divider: 'Linha',
 }
 
 interface Props {
@@ -76,12 +77,12 @@ export function LinkItemCard({ item, plan }: Props) {
                    onChange={(e) => updateItem(item.id, { label: e.target.value })} />
           </div>
 
-          {['link', 'social', 'email', 'phone', 'product'].includes(item.type) && (
+          {['link', 'social', 'email', 'phone', 'product', 'tagashop'].includes(item.type) && (
             <div>
               <label className="label">URL</label>
               <input className="input" value={item.url || ''}
                      onChange={(e) => updateItem(item.id, { url: e.target.value })}
-                     placeholder="https://" />
+                     placeholder={item.type === 'tagashop' ? 'https://tagashop.ao/loja/...' : 'https://'} />
             </div>
           )}
 

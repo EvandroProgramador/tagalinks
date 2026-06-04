@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Logo } from '@/components/ui/Logo'
-import { ArrowRight, Link2, BarChart2, Palette, Youtube, ShoppingBag, Bot, Check } from 'lucide-react'
+import { ArrowRight, Link2, BarChart2, Palette, Youtube, ShoppingBag, Check } from 'lucide-react'
 
 const features = [
   { icon: Link2,      title: 'Todos os teus links',    desc: 'Partilha redes sociais, produtos, WhatsApp e muito mais num único link.' },
@@ -8,13 +8,12 @@ const features = [
   { icon: BarChart2,  title: 'Analytics integrado',    desc: 'Vê de onde vêm as visitas e quais os links mais clicados.' },
   { icon: Palette,    title: 'Personalização total',   desc: 'Personaliza cores, fontes e fundo para combinar com a tua marca.' },
   { icon: ShoppingBag,title: 'Produtos TagaShop',      desc: 'Integra a tua loja TagaShop directamente na bio.' },
-  { icon: Bot,        title: 'Bot Tagarela',           desc: 'Automatiza respostas e captura leads com o Tagarela.' },
 ]
 
 const plans = [
   { name: 'Gratuito', price: '0', period: '', features: ['5 links', 'Vídeo YouTube', 'Analytics básico', 'Tema TAGATECH'] },
   { name: 'Creator',  price: '5 000', period: '/mês', highlight: true,
-    features: ['Links ilimitados', 'Analytics completo', 'Cores e fontes personalizadas', 'TagaShop embutido', 'Bot Tagarela'] },
+    features: ['Links ilimitados', 'Analytics completo', 'Cores e fontes personalizadas', 'TagaShop embutido', 'Subdomínio personalizado'] },
   { name: 'Business', price: '12 000', period: '/mês',
     features: ['Tudo do Creator', 'Múltiplas páginas', 'A/B Testing', 'TagaPay', 'Domínio próprio'] },
 ]

@@ -79,6 +79,7 @@ export function usePage() {
       social:    { label: 'Instagram', social_network: 'instagram', url: '' },
       header:    { label: 'Título da secção' },
       divider:   { label: '' },
+      tagashop:  { label: 'A minha loja TagaShop', url: '' },
       product:   { label: 'Produto TagaShop', url: '' },
       email:     { label: 'Envia-me um e-mail' },
       phone:     { label: 'Liga-me' },

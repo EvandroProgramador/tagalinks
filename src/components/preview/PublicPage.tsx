@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { ExternalLink, MessageCircle } from 'lucide-react'
+import { ExternalLink, MessageCircle, Store } from 'lucide-react'
 import { YouTubeEmbed } from '@/components/ui/YouTubeEmbed'
 import { computeTheme } from '@/lib/theme'
 import { generateSessionId, detectReferrer } from '@/lib/utils'
@@ -106,15 +106,23 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
 function LinkBlock({ item, theme, plan, onTrack }:
   { item: LinkItem; theme: any; plan: string; onTrack: () => void }) {
 
-  const btnBg     = (plan !== 'free' && item.custom_bg_color)     || theme.primary
-  const btnText   = (plan !== 'free' && item.custom_text_color)   || '#FFFFFF'
-  const style     = (plan !== 'free' && item.custom_style)        || 'solid'
+  const btnBg     = (plan !== 'free' && item.custom_bg_color)   || theme.primary
+  const btnText   = (plan !== 'free' && item.custom_text_color) || '#FFFFFF'
+  const style     = (plan !== 'free' && item.custom_style)      || theme.btnStyle
+  const radius    = theme.btnShape
+  const shadow    = theme.btnShadow ? '0 4px 14px rgba(0,0,0,0.3)' : undefined
 
-  const baseStyle: React.CSSProperties =
-    style === 'outline'  ? { background: 'transparent', color: btnBg, border: `1.5px solid ${btnBg}` }
-    : style === 'ghost'  ? { background: 'transparent', color: theme.text }
-    : style === 'gradient' ? { background: `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`, color: '#fff' }
-    : { background: btnBg, color: btnText }
+  const baseStyle: React.CSSProperties = {
+    borderRadius: radius,
+    boxShadow:    shadow,
+    ...(style === 'outline'
+      ? { background: 'transparent', color: btnBg, border: `1.5px solid ${btnBg}` }
+      : style === 'ghost'
+      ? { background: 'transparent', color: theme.text }
+      : style === 'gradient'
+      ? { background: `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`, color: '#fff' }
+      : { background: btnBg, color: btnText }),
+  }
 
   if (item.type === 'header') {
     return (
@@ -132,7 +140,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
 
   if (item.type === 'youtube' && item.youtube_url) {
     return (
-      <div className="rounded-xl overflow-hidden" style={{ border: `0.5px solid ${theme.border}` }}>
+      <div style={{ borderRadius: radius, border: `0.5px solid ${theme.border}`, overflow: 'hidden' }}>
         {item.label && (
           <p className="text-sm font-medium px-4 py-2" style={{ color: theme.text, background: theme.surface }}>
             {item.label}
@@ -143,10 +151,22 @@ function LinkBlock({ item, theme, plan, onTrack }:
     )
   }
 
+  if (item.type === 'tagashop') {
+    return (
+      <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
+         className="flex items-center gap-3 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
+         style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`, color: '#fff', borderRadius: radius, boxShadow: shadow }}>
+        <Store className="w-5 h-5 flex-shrink-0" />
+        <span className="flex-1">{item.label}</span>
+        <ExternalLink className="w-4 h-4 opacity-70 flex-shrink-0" />
+      </a>
+    )
+  }
+
   if (item.type === 'product') {
     return (
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-         className="flex items-center gap-3 p-3 rounded-xl transition-opacity hover:opacity-90"
+         className="flex items-center gap-3 p-3 transition-opacity hover:opacity-90"
          style={{ ...baseStyle, border: `0.5px solid ${theme.border}` }}>
         {item.product_image_url && (
           <img src={item.product_image_url} alt={item.label} className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
@@ -163,11 +183,10 @@ function LinkBlock({ item, theme, plan, onTrack }:
   }
 
   if (item.type === 'whatsapp') {
-    const waUrl = item.url || '#'
     return (
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-         className="flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl font-medium transition-opacity hover:opacity-90 w-full"
-         style={{ background: '#25D366', color: '#fff' }}>
+      <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
+         className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
+         style={{ background: '#25D366', color: '#fff', borderRadius: radius, boxShadow: shadow }}>
         <MessageCircle className="w-5 h-5" />
         <span>{item.label}</span>
       </a>
@@ -178,7 +197,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
     const icon = SOCIAL_ICONS[item.social_network || ''] || '🔗'
     return (
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-         className="flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl font-medium transition-opacity hover:opacity-90 w-full"
+         className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
          style={baseStyle}>
         <span>{icon}</span>
         <span>{item.label}</span>
@@ -188,7 +207,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
 
   return (
     <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-       className="flex items-center justify-between py-3.5 px-5 rounded-xl font-medium transition-opacity hover:opacity-90 w-full"
+       className="flex items-center justify-between py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
        style={baseStyle}>
       <span>{item.label}</span>
       <ExternalLink className="w-4 h-4 opacity-60" />

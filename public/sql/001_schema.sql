@@ -6,7 +6,7 @@ create extension if not exists "uuid-ossp";
 create type subscription_plan as enum ('free', 'creator', 'business');
 
 create type link_item_type as enum (
-  'link', 'product', 'whatsapp', 'social', 'divider',
+  'link', 'product', 'tagashop', 'whatsapp', 'social', 'divider',
   'header', 'youtube', 'email', 'phone'
 );
 
@@ -28,8 +28,6 @@ create table profiles (
   plan           subscription_plan not null default 'free',
   sub_status     subscription_status default 'active',
   sub_expires_at timestamptz,
-  tagarela_enabled boolean default false,
-  tagarela_bot_id  text,
   tagashop_slug    text,
   role           text not null default 'user',
   created_at     timestamptz default now(),
@@ -61,9 +59,11 @@ create table link_pages (
   published      boolean default false,
   seo_title      text,
   seo_description text,
-  whatsapp_number text,
+  whatsapp_number  text,
   whatsapp_message text,
-  tagarela_flow_id text,
+  custom_btn_style  text default 'solid',
+  custom_btn_shape  text default 'rounded',
+  custom_btn_shadow boolean default false,
   created_at     timestamptz default now(),
   updated_at     timestamptz default now()
 );
@@ -142,13 +142,3 @@ create table subscriptions (
 
 create index idx_subscriptions_profile on subscriptions(profile_id);
 
--- Tabela integrations
-create table integrations (
-  id           uuid default uuid_generate_v4() primary key,
-  profile_id   uuid references profiles(id) on delete cascade not null,
-  type         text not null,
-  config       jsonb default '{}',
-  active       boolean default true,
-  created_at   timestamptz default now(),
-  unique(profile_id, type)
-);

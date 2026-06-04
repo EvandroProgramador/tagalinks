@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
-import { Plus, Eye, EyeOff, Save, Globe, ExternalLink } from 'lucide-react'
+import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { usePage } from '@/hooks/usePage'
 import { useEditorStore } from '@/store/useEditorStore'
+import { supabase } from '@/lib/supabase'
 import { LinkItemCard } from '@/components/editor/LinkItemCard'
 import { AddBlockMenu } from '@/components/editor/AddBlockMenu'
 import { PagePreview } from '@/components/preview/PagePreview'
@@ -15,6 +16,8 @@ export default function Editor() {
   const { loadPage, savePage, saveItems, addItem } = usePage()
   const { page, items, dirty, preview, saving, setItems, setPage, setPreview } = useEditorStore()
   const [showAddMenu, setShowAddMenu] = useState(false)
+  const [uploadingAvatar, setUploadingAvatar] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const sensors = useSensors(useSensor(PointerSensor))
 
@@ -45,6 +48,38 @@ export default function Editor() {
     }
     const newItem = await addItem(page.id, type, items.length)
     if (newItem) setItems([...items, newItem])
+  }
+
+  async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file || !user?.id || !page) return
+    if (!file.type.startsWith('image/')) { toast.error('Escolhe uma imagem válida'); return }
+    if (file.size > 2 * 1024 * 1024) { toast.error('Imagem deve ter menos de 2MB'); return }
+
+    setUploadingAvatar(true)
+    try {
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+      const path = `${user.id}/avatar.${ext}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars').upload(path, file, { upsert: true })
+      if (uploadError) { toast.error('Erro ao carregar foto'); return }
+
+      const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path)
+      const avatarUrl = `${publicUrl}?t=${Date.now()}`
+
+      const { error: saveError } = await supabase
+        .from('link_pages')
+        .update({ avatar_url: avatarUrl, updated_at: new Date().toISOString() })
+        .eq('id', page.id)
+      if (saveError) { toast.error('Erro ao guardar foto'); return }
+
+      setPage({ ...page, avatar_url: avatarUrl })
+      toast.success('Foto de perfil actualizada!')
+    } finally {
+      setUploadingAvatar(false)
+    }
   }
 
   function handleDragEnd(event: any) {
@@ -104,6 +139,38 @@ export default function Editor() {
         {/* Perfil rápido */}
         <div className="card space-y-3">
           <h2 className="text-sm font-semibold text-gray-300">Perfil</h2>
+
+          {/* Avatar upload */}
+          <div className="flex items-center gap-4">
+            <div className="relative flex-shrink-0">
+              {page.avatar_url ? (
+                <img src={page.avatar_url} alt="Avatar"
+                     className="w-16 h-16 rounded-full object-cover ring-2 ring-brand-500/40" />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-gradient-tagatech flex items-center justify-center text-2xl font-bold text-white">
+                  {(page.title || '?')[0].toUpperCase()}
+                </div>
+              )}
+              {uploadingAvatar && (
+                <div className="absolute inset-0 rounded-full bg-black/60 flex items-center justify-center">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+            </div>
+            <div>
+              <p className="text-sm font-medium text-white mb-1">Foto de perfil</p>
+              <p className="text-xs text-gray-500 mb-2">JPG, PNG ou WebP · máx 2MB</p>
+              <button type="button" disabled={uploadingAvatar}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="btn-secondary text-xs flex items-center gap-1.5 py-1.5 px-3">
+                <Camera className="w-3.5 h-3.5" />
+                {uploadingAvatar ? 'A carregar...' : 'Alterar foto'}
+              </button>
+            </div>
+            <input ref={fileInputRef} type="file" accept="image/*"
+                   className="hidden" onChange={handleAvatarUpload} />
+          </div>
+
           <input className="input" placeholder="Título da página (ex: Kizomba Beats AO)"
                  value={page.title || ''}
                  onChange={(e) => setPage({ ...page, title: e.target.value })} />

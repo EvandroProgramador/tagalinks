@@ -1,6 +1,6 @@
 export type SubscriptionPlan   = 'free' | 'creator' | 'business'
 export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'trial'
-export type LinkItemType       = 'link' | 'product' | 'whatsapp' | 'social' | 'divider' | 'header' | 'youtube' | 'email' | 'phone'
+export type LinkItemType       = 'link' | 'product' | 'tagashop' | 'whatsapp' | 'social' | 'divider' | 'header' | 'youtube' | 'email' | 'phone'
 export type SocialNetwork      = 'instagram' | 'tiktok' | 'youtube' | 'facebook' | 'twitter' | 'linkedin' | 'snapchat' | 'telegram' | 'spotify'
 export type DeviceType         = 'mobile' | 'desktop' | 'tablet'
 export type ReferrerSource     = 'instagram' | 'tiktok' | 'whatsapp' | 'facebook' | 'twitter' | 'youtube' | 'direct' | 'other'
@@ -15,8 +15,6 @@ export interface Profile {
   plan:              SubscriptionPlan
   sub_status?:       SubscriptionStatus
   sub_expires_at?:   string
-  tagarela_enabled:  boolean
-  tagarela_bot_id?:  string
   tagashop_slug?:    string
   role:              string
   created_at:        string
@@ -40,12 +38,14 @@ export interface LinkPage {
   custom_bg_type?:         'solid' | 'gradient' | 'image'
   custom_bg_gradient?:     string
   custom_bg_image_url?:    string
+  custom_btn_style?:       'solid' | 'outline' | 'ghost' | 'gradient'
+  custom_btn_shape?:       'rounded' | 'pill' | 'square'
+  custom_btn_shadow?:      boolean
   published:               boolean
   seo_title?:              string
   seo_description?:        string
   whatsapp_number?:        string
   whatsapp_message?:       string
-  tagarela_flow_id?:       string
   created_at:              string
   updated_at:              string
   items?:                  LinkItem[]

@@ -41,7 +41,6 @@ export function useSubscription() {
       'Personalização de cores e fontes',
       'Vídeo YouTube de apresentação',
       'Produtos TagaShop embutidos',
-      'Bot Tagarela integrado',
       'Subdomínio personalizado',
     ],
     business: [
