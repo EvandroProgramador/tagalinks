@@ -46,9 +46,3 @@ create policy "own_read_subs"  on subscriptions for select using (auth.uid() = p
 create policy "service_insert" on subscriptions for insert with check (true);
 create policy "service_update" on subscriptions for update using (true);
 
--- integrations
-alter table integrations enable row level security;
-create policy "own_read_integ"   on integrations for select using (auth.uid() = profile_id);
-create policy "own_insert_integ" on integrations for insert with check (auth.uid() = profile_id);
-create policy "own_update_integ" on integrations for update using (auth.uid() = profile_id);
-create policy "own_delete_integ" on integrations for delete using (auth.uid() = profile_id);
