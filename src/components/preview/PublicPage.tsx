@@ -117,6 +117,7 @@ function VitrineBlock({ item, theme }: { item: LinkItem; theme: any }) {
 
   const SUPABASE_URL      = import.meta.env.VITE_SUPABASE_URL      || ''
   const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+  const TAGASHOP_URL      = import.meta.env.VITE_TAGASHOP_API_URL   || 'https://tagashop.site'
 
   useEffect(() => {
     const storeSlug = item.url
@@ -169,7 +170,7 @@ function VitrineBlock({ item, theme }: { item: LinkItem; theme: any }) {
         {products.map((product) => (
           <a
             key={product.id}
-            href={product.product_url}
+            href={`${TAGASHOP_URL}/p/${product.id}`}
             target="_blank"
             rel="noopener noreferrer"
             className={`block rounded-xl overflow-hidden transition-opacity hover:opacity-90 ${
