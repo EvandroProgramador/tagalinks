@@ -11,6 +11,7 @@ import Editor           from '@/pages/dashboard/Editor'
 import Analytics        from '@/pages/dashboard/Analytics'
 import Appearance       from '@/pages/dashboard/Appearance'
 import Settings         from '@/pages/dashboard/Settings'
+import IntegrarLoja     from '@/pages/dashboard/IntegrarLoja'
 import Upgrade          from '@/pages/dashboard/Upgrade'
 import AdminPanel       from '@/pages/admin/AdminPanel'
 import UserPage         from '@/pages/public/UserPage'
@@ -47,8 +48,9 @@ export default function App() {
             <Route path="editor"     element={<Editor />} />
             <Route path="analytics"  element={<Analytics />} />
             <Route path="appearance" element={<Appearance />} />
-            <Route path="settings"   element={<Settings />} />
-            <Route path="upgrade"    element={<Upgrade />} />
+            <Route path="settings"      element={<Settings />} />
+            <Route path="integrar-loja" element={<IntegrarLoja />} />
+            <Route path="upgrade"       element={<Upgrade />} />
             <Route path="admin"      element={<AdminGuard><AdminPanel /></AdminGuard>} />
           </Route>
 
