@@ -46,8 +46,22 @@ export default function Editor() {
       toast.error('Plano gratuito: máximo 5 links. Faz upgrade para Creator!')
       return
     }
+    if (type === 'vitrine' && profile?.plan === 'free') {
+      toast.error('O bloco Vitrine requer plano Creator. Faz upgrade!')
+      return
+    }
     const newItem = await addItem(page.id, type, items.length)
-    if (newItem) setItems([...items, newItem])
+    if (newItem) {
+      if (type === 'vitrine' && profile?.tagashop_slug) {
+        await supabase
+          .from('link_items')
+          .update({ url: profile.tagashop_slug })
+          .eq('id', newItem.id)
+        setItems([...items, { ...newItem, url: profile.tagashop_slug }])
+      } else {
+        setItems([...items, newItem])
+      }
+    }
   }
 
   async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {

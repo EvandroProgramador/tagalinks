@@ -93,6 +93,13 @@ export function usePage() {
       product:   { label: 'Produto TagaShop', url: '' },
       email:     { label: 'Envia-me um e-mail' },
       phone:     { label: 'Liga-me' },
+      vitrine: {
+        label: 'A minha loja',
+        vitrine_title: 'Os meus produtos',
+        vitrine_layout: 'list',
+        vitrine_max_products: 6,
+        vitrine_only_featured: false,
+      },
     }
     const { data, error } = await supabase
       .from('link_items')

@@ -6,6 +6,7 @@ import { useEditorStore } from '@/store/useEditorStore'
 import { usePage } from '@/hooks/usePage'
 import { SOCIAL_BRAND_ICONS, WhatsAppIcon, YouTubeIcon } from '@/components/ui/BrandIcons'
 import { cn } from '@/lib/utils'
+import { VitrineBlockEditor } from '@/components/editor/VitrineBlockEditor'
 import type { LinkItem, SubscriptionPlan } from '@/types'
 
 /* ── ícone por tipo / rede ── */
@@ -23,6 +24,7 @@ function ItemIcon({ item, className = 'w-4 h-4', style }: { item: LinkItem; clas
     link:     <Link2        {...props} />,
     product:  <ShoppingBag  {...props} />,
     tagashop: <Store        {...props} />,
+    vitrine:  <Store        {...props} />,
     header:   <Type         {...props} />,
     divider:  <Minus        {...props} />,
   }
@@ -248,6 +250,9 @@ function LinkFields({ item, update }: { item: LinkItem; update: (f: Partial<Link
         </div>
       )
 
+    case 'vitrine':
+      return <VitrineBlockEditor item={item} onChange={update} />
+
     default:
       return null
   }
@@ -390,6 +395,7 @@ export function LinkItemCard({ item, plan }: Props) {
               ? SOCIAL_CONFIG[item.social_network || '']?.label ?? 'Rede social'
               : { link: 'Link', whatsapp: 'WhatsApp', youtube: 'YouTube', email: 'E-mail',
                   phone: 'Telefone', product: 'Produto TagaShop', tagashop: 'Loja TagaShop',
+                  vitrine: 'Vitrine de Produtos',
                   header: 'Título', divider: 'Linha' }[item.type] ?? item.type}
           </p>
         </div>
@@ -436,7 +442,7 @@ export function LinkItemCard({ item, plan }: Props) {
 
           <LinkFields item={item} update={(f) => updateItem(item.id, f)} />
 
-          {plan !== 'free' && !['header', 'divider'].includes(item.type) && (
+          {plan !== 'free' && !['header', 'divider', 'vitrine'].includes(item.type) && (
             <BtnCustomization item={item} update={(f) => updateItem(item.id, f)} />
           )}
         </div>

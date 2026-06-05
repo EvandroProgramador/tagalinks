@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { ExternalLink, Store } from 'lucide-react'
 import { YouTubeEmbed } from '@/components/ui/YouTubeEmbed'
@@ -6,7 +6,7 @@ import { SOCIAL_BRAND_ICONS, WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { computeTheme } from '@/lib/theme'
 import { generateSessionId, detectReferrer } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
-import type { LinkPage, LinkItem } from '@/types'
+import type { LinkPage, LinkItem, TagaShopProduct } from '@/types'
 
 interface Props {
   page:    LinkPage
@@ -96,6 +96,150 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
         </div>
       </div>
     </>
+  )
+}
+
+const PRODUCT_TYPE_BADGES: Record<string, string> = {
+  course:     '🎓 Curso',
+  ebook:      '📄 E-book',
+  service:    '🛠️ Serviço',
+  beat:       '🎵 Beat',
+  album:      '🎶 Álbum',
+  preset:     '🎨 Preset',
+  asset_pack: '📦 Pack',
+  ticket:     '🎟️ Evento',
+}
+
+function VitrineBlock({ item, theme }: { item: LinkItem; theme: any }) {
+  const [products, setProducts] = useState<TagaShopProduct[]>([])
+  const [loading, setLoading]   = useState(true)
+  const [error, setError]       = useState(false)
+
+  const TAGASHOP_URL = 'https://tagashop.site'
+
+  useEffect(() => {
+    const storeSlug = item.url
+    if (!storeSlug) { setLoading(false); return }
+
+    fetch(`${TAGASHOP_URL}/api/store/${storeSlug}/products`)
+      .then((r) => r.ok ? r.json() : Promise.reject())
+      .then((data: TagaShopProduct[]) => {
+        let filtered = data.filter((p: TagaShopProduct) => {
+          if (item.vitrine_only_featured) return p.is_featured
+          return true
+        })
+        filtered = filtered
+          .sort((a, b) => {
+            if (a.is_featured && !b.is_featured) return -1
+            if (!a.is_featured && b.is_featured) return 1
+            return b.sales - a.sales
+          })
+          .slice(0, item.vitrine_max_products ?? 6)
+        setProducts(filtered)
+      })
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
+  }, [item.url, item.vitrine_only_featured, item.vitrine_max_products])
+
+  const title  = item.vitrine_title || item.label || 'Produtos'
+  const layout = item.vitrine_layout || 'list'
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl py-6 text-center" style={{ background: 'rgba(255,255,255,0.05)' }}>
+        <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
+             style={{ borderColor: theme.primary, borderTopColor: 'transparent' }} />
+      </div>
+    )
+  }
+
+  if (error || products.length === 0) return null
+
+  return (
+    <div className="space-y-3">
+      <p className="text-sm font-semibold text-center" style={{ color: theme.text }}>{title}</p>
+
+      <div className={layout === 'grid' ? 'grid grid-cols-2 gap-2.5' : 'space-y-2'}>
+        {products.map((product) => (
+          <a
+            key={product.id}
+            href={product.product_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`block rounded-xl overflow-hidden transition-opacity hover:opacity-90 ${
+              layout === 'grid' ? '' : 'flex items-center gap-3'
+            }`}
+            style={{ background: 'rgba(255,255,255,0.07)', border: `0.5px solid ${theme.border}` }}
+          >
+            {product.cover_image && (
+              <div className={layout === 'grid' ? 'relative' : 'flex-shrink-0'}>
+                <img
+                  src={product.cover_image}
+                  alt={product.title}
+                  className={layout === 'grid'
+                    ? 'w-full aspect-square object-cover'
+                    : 'w-14 h-14 object-cover'}
+                />
+                {product.is_featured && layout === 'grid' && (
+                  <span className="absolute top-1.5 left-1.5 text-xs px-1.5 py-0.5 rounded-full
+                                   bg-yellow-500/90 text-yellow-900 font-medium">
+                    ⭐ Destaque
+                  </span>
+                )}
+              </div>
+            )}
+
+            <div className={`p-2.5 ${layout === 'grid' ? '' : 'flex-1 min-w-0'}`}>
+              {PRODUCT_TYPE_BADGES[product.product_type] && (
+                <span className="text-xs opacity-60 block mb-0.5" style={{ color: theme.subtext }}>
+                  {PRODUCT_TYPE_BADGES[product.product_type]}
+                </span>
+              )}
+
+              <p className={`font-medium text-sm ${layout === 'grid' ? 'line-clamp-2' : 'truncate'}`}
+                 style={{ color: theme.text }}>
+                {product.title}
+              </p>
+
+              <div className="flex items-baseline gap-1.5 mt-1 flex-wrap">
+                <span className="text-sm font-semibold" style={{ color: theme.primary }}>
+                  {new Intl.NumberFormat('pt-PT').format(product.price)} Kz
+                </span>
+                {product.original_price && product.original_price > product.price && (
+                  <>
+                    <span className="text-xs line-through opacity-50" style={{ color: theme.subtext }}>
+                      {new Intl.NumberFormat('pt-PT').format(product.original_price)} Kz
+                    </span>
+                    <span className="text-xs font-medium px-1 rounded"
+                          style={{ background: 'rgba(34,197,94,0.15)', color: '#4ade80' }}>
+                      -{Math.round((1 - product.price / product.original_price) * 100)}%
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {product.sales >= 10 && !product.is_featured && (
+                <span className="inline-block text-xs mt-1 opacity-70" style={{ color: theme.subtext }}>
+                  🔥 Mais vendido
+                </span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {item.url && (
+        <a
+          href={`https://tagashop.site/store/${item.url}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block text-center text-xs py-2 rounded-xl transition-opacity hover:opacity-80"
+          style={{ color: theme.primary, border: `0.5px solid ${theme.border}` }}
+        >
+          Ver loja completa →
+        </a>
+      )}
+    </div>
   )
 }
 
@@ -199,6 +343,10 @@ function LinkBlock({ item, theme, plan, onTrack }:
         <span>{item.label}</span>
       </a>
     )
+  }
+
+  if (item.type === 'vitrine') {
+    return <VitrineBlock item={item} theme={theme} />
   }
 
   return (

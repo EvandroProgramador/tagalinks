@@ -1,6 +1,6 @@
 export type SubscriptionPlan   = 'free' | 'creator' | 'business'
 export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'trial'
-export type LinkItemType       = 'link' | 'product' | 'tagashop' | 'whatsapp' | 'social' | 'divider' | 'header' | 'youtube' | 'email' | 'phone'
+export type LinkItemType       = 'link' | 'product' | 'tagashop' | 'whatsapp' | 'social' | 'divider' | 'header' | 'youtube' | 'email' | 'phone' | 'vitrine'
 export type SocialNetwork      = 'instagram' | 'tiktok' | 'youtube' | 'facebook' | 'twitter' | 'linkedin' | 'snapchat' | 'telegram' | 'spotify'
 export type DeviceType         = 'mobile' | 'desktop' | 'tablet'
 export type ReferrerSource     = 'instagram' | 'tiktok' | 'whatsapp' | 'facebook' | 'twitter' | 'youtube' | 'direct' | 'other'
@@ -15,8 +15,10 @@ export interface Profile {
   plan:              SubscriptionPlan
   sub_status?:       SubscriptionStatus
   sub_expires_at?:   string
-  tagashop_slug?:    string
-  role:              string
+  tagashop_slug?:       string
+  tagashop_api_key?:    string | null
+  tagashop_store_name?: string | null
+  role:                 string
   created_at:        string
 }
 
@@ -71,6 +73,10 @@ export interface LinkItem {
   custom_border_color?: string
   custom_style?:        'solid' | 'outline' | 'ghost' | 'gradient'
   thumbnail_url?:       string
+  vitrine_title?:         string
+  vitrine_layout?:        'list' | 'grid' | 'carousel'
+  vitrine_max_products?:  number
+  vitrine_only_featured?: boolean
   created_at:           string
 }
 
@@ -123,4 +129,32 @@ export interface AppyPayInitResponse {
   expires_at: string
   qr_code?:   string
   deeplink?:  string
+}
+
+export interface TagaShopProduct {
+  id:             string
+  title:          string
+  description:    string | null
+  price:          number
+  original_price: number | null
+  cover_image:    string | null
+  product_type:   string
+  category:       string | null
+  sales:          number
+  is_featured:    boolean
+  product_url:    string
+}
+
+export interface TagaShopCatalog {
+  seller: {
+    store_name:        string
+    store_slug:        string
+    store_description: string | null
+    store_logo:        string | null
+    store_banner:      string | null
+    phone:             string
+  }
+  products:       TagaShopProduct[]
+  products_count: number
+  generated_at:   string
 }
