@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
 import { supabase } from '@/lib/supabase'
-import { Save } from 'lucide-react'
+import { Save, KeyRound, Eye, EyeOff } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface ProfileForm {
@@ -12,16 +12,51 @@ interface ProfileForm {
   username: string
 }
 
+interface PasswordForm {
+  current:  string
+  next:     string
+  confirm:  string
+}
+
 export default function Settings() {
   const { user, profile } = useAuth()
   const { fetchProfile }  = useAuthStore()
-  const [saving, setSaving] = useState(false)
+  const [saving, setSaving]           = useState(false)
+  const [changingPw, setChangingPw]   = useState(false)
+  const [showCurrent, setShowCurrent] = useState(false)
+  const [showNext, setShowNext]       = useState(false)
 
   const { register, handleSubmit, reset } = useForm<ProfileForm>()
+  const { register: regPw, handleSubmit: handlePw, reset: resetPw, formState: { errors: pwErrors } } = useForm<PasswordForm>()
 
   useEffect(() => {
     if (profile) reset({ name: profile.name, phone: profile.phone || '', username: profile.username || '' })
   }, [profile])
+
+  async function onChangePassword(data: PasswordForm) {
+    if (data.next !== data.confirm) {
+      toast.error('As passwords não coincidem.')
+      return
+    }
+    if (data.next.length < 6) {
+      toast.error('A nova password deve ter pelo menos 6 caracteres.')
+      return
+    }
+    setChangingPw(true)
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: profile?.email || '',
+      password: data.current,
+    })
+    if (signInError) {
+      toast.error('Password actual incorrecta.')
+      setChangingPw(false)
+      return
+    }
+    const { error } = await supabase.auth.updateUser({ password: data.next })
+    if (error) toast.error(error.message)
+    else { toast.success('Password alterada com sucesso!'); resetPw() }
+    setChangingPw(false)
+  }
 
   async function onSubmit(data: ProfileForm) {
     if (!user?.id) return
@@ -65,6 +100,63 @@ export default function Settings() {
           </div>
           <button type="submit" disabled={saving} className="btn-primary text-sm flex items-center gap-1.5">
             <Save className="w-4 h-4" /> {saving ? 'A guardar...' : 'Guardar alterações'}
+          </button>
+        </form>
+      </div>
+
+      {/* Alterar password */}
+      <div className="card">
+        <div className="flex items-center gap-2 mb-4">
+          <KeyRound className="w-4 h-4 text-gray-400" />
+          <h2 className="text-sm font-semibold text-gray-300">Alterar password</h2>
+        </div>
+        <form onSubmit={handlePw(onChangePassword)} className="space-y-4">
+          <div>
+            <label className="label">Password actual</label>
+            <div className="relative">
+              <input
+                type={showCurrent ? 'text' : 'password'}
+                className="input pr-10"
+                {...regPw('current', { required: true })}
+              />
+              <button
+                type="button"
+                onClick={() => setShowCurrent(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+              >
+                {showCurrent ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+          <div>
+            <label className="label">Nova password</label>
+            <div className="relative">
+              <input
+                type={showNext ? 'text' : 'password'}
+                className="input pr-10"
+                placeholder="Mínimo 6 caracteres"
+                {...regPw('next', { required: true, minLength: 6 })}
+              />
+              <button
+                type="button"
+                onClick={() => setShowNext(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+              >
+                {showNext ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+            {pwErrors.next && <p className="text-xs text-red-400 mt-1">Mínimo 6 caracteres.</p>}
+          </div>
+          <div>
+            <label className="label">Confirmar nova password</label>
+            <input
+              type="password"
+              className="input"
+              {...regPw('confirm', { required: true })}
+            />
+          </div>
+          <button type="submit" disabled={changingPw} className="btn-primary text-sm flex items-center gap-1.5">
+            <KeyRound className="w-4 h-4" /> {changingPw ? 'A alterar...' : 'Alterar password'}
           </button>
         </form>
       </div>
