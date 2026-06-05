@@ -61,9 +61,14 @@ export function Sidebar() {
       <div className="p-3 border-t border-surface-border">
         {profile && (
           <div className="flex items-center gap-2 px-3 py-2 mb-1">
-            <div className="w-7 h-7 rounded-full bg-gradient-tagatech flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
-              {profile.name?.[0]?.toUpperCase() || '?'}
-            </div>
+            {profile.avatar_url ? (
+              <img src={profile.avatar_url} alt={profile.name}
+                   className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
+            ) : (
+              <div className="w-7 h-7 rounded-full bg-gradient-tagatech flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                {profile.name?.[0]?.toUpperCase() || '?'}
+              </div>
+            )}
             <div className="flex-1 min-w-0">
               <p className="text-xs font-medium text-white truncate">{profile.name}</p>
               <p className="text-xs text-gray-500 truncate">@{profile.username}</p>

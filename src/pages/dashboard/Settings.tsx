@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
 import { supabase } from '@/lib/supabase'
-import { Save, KeyRound, Eye, EyeOff } from 'lucide-react'
+import { Save, KeyRound, Eye, EyeOff, Camera } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface ProfileForm {
@@ -21,10 +21,12 @@ interface PasswordForm {
 export default function Settings() {
   const { user, profile } = useAuth()
   const { fetchProfile }  = useAuthStore()
-  const [saving, setSaving]           = useState(false)
-  const [changingPw, setChangingPw]   = useState(false)
-  const [showCurrent, setShowCurrent] = useState(false)
-  const [showNext, setShowNext]       = useState(false)
+  const [saving, setSaving]               = useState(false)
+  const [changingPw, setChangingPw]       = useState(false)
+  const [showCurrent, setShowCurrent]     = useState(false)
+  const [showNext, setShowNext]           = useState(false)
+  const [uploadingAvatar, setUploadingAvatar] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const { register, handleSubmit, reset } = useForm<ProfileForm>()
   const { register: regPw, handleSubmit: handlePw, reset: resetPw, formState: { errors: pwErrors } } = useForm<PasswordForm>()
@@ -58,6 +60,36 @@ export default function Settings() {
     setChangingPw(false)
   }
 
+  async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file || !user?.id) return
+    if (!file.type.startsWith('image/')) { toast.error('Escolhe uma imagem válida'); return }
+    if (file.size > 2 * 1024 * 1024) { toast.error('Imagem deve ter menos de 2MB'); return }
+
+    setUploadingAvatar(true)
+    try {
+      const ext  = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+      const path = `${user.id}/profile.${ext}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars').upload(path, file, { upsert: true })
+      if (uploadError) { toast.error('Erro ao carregar foto'); return }
+
+      const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path)
+      const avatarUrl = `${publicUrl}?t=${Date.now()}`
+
+      const { error } = await supabase.from('profiles')
+        .update({ avatar_url: avatarUrl }).eq('id', user.id)
+      if (error) { toast.error('Erro ao guardar foto'); return }
+
+      await fetchProfile(user.id)
+      toast.success('Foto de perfil actualizada!')
+    } finally {
+      setUploadingAvatar(false)
+    }
+  }
+
   async function onSubmit(data: ProfileForm) {
     if (!user?.id) return
     setSaving(true)
@@ -76,6 +108,38 @@ export default function Settings() {
       {/* Perfil */}
       <div className="card">
         <h2 className="text-sm font-semibold text-gray-300 mb-4">Perfil</h2>
+
+        {/* Avatar da conta */}
+        <div className="flex items-center gap-4 mb-5 pb-5 border-b border-surface-border">
+          <div className="relative flex-shrink-0">
+            {profile?.avatar_url ? (
+              <img src={profile.avatar_url} alt="Avatar"
+                   className="w-16 h-16 rounded-full object-cover ring-2 ring-brand-500/40" />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-gradient-tagatech flex items-center justify-center text-2xl font-bold text-white">
+                {profile?.name?.[0]?.toUpperCase() || '?'}
+              </div>
+            )}
+            {uploadingAvatar && (
+              <div className="absolute inset-0 rounded-full bg-black/60 flex items-center justify-center">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+          </div>
+          <div>
+            <p className="text-sm font-medium text-white mb-1">Foto da conta</p>
+            <p className="text-xs text-gray-500 mb-2">Aparece na sidebar · JPG, PNG ou WebP · máx 2MB</p>
+            <button type="button" disabled={uploadingAvatar}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="btn-secondary text-xs flex items-center gap-1.5 py-1.5 px-3">
+              <Camera className="w-3.5 h-3.5" />
+              {uploadingAvatar ? 'A carregar...' : 'Alterar foto'}
+            </button>
+          </div>
+          <input ref={fileInputRef} type="file" accept="image/*"
+                 className="hidden" onChange={handleAvatarUpload} />
+        </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="label">Nome completo</label>
