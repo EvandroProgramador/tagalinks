@@ -170,7 +170,7 @@ function VitrineBlock({ item, theme }: { item: LinkItem; theme: any }) {
         {products.map((product) => (
           <a
             key={product.id}
-            href={`${TAGASHOP_URL}/p/${product.id}`}
+            href={product.product_url || `${TAGASHOP_URL}/p/${product.id}`}
             target="_blank"
             rel="noopener noreferrer"
             className={`block rounded-xl overflow-hidden transition-opacity hover:opacity-90 ${
