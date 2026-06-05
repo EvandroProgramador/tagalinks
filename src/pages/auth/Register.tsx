@@ -66,7 +66,7 @@ export default function Register() {
     <div className="min-h-screen bg-surface-bg flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Logo className="h-10 mx-auto mb-4" />
+          <Logo className="h-[134px] block mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-white">Cria a tua página</h1>
           <p className="text-gray-400 mt-1">Partilha tudo com um único link</p>
         </div>

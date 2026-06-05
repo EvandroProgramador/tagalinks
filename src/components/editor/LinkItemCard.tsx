@@ -1,10 +1,9 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { GripVertical, Trash2, ChevronDown, ChevronUp, Link2, Mail, Phone, Type, Minus, Store, ShoppingBag } from 'lucide-react'
+import { GripVertical, Trash2, ChevronDown, ChevronUp, Link2, Mail, Phone, Type, Minus, Store, ShoppingBag, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { useEditorStore } from '@/store/useEditorStore'
 import { usePage } from '@/hooks/usePage'
-import { Toggle } from '@/components/ui/Toggle'
 import { SOCIAL_BRAND_ICONS, WhatsAppIcon, YouTubeIcon } from '@/components/ui/BrandIcons'
 import { cn } from '@/lib/utils'
 import type { LinkItem, SubscriptionPlan } from '@/types'
@@ -384,9 +383,9 @@ export function LinkItemCard({ item, plan }: Props) {
                     style={socialColor ? { color: socialColor } : { color: '#9B9BAA' }} />
         </div>
 
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-white truncate">{item.label || '(sem título)'}</p>
-          <p className="text-xs text-gray-500">
+        <div className="flex-1 min-w-0 overflow-hidden">
+          <p className="text-sm font-medium text-white truncate leading-tight">{item.label || '(sem título)'}</p>
+          <p className="text-xs text-gray-500 truncate leading-tight">
             {item.type === 'social'
               ? SOCIAL_CONFIG[item.social_network || '']?.label ?? 'Rede social'
               : { link: 'Link', whatsapp: 'WhatsApp', youtube: 'YouTube', email: 'E-mail',
@@ -395,16 +394,31 @@ export function LinkItemCard({ item, plan }: Props) {
           </p>
         </div>
 
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <Toggle checked={item.visible} onChange={(v) => updateItem(item.id, { visible: v })} />
+        {/* acções — ícones compactos em fila horizontal fixa */}
+        <div className="flex items-center flex-shrink-0 ml-1">
+          <button
+            onClick={() => updateItem(item.id, { visible: !item.visible })}
+            title={item.visible ? 'Ocultar' : 'Mostrar'}
+            className={cn(
+              'p-1.5 rounded-lg transition-colors',
+              item.visible
+                ? 'text-brand-400 hover:text-brand-300 hover:bg-brand-500/10'
+                : 'text-gray-600 hover:text-gray-400 hover:bg-surface-card'
+            )}>
+            {item.visible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+          </button>
           {hasFields && (
-            <button onClick={() => setExpanded(!expanded)}
-                    className="p-1.5 text-gray-500 hover:text-white rounded-lg hover:bg-surface-card transition-colors">
+            <button
+              onClick={() => setExpanded(!expanded)}
+              title={expanded ? 'Fechar' : 'Editar'}
+              className="p-1.5 text-gray-500 hover:text-white rounded-lg hover:bg-surface-card transition-colors">
               {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
             </button>
           )}
-          <button onClick={handleDelete}
-                  className="p-1.5 text-gray-600 hover:text-red-400 rounded-lg hover:bg-red-500/10 transition-colors">
+          <button
+            onClick={handleDelete}
+            title="Eliminar"
+            className="p-1.5 text-gray-600 hover:text-red-400 rounded-lg hover:bg-red-500/10 transition-colors">
             <Trash2 className="w-4 h-4" />
           </button>
         </div>

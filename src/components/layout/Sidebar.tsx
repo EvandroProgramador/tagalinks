@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Edit3, BarChart2, Palette, Settings, Zap, LogOut } from 'lucide-react'
+import { LayoutDashboard, Edit3, BarChart2, Palette, Settings, Zap, LogOut, Shield } from 'lucide-react'
 import { Logo } from '@/components/ui/Logo'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils'
@@ -15,11 +15,12 @@ const nav = [
 
 export function Sidebar() {
   const { signOut, profile } = useAuth()
+  const isAdmin = profile?.role === 'admin'
 
   return (
     <aside className="w-56 h-screen flex flex-col bg-surface-card border-r border-surface-border flex-shrink-0">
       <div className="p-4 border-b border-surface-border">
-        <Logo className="h-8" />
+        <Logo className="h-[109px]" />
       </div>
 
       <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
@@ -39,6 +40,21 @@ export function Sidebar() {
             {label}
           </NavLink>
         ))}
+        {isAdmin && (
+          <>
+            <div className="my-2 border-t border-surface-border" />
+            <NavLink to="/dashboard/admin"
+              className={({ isActive }) => cn(
+                'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all',
+                isActive
+                  ? 'bg-amber-500/15 text-amber-300 font-medium'
+                  : 'text-amber-500/70 hover:bg-amber-500/10 hover:text-amber-300',
+              )}>
+              <Shield className="w-4 h-4 flex-shrink-0" />
+              Admin
+            </NavLink>
+          </>
+        )}
       </nav>
 
       <div className="p-3 border-t border-surface-border">

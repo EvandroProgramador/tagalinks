@@ -34,7 +34,7 @@ export default function Login() {
     <div className="min-h-screen bg-surface-bg flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Logo className="h-10 mx-auto mb-4" />
+          <Logo className="h-[134px] block mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-white">Bem-vindo de volta</h1>
           <p className="text-gray-400 mt-1">Entra na tua conta TagaLinks</p>
         </div>

@@ -23,7 +23,7 @@ export default function Landing() {
     <div className="min-h-screen bg-surface-bg">
       {/* Nav */}
       <nav className="flex items-center justify-between px-5 py-4 max-w-5xl mx-auto">
-        <Logo className="h-8" />
+        <Logo className="h-[114px]" />
         <div className="flex items-center gap-3">
           <Link to="/login" className="btn-ghost text-sm">Entrar</Link>
           <Link to="/register" className="btn-primary text-sm">Começar grátis</Link>

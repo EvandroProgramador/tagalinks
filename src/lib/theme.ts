@@ -117,8 +117,16 @@ export const GRADIENT_PRESETS = [
 ]
 
 export const GOOGLE_FONTS = [
-  'Inter', 'Roboto', 'Poppins', 'Montserrat', 'Raleway',
-  'Nunito', 'Lato', 'Open Sans', 'Playfair Display', 'DM Sans',
+  'Inter',            // neutro, moderno
+  'Poppins',          // arredondado, popular
+  'Montserrat',       // geométrico, forte
+  'Raleway',          // elegante, fino
+  'Nunito',           // casual, amigável
+  'Oswald',           // condensado, impactante
+  'Space Grotesk',    // tecnológico, geek
+  'Playfair Display', // serif elegante
+  'Lora',             // serif legível
+  'Bebas Neue',       // display bold, all-caps
 ]
 
 export const THEME_PRESETS = Object.keys(PRESETS)

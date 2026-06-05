@@ -43,11 +43,21 @@ export function usePage() {
   const savePage = useCallback(async (pageId: string, updates: Partial<LinkPage>) => {
     setSaving(true)
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('link_pages')
         .update({ ...updates, updated_at: new Date().toISOString() })
         .eq('id', pageId)
-      if (error) { toast.error('Erro ao guardar'); return false }
+        .select('id')
+      if (error) {
+        console.error('[savePage] Supabase error:', error.message, '| details:', error.details, '| hint:', error.hint, '| code:', error.code)
+        toast.error(`Erro ao guardar: ${error.message}`)
+        return false
+      }
+      if (!data || data.length === 0) {
+        console.error('[savePage] No rows updated — RLS blocked or page not found. pageId:', pageId)
+        toast.error('Erro ao guardar: sem permissão ou página não encontrada')
+        return false
+      }
       toast.success('Guardado!')
       setDirty(false)
       return true

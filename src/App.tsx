@@ -12,8 +12,10 @@ import Analytics        from '@/pages/dashboard/Analytics'
 import Appearance       from '@/pages/dashboard/Appearance'
 import Settings         from '@/pages/dashboard/Settings'
 import Upgrade          from '@/pages/dashboard/Upgrade'
+import AdminPanel       from '@/pages/admin/AdminPanel'
 import UserPage         from '@/pages/public/UserPage'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
+import { AdminGuard }   from '@/components/admin/AdminGuard'
 
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -47,6 +49,7 @@ export default function App() {
             <Route path="appearance" element={<Appearance />} />
             <Route path="settings"   element={<Settings />} />
             <Route path="upgrade"    element={<Upgrade />} />
+            <Route path="admin"      element={<AdminGuard><AdminPanel /></AdminGuard>} />
           </Route>
 
           <Route path="/:username" element={<UserPage />} />

@@ -14,7 +14,7 @@ import toast from 'react-hot-toast'
 export default function Editor() {
   const { user, profile }  = useAuth()
   const { loadPage, savePage, saveItems, addItem } = usePage()
-  const { page, items, dirty, preview, saving, setItems, setPage, setPreview } = useEditorStore()
+  const { page, items, dirty, preview, saving, setItems, setPage, setDirty, reorderItems, setPreview } = useEditorStore()
   const [showAddMenu, setShowAddMenu] = useState(false)
   const [uploadingAvatar, setUploadingAvatar] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -87,7 +87,7 @@ export default function Editor() {
     if (!over || active.id === over.id) return
     const oldIdx = items.findIndex((i) => i.id === active.id)
     const newIdx = items.findIndex((i) => i.id === over.id)
-    setItems(arrayMove(items, oldIdx, newIdx))
+    reorderItems(arrayMove(items, oldIdx, newIdx))
   }
 
   async function togglePublish() {
@@ -159,7 +159,7 @@ export default function Editor() {
             </div>
             <div>
               <p className="text-sm font-medium text-white mb-1">Foto de perfil</p>
-              <p className="text-xs text-gray-500 mb-2">JPG, PNG ou WebP · máx 2MB</p>
+              <p className="text-xs text-gray-500 mb-2">JPG, PNG ou WebP · máx 2MB · guarda automaticamente</p>
               <button type="button" disabled={uploadingAvatar}
                       onClick={() => fileInputRef.current?.click()}
                       className="btn-secondary text-xs flex items-center gap-1.5 py-1.5 px-3">
@@ -173,10 +173,10 @@ export default function Editor() {
 
           <input className="input" placeholder="Título da página (ex: Kizomba Beats AO)"
                  value={page.title || ''}
-                 onChange={(e) => setPage({ ...page, title: e.target.value })} />
+                 onChange={(e) => { setPage({ ...page, title: e.target.value }); setDirty(true) }} />
           <textarea className="input resize-none" rows={2} placeholder="Bio — descreve quem és..."
                     value={page.bio || ''}
-                    onChange={(e) => setPage({ ...page, bio: e.target.value })} />
+                    onChange={(e) => { setPage({ ...page, bio: e.target.value }); setDirty(true) }} />
         </div>
 
         {/* Vídeo de apresentação */}
@@ -187,11 +187,11 @@ export default function Editor() {
           </div>
           <input className="input" placeholder="https://youtube.com/watch?v=..."
                  value={page.youtube_url || ''}
-                 onChange={(e) => setPage({ ...page, youtube_url: e.target.value })} />
+                 onChange={(e) => { setPage({ ...page, youtube_url: e.target.value }); setDirty(true) }} />
           {page.youtube_url && (
             <input className="input text-sm" placeholder="Legenda do vídeo (opcional)"
                    value={page.youtube_title || ''}
-                   onChange={(e) => setPage({ ...page, youtube_title: e.target.value })} />
+                   onChange={(e) => { setPage({ ...page, youtube_title: e.target.value }); setDirty(true) }} />
           )}
           <p className="text-xs text-gray-500">
             Aparece no topo da página, antes dos links. Ideal para apresentação pessoal.
