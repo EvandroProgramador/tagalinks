@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Edit3, BarChart2, Globe, ExternalLink, Zap } from 'lucide-react'
+import { Edit3, BarChart2, Globe, ExternalLink, Zap, Store, CheckCircle2, XCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { usePage } from '@/hooks/usePage'
 import { useEditorStore } from '@/store/useEditorStore'
@@ -76,6 +76,31 @@ export default function Dashboard() {
           </div>
         </Link>
       </div>
+
+      {/* Estado da loja TagaShop */}
+      <Link
+        to="/dashboard/integrar-loja"
+        className="card flex items-center gap-4 hover:border-brand-500/50 transition-colors group"
+      >
+        <div className="p-2.5 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0">
+          <Store className="w-5 h-5 text-white" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-medium text-white text-sm">Loja TagaShop</p>
+          <p className="text-xs text-gray-500 truncate">
+            {profile?.tagashop_store_name || profile?.tagashop_slug || 'Integração com a loja'}
+          </p>
+        </div>
+        {profile?.tagashop_api_key ? (
+          <span className="flex items-center gap-1 text-xs text-green-400 bg-green-500/10 px-2 py-1 rounded-full flex-shrink-0">
+            <CheckCircle2 className="w-3 h-3" /> Ligada
+          </span>
+        ) : (
+          <span className="flex items-center gap-1 text-xs text-gray-500 bg-surface-elevated px-2 py-1 rounded-full flex-shrink-0">
+            <XCircle className="w-3 h-3" /> Desligada
+          </span>
+        )}
+      </Link>
 
       {/* Status da página */}
       {page && (
