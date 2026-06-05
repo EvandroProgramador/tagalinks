@@ -115,15 +115,21 @@ function VitrineBlock({ item, theme }: { item: LinkItem; theme: any }) {
   const [loading, setLoading]   = useState(true)
   const [error, setError]       = useState(false)
 
-  const TAGASHOP_URL = 'https://tagashop.site'
+  const SUPABASE_URL      = import.meta.env.VITE_SUPABASE_URL      || ''
+  const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
 
   useEffect(() => {
     const storeSlug = item.url
     if (!storeSlug) { setLoading(false); return }
 
-    fetch(`${TAGASHOP_URL}/api/store/${storeSlug}/products`)
+    fetch(`${SUPABASE_URL}/functions/v1/tagashop-products`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      body:    JSON.stringify({ store_slug: storeSlug }),
+    })
       .then((r) => r.ok ? r.json() : Promise.reject())
-      .then((data: TagaShopProduct[]) => {
+      .then((catalog: { products: TagaShopProduct[] }) => {
+        const data = catalog.products || []
         let filtered = data.filter((p: TagaShopProduct) => {
           if (item.vitrine_only_featured) return p.is_featured
           return true

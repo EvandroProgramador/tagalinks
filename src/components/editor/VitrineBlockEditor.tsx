@@ -21,16 +21,21 @@ export function VitrineBlockEditor({ item, onChange }: Props) {
   const [products, setProducts] = useState<TagaShopProduct[]>([])
   const [loading, setLoading]   = useState(false)
 
-  const isConnected = !!profile?.tagashop_api_key
+  const isConnected = !!profile?.tagashop_slug
 
   useEffect(() => {
-    if (!isConnected || !profile?.tagashop_api_key) return
+    if (!isConnected || !profile?.tagashop_slug) return
+    // auto-fill URL do bloco se estiver vazio mas a loja já estiver ligada
+    if (!item.url && profile.tagashop_slug) {
+      onChange({ url: profile.tagashop_slug })
+    }
+    if (!profile?.tagashop_api_key) return
     setLoading(true)
     fetchCatalog(profile.tagashop_api_key).then((cat) => {
       if (cat) setProducts(cat.products)
       setLoading(false)
     })
-  }, [profile?.tagashop_api_key])
+  }, [profile?.tagashop_api_key, profile?.tagashop_slug])
 
   const previewProducts = products
     .filter((p) => !item.vitrine_only_featured || p.is_featured)

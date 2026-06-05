@@ -245,7 +245,7 @@ function LinkFields({ item, update }: { item: LinkItem; update: (f: Partial<Link
         <div>
           <label className="label">URL da loja</label>
           <input className="input" type="url" value={item.url || ''}
-                 placeholder="https://tagashop.ao/loja/..."
+                 placeholder="https://tagashop.site/store/..."
                  onChange={(e) => update({ url: e.target.value })} />
         </div>
       )
