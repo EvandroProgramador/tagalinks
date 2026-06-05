@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
-import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera, Store } from 'lucide-react'
+import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera, Store, CheckCircle2, XCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
 import { usePage } from '@/hooks/usePage'
@@ -230,59 +230,75 @@ export default function Editor() {
           </p>
         </div>
 
-        {/* Banner TagaShop — só aparece quando a loja não está ligada */}
-        {!profile?.tagashop_api_key && (
-          <div className="card border-brand-500/20 space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0">
-                <Store className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white">Liga a tua loja TagaShop</p>
-                <p className="text-xs text-gray-400">Mostra produtos automaticamente com o bloco Vitrine.</p>
-              </div>
+        {/* Card TagaShop — sempre visível */}
+        <div className="card space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0">
+              <Store className="w-4 h-4 text-white" />
             </div>
-            {!showApiInput ? (
-              <button
-                type="button"
-                onClick={() => setShowApiInput(true)}
-                className="btn-secondary text-sm w-full"
-              >
-                Ligar loja
-              </button>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-white">Loja TagaShop</p>
+              <p className="text-xs text-gray-400 truncate">
+                {profile?.tagashop_api_key
+                  ? (profile.tagashop_store_name || profile.tagashop_slug || 'Loja ligada')
+                  : 'Liga a tua loja para mostrar produtos com o bloco Vitrine.'}
+              </p>
+            </div>
+            {profile?.tagashop_api_key ? (
+              <span className="flex items-center gap-1 text-xs text-green-400 bg-green-500/10 px-2 py-1 rounded-full flex-shrink-0">
+                <CheckCircle2 className="w-3 h-3" /> Ligada
+              </span>
             ) : (
-              <div className="space-y-2">
-                <p className="text-xs text-gray-400">
-                  No TagaShop, vai a <strong className="text-gray-200">Integrações → TagaLinks</strong>, activa e copia a API Key.
-                </p>
-                <input
-                  type="text"
-                  className="input font-mono text-sm"
-                  placeholder="tgl_..."
-                  value={apiKeyInput}
-                  onChange={(e) => setApiKeyInput(e.target.value)}
-                />
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={handleConnectAndAddVitrine}
-                    disabled={validating || !apiKeyInput.startsWith('tgl_')}
-                    className="btn-primary text-sm flex-1"
-                  >
-                    {validating ? 'A validar...' : 'Ligar loja'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setShowApiInput(false); setApiKeyInput('') }}
-                    className="btn-ghost text-sm"
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              </div>
+              <span className="flex items-center gap-1 text-xs text-gray-500 bg-surface-elevated px-2 py-1 rounded-full flex-shrink-0">
+                <XCircle className="w-3 h-3" /> Desligada
+              </span>
             )}
           </div>
-        )}
+
+          {!profile?.tagashop_api_key && (
+            <>
+              {!showApiInput ? (
+                <button
+                  type="button"
+                  onClick={() => setShowApiInput(true)}
+                  className="btn-secondary text-sm w-full"
+                >
+                  Ligar loja
+                </button>
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-xs text-gray-400">
+                    No TagaShop, vai a <strong className="text-gray-200">Integrações → TagaLinks</strong>, activa e copia a API Key.
+                  </p>
+                  <input
+                    type="text"
+                    className="input font-mono text-sm"
+                    placeholder="tgl_..."
+                    value={apiKeyInput}
+                    onChange={(e) => setApiKeyInput(e.target.value)}
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleConnectAndAddVitrine}
+                      disabled={validating || !apiKeyInput.startsWith('tgl_')}
+                      className="btn-primary text-sm flex-1"
+                    >
+                      {validating ? 'A validar...' : 'Ligar loja'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setShowApiInput(false); setApiKeyInput('') }}
+                      className="btn-ghost text-sm"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
 
         {/* Links */}
         <div className="card space-y-3">
