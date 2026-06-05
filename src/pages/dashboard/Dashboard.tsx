@@ -24,8 +24,8 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
           <h1 className="text-xl font-bold text-white">
             Olá, {profile?.name?.split(' ')[0] || 'Criador'}!
           </h1>
@@ -35,8 +35,9 @@ export default function Dashboard() {
         </div>
         {page?.slug && (
           <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer"
-             className="btn-secondary flex items-center gap-2 text-sm">
-            <ExternalLink className="w-4 h-4" /> Ver página
+             className="btn-secondary flex items-center gap-2 text-sm flex-shrink-0">
+            <ExternalLink className="w-4 h-4" />
+            <span className="hidden sm:inline">Ver página</span>
           </a>
         )}
       </div>

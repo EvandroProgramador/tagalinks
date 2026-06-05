@@ -142,28 +142,29 @@ export default function Editor() {
     <div className="flex gap-6 h-full">
       <div className="flex-1 space-y-4 min-w-0">
         {/* Toolbar */}
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          <div>
-            <h1 className="text-lg font-semibold text-white">Editor de página</h1>
-            <p className="text-sm text-gray-400">tagalinks.ao/{page.slug}</p>
+        <div className="flex items-center justify-between gap-2 sm:gap-3">
+          <div className="min-w-0">
+            <h1 className="text-base sm:text-lg font-semibold text-white leading-tight">Editor de página</h1>
+            <p className="text-xs sm:text-sm text-gray-400 truncate">tagalinks.ao/{page.slug}</p>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer"
-               className="btn-ghost flex items-center gap-1.5 text-sm">
-              <ExternalLink className="w-4 h-4" /> Ver página
+               className="btn-ghost flex items-center gap-1.5 text-sm px-2 sm:px-4">
+              <ExternalLink className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Ver página</span>
             </a>
             <button onClick={() => setPreview(!preview)} className="btn-ghost text-sm p-2">
               {preview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
             <button onClick={togglePublish}
-                    className={`btn-secondary text-sm flex items-center gap-1.5 ${page.published ? 'text-green-400 border-green-500/30' : ''}`}>
-              <Globe className="w-4 h-4" />
-              {page.published ? 'Publicado' : 'Publicar'}
+                    className={`btn-secondary text-sm flex items-center gap-1.5 px-2.5 sm:px-5 ${page.published ? 'text-green-400 border-green-500/30' : ''}`}>
+              <Globe className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">{page.published ? 'Publicado' : 'Publicar'}</span>
             </button>
             <button onClick={handleSave} disabled={!dirty || saving}
-                    className="btn-primary text-sm flex items-center gap-1.5">
-              <Save className="w-4 h-4" />
-              {saving ? 'A guardar...' : dirty ? 'Guardar' : 'Guardado'}
+                    className="btn-primary text-sm flex items-center gap-1.5 px-2.5 sm:px-5">
+              <Save className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">{saving ? 'A guardar...' : dirty ? 'Guardar' : 'Guardado'}</span>
             </button>
           </div>
         </div>

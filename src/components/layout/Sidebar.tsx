@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Edit3, BarChart2, Palette, Settings, Zap, LogOut, Shield, Store } from 'lucide-react'
+import { LayoutDashboard, Edit3, BarChart2, Palette, Settings, Zap, LogOut, Shield, Store, X } from 'lucide-react'
 import { Logo } from '@/components/ui/Logo'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils'
@@ -14,20 +14,36 @@ const nav = [
   { to: '/dashboard/upgrade',         icon: Zap,             label: 'Upgrade',            highlight: true },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean
+  onClose?: () => void
+}
+
+export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const { signOut, profile } = useAuth()
   const isAdmin = profile?.role === 'admin'
 
   return (
-    <aside className="w-56 h-screen flex flex-col bg-surface-card border-r border-surface-border flex-shrink-0">
-      <div className="p-4 border-b border-surface-border">
+    <aside className={cn(
+      'fixed inset-y-0 left-0 z-50 w-64 flex flex-col bg-surface-card border-r border-surface-border transition-transform duration-300',
+      'lg:static lg:z-auto lg:w-56 lg:h-screen lg:flex-shrink-0 lg:translate-x-0',
+      isOpen ? 'translate-x-0' : '-translate-x-full',
+    )}>
+      <div className="p-4 border-b border-surface-border relative">
         <Logo className="h-[109px]" />
+        <button
+          onClick={onClose}
+          className="lg:hidden absolute top-3 right-3 p-1.5 text-gray-500 hover:text-white rounded-lg hover:bg-surface-elevated transition-colors"
+        >
+          <X className="w-4 h-4" />
+        </button>
       </div>
 
       <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
         {nav.map(({ to, icon: Icon, label, end, highlight }) => (
           <NavLink
             key={to} to={to} end={end}
+            onClick={onClose}
             className={({ isActive }) => cn(
               'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all',
               isActive
@@ -44,7 +60,7 @@ export function Sidebar() {
         {isAdmin && (
           <>
             <div className="my-2 border-t border-surface-border" />
-            <NavLink to="/dashboard/admin"
+            <NavLink to="/dashboard/admin" onClick={onClose}
               className={({ isActive }) => cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all',
                 isActive
