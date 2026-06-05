@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from 'react'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
-import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera } from 'lucide-react'
+import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera, Store } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
+import { useAuthStore } from '@/store/useAuthStore'
 import { usePage } from '@/hooks/usePage'
 import { useEditorStore } from '@/store/useEditorStore'
+import { useTagaShop } from '@/hooks/useTagaShop'
 import { supabase } from '@/lib/supabase'
 import { LinkItemCard } from '@/components/editor/LinkItemCard'
 import { AddBlockMenu } from '@/components/editor/AddBlockMenu'
@@ -13,11 +15,16 @@ import toast from 'react-hot-toast'
 
 export default function Editor() {
   const { user, profile }  = useAuth()
+  const { fetchProfile }   = useAuthStore()
   const { loadPage, savePage, saveItems, addItem } = usePage()
   const { page, items, dirty, preview, saving, setItems, setPage, setDirty, reorderItems, setPreview } = useEditorStore()
-  const [showAddMenu, setShowAddMenu] = useState(false)
+  const [showAddMenu, setShowAddMenu]         = useState(false)
   const [uploadingAvatar, setUploadingAvatar] = useState(false)
+  const [apiKeyInput, setApiKeyInput]         = useState('')
+  const [showApiInput, setShowApiInput]       = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const { validating, connectStore } = useTagaShop(profile?.id)
 
   const sensors = useSensors(useSensor(PointerSensor))
 
@@ -37,6 +44,17 @@ export default function Editor() {
       }),
       saveItems(page.id, items),
     ])
+  }
+
+  async function handleConnectAndAddVitrine() {
+    if (!page) return
+    const ok = await connectStore(apiKeyInput)
+    if (!ok) return
+    if (user?.id) await fetchProfile(user.id)
+    setShowApiInput(false)
+    setApiKeyInput('')
+    const newItem = await addItem(page.id, 'vitrine', items.length)
+    if (newItem) setItems([...items, newItem])
   }
 
   async function handleAddBlock(type: string) {
@@ -211,6 +229,60 @@ export default function Editor() {
             Aparece no topo da página, antes dos links. Ideal para apresentação pessoal.
           </p>
         </div>
+
+        {/* Banner TagaShop — só aparece quando a loja não está ligada */}
+        {!profile?.tagashop_api_key && (
+          <div className="card border-brand-500/20 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0">
+                <Store className="w-4 h-4 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white">Liga a tua loja TagaShop</p>
+                <p className="text-xs text-gray-400">Mostra produtos automaticamente com o bloco Vitrine.</p>
+              </div>
+            </div>
+            {!showApiInput ? (
+              <button
+                type="button"
+                onClick={() => setShowApiInput(true)}
+                className="btn-secondary text-sm w-full"
+              >
+                Ligar loja
+              </button>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-xs text-gray-400">
+                  No TagaShop, vai a <strong className="text-gray-200">Integrações → TagaLinks</strong>, activa e copia a API Key.
+                </p>
+                <input
+                  type="text"
+                  className="input font-mono text-sm"
+                  placeholder="tgl_..."
+                  value={apiKeyInput}
+                  onChange={(e) => setApiKeyInput(e.target.value)}
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={handleConnectAndAddVitrine}
+                    disabled={validating || !apiKeyInput.startsWith('tgl_')}
+                    className="btn-primary text-sm flex-1"
+                  >
+                    {validating ? 'A validar...' : 'Ligar loja'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowApiInput(false); setApiKeyInput('') }}
+                    className="btn-ghost text-sm"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Links */}
         <div className="card space-y-3">
