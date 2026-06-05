@@ -3,7 +3,15 @@ import { supabase } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import type { TagaShopCatalog } from '@/types'
 
-const TAGASHOP_API_URL = import.meta.env.VITE_TAGASHOP_API_URL || 'https://tagashop.site'
+const TAGASHOP_API_URL  = import.meta.env.VITE_TAGASHOP_API_URL  || 'https://tagashop.site'
+const TAGASHOP_ANON_KEY = import.meta.env.VITE_TAGASHOP_ANON_KEY || ''
+
+function tagashopHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    ...(TAGASHOP_ANON_KEY ? { Authorization: `Bearer ${TAGASHOP_ANON_KEY}` } : {}),
+  }
+}
 
 export function useTagaShop(profileId?: string) {
   const [validating, setValidating] = useState(false)
@@ -16,7 +24,7 @@ export function useTagaShop(profileId?: string) {
     try {
       const res = await fetch(`${TAGASHOP_API_URL}/functions/v1/tagalinks-catalog`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: tagashopHeaders(),
         body: JSON.stringify({ api_key: apiKey.trim() }),
       })
       const data: TagaShopCatalog & { error?: string } = await res.json()
@@ -58,7 +66,7 @@ export function useTagaShop(profileId?: string) {
     try {
       const res = await fetch(`${TAGASHOP_API_URL}/functions/v1/tagalinks-catalog`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: tagashopHeaders(),
         body: JSON.stringify({ api_key: apiKey }),
       })
       const data: TagaShopCatalog & { error?: string } = await res.json()
