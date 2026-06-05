@@ -1,16 +1,15 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
-import { subDays, format, parseISO, startOfDay } from 'date-fns'
+import { subDays, format, parseISO } from 'date-fns'
 import { pt } from 'date-fns/locale'
 import {
-  Shield, Users, BarChart2, CreditCard, Eye, MousePointer,
+  Shield, Users, BarChart2, CreditCard, Eye,
   TrendingUp, TrendingDown, RefreshCw, Search, ExternalLink,
-  ChevronDown, Crown, Zap, UserCheck, Globe, Activity,
+  ChevronDown, Crown, Zap, Globe, Activity,
   AlertTriangle, CheckCircle, XCircle, Clock, Minus,
 } from 'lucide-react'
 import {
-  AreaChart, Area, XAxis, YAxis, Tooltip,
-  ResponsiveContainer, BarChart, Bar, Cell,
+  AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
 } from 'recharts'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
