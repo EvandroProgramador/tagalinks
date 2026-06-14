@@ -140,7 +140,7 @@ export default function Editor() {
   )
 
   return (
-    <div className="flex gap-6 h-full">
+    <div className="flex gap-6">
       <div className="flex-1 space-y-4 min-w-0 stagger">
         {/* Toolbar */}
         <div className="flex items-center justify-between gap-2 sm:gap-3">
