@@ -73,10 +73,10 @@ function StatCard({
   icon: React.ElementType; iconColor: string; trend?: number | null; loading?: boolean
 }) {
   return (
-    <div className="bg-surface-card border border-surface-border rounded-2xl p-5 flex flex-col gap-3">
+    <div className="group bg-surface-card border border-surface-border rounded-2xl p-5 flex flex-col gap-3 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">{label}</span>
-        <span className={cn('w-8 h-8 rounded-xl flex items-center justify-center', iconColor)}>
+        <span className={cn('w-8 h-8 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110', iconColor)}>
           <Icon className="w-4 h-4" />
         </span>
       </div>
@@ -124,7 +124,7 @@ function OverviewTab({ stats, loading, recentUsers }: {
   return (
     <div className="space-y-6">
       {/* KPI cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 stagger">
         <StatCard label="Utilizadores" value={stats?.totalUsers ?? '—'}
           sub={`+${stats?.newUsers7d ?? 0} esta semana`}
           icon={Users} iconColor="bg-brand-500/20 text-brand-400"
@@ -648,16 +648,16 @@ function SubsTab() {
   return (
     <div className="space-y-6">
       {/* KPIs */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center">
+      <div className="grid grid-cols-3 gap-4 stagger">
+        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover">
           <p className="text-2xl font-bold text-white">{activeSubs.length}</p>
           <p className="text-xs text-gray-500 mt-1">Subscrições activas</p>
         </div>
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center">
+        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-card-hover">
           <p className="text-2xl font-bold text-amber-400">{kz(totalRevenue)}</p>
           <p className="text-xs text-gray-500 mt-1">Receita recorrente</p>
         </div>
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center">
+        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-green-500/40 hover:shadow-card-hover">
           <p className="text-2xl font-bold text-green-400">{kz(monthRevenue)}</p>
           <p className="text-xs text-gray-500 mt-1">Últimos 30 dias</p>
         </div>
@@ -801,10 +801,10 @@ export default function AdminPanel() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
+      <div className="flex items-center justify-between flex-wrap gap-3 animate-slide-up">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/20
-                          flex items-center justify-center">
+                          flex items-center justify-center shadow-[0_0_20px_-6px_rgba(245,158,11,0.5)]">
             <Shield className="w-5 h-5 text-amber-400" />
           </div>
           <div>
@@ -827,23 +827,25 @@ export default function AdminPanel() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-surface-card border border-surface-border rounded-xl p-1 w-fit">
+      <div className="flex gap-1 bg-surface-card border border-surface-border rounded-xl p-1 w-fit animate-slide-up">
         {TABS.map(({ id, label, icon: Icon }) => (
           <button key={id} onClick={() => setTab(id)}
-                  className={cn('flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all',
+                  className={cn('flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95',
                     tab === id
                       ? 'bg-surface-elevated text-white shadow-sm'
-                      : 'text-gray-500 hover:text-white')}>
+                      : 'text-gray-500 hover:text-white hover:bg-surface-elevated/50')}>
             <Icon className="w-4 h-4" /> {label}
           </button>
         ))}
       </div>
 
-      {/* Conteúdo */}
-      {tab === 'overview'       && <OverviewTab stats={stats} loading={statsLoading} recentUsers={recentUsers} />}
-      {tab === 'users'          && <UsersTab />}
-      {tab === 'analytics'      && <AnalyticsTab />}
-      {tab === 'subscriptions'  && <SubsTab />}
+      {/* Conteúdo — re-anima a cada troca de aba */}
+      <div key={tab} className="animate-fade-in">
+        {tab === 'overview'       && <OverviewTab stats={stats} loading={statsLoading} recentUsers={recentUsers} />}
+        {tab === 'users'          && <UsersTab />}
+        {tab === 'analytics'      && <AnalyticsTab />}
+        {tab === 'subscriptions'  && <SubsTab />}
+      </div>
     </div>
   )
 }

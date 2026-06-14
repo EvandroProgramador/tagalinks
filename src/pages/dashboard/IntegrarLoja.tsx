@@ -46,13 +46,13 @@ export default function IntegrarLoja() {
   }
 
   return (
-    <div className="max-w-2xl space-y-6">
+    <div className="max-w-2xl space-y-6 stagger">
       <h1 className="text-xl font-bold text-white">Integrar com a loja</h1>
 
       {/* Descrição */}
-      <div className="card">
+      <div className="card group">
         <div className="flex items-start gap-4">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-glow-soft">
             <Store className="w-5 h-5 text-white" />
           </div>
           <div>

@@ -56,10 +56,10 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
       <div className="min-h-screen py-10 px-4" style={{ ...bgStyle, fontFamily: `'${theme.font}', sans-serif` }}>
         <div className="max-w-md mx-auto">
 
-          <div className="text-center mb-6">
+          <div className="text-center mb-6 animate-slide-up">
             {page.avatar_url ? (
               <img src={page.avatar_url} alt={page.title}
-                   className="w-20 h-20 rounded-full mx-auto mb-3 object-cover ring-2"
+                   className="w-20 h-20 rounded-full mx-auto mb-3 object-cover ring-2 transition-transform duration-300 hover:scale-105"
                    style={{ outline: `2px solid ${theme.primary}`, outlineOffset: '2px' }} />
             ) : (
               <div className="w-20 h-20 rounded-full mx-auto mb-3 flex items-center justify-center text-3xl font-bold"
@@ -81,7 +81,7 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
             </div>
           )}
 
-          <div className="space-y-3">
+          <div className="space-y-3 stagger">
             {items.filter((i) => i.visible).sort((a, b) => a.position - b.position).map((item) => (
               <LinkBlock key={item.id} item={item} theme={theme} plan={plan} onTrack={() => trackClick(item)} />
             ))}
@@ -301,7 +301,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
   if (item.type === 'tagashop') {
     return (
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-         className="flex items-center gap-3 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
+         className="flex items-center gap-3 py-3.5 px-5 font-medium transition-all duration-200 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] w-full"
          style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`, color: '#fff', borderRadius: radius, boxShadow: shadow }}>
         <Store className="w-5 h-5 flex-shrink-0" />
         <span className="flex-1">{item.label}</span>
@@ -313,7 +313,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
   if (item.type === 'product') {
     return (
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-         className="flex items-center gap-3 p-3 transition-opacity hover:opacity-90"
+         className="flex items-center gap-3 p-3 transition-all duration-200 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99]"
          style={{ ...baseStyle, border: `0.5px solid ${theme.border}` }}>
         {item.product_image_url && (
           <img src={item.product_image_url} alt={item.label} className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
@@ -332,7 +332,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
   if (item.type === 'whatsapp') {
     return (
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-         className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
+         className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-all duration-200 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] w-full"
          style={{ background: '#25D366', color: '#fff', borderRadius: radius, boxShadow: shadow }}>
         <WhatsAppIcon className="w-5 h-5" />
         <span>{item.label}</span>
@@ -344,7 +344,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
     const BrandIcon = SOCIAL_BRAND_ICONS[item.social_network || '']
     return (
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-         className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
+         className="flex items-center justify-center gap-2 py-3.5 px-5 font-medium transition-all duration-200 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] w-full"
          style={baseStyle}>
         {BrandIcon && <BrandIcon className="w-5 h-5 flex-shrink-0" />}
         <span>{item.label}</span>
@@ -358,10 +358,10 @@ function LinkBlock({ item, theme, plan, onTrack }:
 
   return (
     <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
-       className="flex items-center justify-between py-3.5 px-5 font-medium transition-opacity hover:opacity-90 w-full"
+       className="group flex items-center justify-between py-3.5 px-5 font-medium transition-all duration-200 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] w-full"
        style={baseStyle}>
       <span>{item.label}</span>
-      <ExternalLink className="w-4 h-4 opacity-60" />
+      <ExternalLink className="w-4 h-4 opacity-60 transition-transform group-hover:translate-x-0.5" />
     </a>
   )
 }

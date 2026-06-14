@@ -30,9 +30,9 @@ export default function Upgrade() {
 
   if (payData && selected) {
     return (
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto animate-scale-in">
         <div className="card text-center space-y-5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-tagatech mx-auto flex items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-tagatech mx-auto flex items-center justify-center shadow-glow-soft animate-glow-pulse">
             <QrCode className="w-7 h-7 text-white" />
           </div>
           <div>
@@ -85,18 +85,18 @@ export default function Upgrade() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-white">Escolhe o teu plano</h1>
+      <div className="text-center mb-8 animate-slide-up">
+        <h1 className="text-2xl font-bold text-white">Escolhe o teu <span className="gradient-text">plano</span></h1>
         <p className="text-gray-400 mt-2">Paga em Kwanza via Multicaixa ou AppyPay</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 items-start stagger">
         {(['free', 'creator', 'business'] as SubscriptionPlan[]).map((plan) => {
           const isCurrent = currentPlan === plan
           const isCreator = plan === 'creator'
           return (
             <div key={plan}
-                 className={`card relative flex flex-col ${isCreator ? 'border-brand-500/50 ring-1 ring-brand-500/30' : ''}`}>
+                 className={`card relative flex flex-col hover-lift ${isCreator ? 'border-brand-500/50 shadow-glow-soft md:-translate-y-2 hover:shadow-glow-brand' : 'hover:border-brand-500/30'}`}>
               {isCreator && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="badge bg-gradient-tagatech text-white text-xs px-3 py-1">Mais popular</span>

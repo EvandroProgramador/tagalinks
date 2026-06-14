@@ -102,7 +102,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="max-w-2xl space-y-6">
+    <div className="max-w-2xl space-y-6 stagger">
       <h1 className="text-xl font-bold text-white">Definições</h1>
 
       {/* Perfil */}
@@ -114,9 +114,9 @@ export default function Settings() {
           <div className="relative flex-shrink-0">
             {profile?.avatar_url ? (
               <img src={profile.avatar_url} alt="Avatar"
-                   className="w-16 h-16 rounded-full object-cover ring-2 ring-brand-500/40" />
+                   className="w-16 h-16 rounded-full object-cover ring-2 ring-brand-500/40 transition-transform duration-300 hover:scale-105" />
             ) : (
-              <div className="w-16 h-16 rounded-full bg-gradient-tagatech flex items-center justify-center text-2xl font-bold text-white">
+              <div className="w-16 h-16 rounded-full bg-gradient-tagatech flex items-center justify-center text-2xl font-bold text-white shadow-glow-soft">
                 {profile?.name?.[0]?.toUpperCase() || '?'}
               </div>
             )}

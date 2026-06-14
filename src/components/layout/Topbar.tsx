@@ -30,7 +30,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
   }
 
   return (
-    <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-surface-card border-b border-surface-border flex-shrink-0 gap-2">
+    <header className="h-14 flex items-center justify-between px-3 sm:px-5 bg-surface-card/80 backdrop-blur-xl border-b border-surface-border flex-shrink-0 gap-2 z-30">
       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
           onClick={onMenuClick}
@@ -75,7 +75,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
             {profile.plan}
           </Badge>
         )}
-        <button className="p-2 rounded-xl text-gray-500 hover:text-white hover:bg-surface-elevated transition-all">
+        <button className="relative p-2 rounded-xl text-gray-500 hover:text-white hover:bg-surface-elevated transition-all hover:scale-105 active:scale-95">
           <Bell className="w-4 h-4" />
         </button>
       </div>

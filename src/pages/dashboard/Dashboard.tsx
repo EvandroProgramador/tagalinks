@@ -24,29 +24,30 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between gap-3 animate-slide-up">
         <div className="min-w-0">
           <h1 className="text-xl font-bold text-white">
-            Olá, {profile?.name?.split(' ')[0] || 'Criador'}!
+            Olá, <span className="gradient-text">{profile?.name?.split(' ')[0] || 'Criador'}</span>!
           </h1>
-          <p className="text-sm text-gray-400 mt-0.5">
+          <p className="text-sm text-gray-400 mt-0.5 flex items-center gap-1.5">
+            <span className={`w-1.5 h-1.5 rounded-full ${page?.published ? 'bg-green-400 animate-pulse' : 'bg-gray-500'}`} />
             {page?.published ? 'A tua página está publicada' : 'A tua página ainda não está publicada'}
           </p>
         </div>
         {page?.slug && (
           <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer"
-             className="btn-secondary flex items-center gap-2 text-sm flex-shrink-0">
-            <ExternalLink className="w-4 h-4" />
+             className="btn-secondary flex items-center gap-2 text-sm flex-shrink-0 group">
+            <ExternalLink className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             <span className="hidden sm:inline">Ver página</span>
           </a>
         )}
       </div>
 
       {/* Acções rápidas */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 stagger">
         <Link to="/dashboard/editor"
-              className="card flex items-center gap-4 hover:border-brand-500/50 transition-colors group">
-          <div className="w-10 h-10 rounded-xl bg-brand-500/15 flex items-center justify-center group-hover:bg-brand-500/25 transition-colors">
+              className="card-interactive flex items-center gap-4 hover:border-brand-500/50 group">
+          <div className="w-10 h-10 rounded-xl bg-brand-500/15 flex items-center justify-center transition-all duration-300 group-hover:bg-brand-500/25 group-hover:scale-110">
             <Edit3 className="w-5 h-5 text-brand-400" />
           </div>
           <div>
@@ -56,8 +57,8 @@ export default function Dashboard() {
         </Link>
 
         <Link to="/dashboard/analytics"
-              className="card flex items-center gap-4 hover:border-accent-500/50 transition-colors group">
-          <div className="w-10 h-10 rounded-xl bg-accent-500/15 flex items-center justify-center group-hover:bg-accent-500/25 transition-colors">
+              className="card-interactive flex items-center gap-4 hover:border-accent-500/50 group">
+          <div className="w-10 h-10 rounded-xl bg-accent-500/15 flex items-center justify-center transition-all duration-300 group-hover:bg-accent-500/25 group-hover:scale-110">
             <BarChart2 className="w-5 h-5 text-accent-400" />
           </div>
           <div>
@@ -67,8 +68,8 @@ export default function Dashboard() {
         </Link>
 
         <Link to="/dashboard/upgrade"
-              className="card flex items-center gap-4 hover:border-yellow-500/50 transition-colors group">
-          <div className="w-10 h-10 rounded-xl bg-yellow-500/15 flex items-center justify-center group-hover:bg-yellow-500/25 transition-colors">
+              className="card-interactive flex items-center gap-4 hover:border-yellow-500/50 group">
+          <div className="w-10 h-10 rounded-xl bg-yellow-500/15 flex items-center justify-center transition-all duration-300 group-hover:bg-yellow-500/25 group-hover:scale-110">
             <Zap className="w-5 h-5 text-yellow-400" />
           </div>
           <div>
@@ -81,9 +82,9 @@ export default function Dashboard() {
       {/* Estado da loja TagaShop */}
       <Link
         to="/dashboard/integrar-loja"
-        className="card flex items-center gap-4 hover:border-brand-500/50 transition-colors group"
+        className="card-interactive flex items-center gap-4 hover:border-brand-500/50 group animate-slide-up"
       >
-        <div className="p-2.5 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0">
+        <div className="p-2.5 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-glow-soft">
           <Store className="w-5 h-5 text-white" />
         </div>
         <div className="flex-1 min-w-0">
@@ -105,7 +106,7 @@ export default function Dashboard() {
 
       {/* Status da página */}
       {page && (
-        <div className="card">
+        <div className="card animate-slide-up">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-sm font-semibold text-gray-300">Estado da página</h2>
             <Badge variant={page.published ? 'success' : 'default'}>

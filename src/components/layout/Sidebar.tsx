@@ -45,16 +45,24 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             key={to} to={to} end={end}
             onClick={onClose}
             className={({ isActive }) => cn(
-              'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all',
+              'group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
               isActive
                 ? 'bg-brand-500/15 text-brand-300 font-medium'
                 : highlight
                   ? 'text-brand-400 hover:bg-brand-500/10'
-                  : 'text-gray-400 hover:bg-surface-elevated hover:text-white',
+                  : 'text-gray-400 hover:bg-surface-elevated hover:text-white hover:translate-x-0.5',
             )}
           >
-            <Icon className="w-4 h-4 flex-shrink-0" />
-            {label}
+            {({ isActive }) => (
+              <>
+                <span className={cn(
+                  'absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full bg-gradient-tagatech transition-all duration-300',
+                  isActive ? 'h-5 opacity-100' : 'h-0 opacity-0',
+                )} />
+                <Icon className="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-hover:scale-110" />
+                {label}
+              </>
+            )}
           </NavLink>
         ))}
         {isAdmin && (

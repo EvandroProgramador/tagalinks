@@ -92,14 +92,15 @@ export default function Appearance() {
   }
 
   if (!page) return (
-    <div className="flex justify-center py-10">
-      <div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
+    <div className="relative flex justify-center py-10 overflow-hidden">
+      <div className="glow-blob top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-500/20 animate-glow-pulse" />
+      <div className="relative w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
 
   return (
     <div className="flex gap-6 h-full">
-      <div className="flex-1 min-w-0 space-y-6 max-w-2xl">
+      <div className="flex-1 min-w-0 space-y-6 max-w-2xl stagger">
 
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -121,9 +122,9 @@ export default function Appearance() {
                 <button
                   key={t.id}
                   onClick={() => update({ theme_preset: t.id })}
-                  className={`relative flex flex-col gap-2 p-3 rounded-xl border text-left transition-all ${
+                  className={`relative flex flex-col gap-2 p-3 rounded-xl border text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] ${
                     active
-                      ? 'border-brand-500/70 bg-brand-500/10'
+                      ? 'border-brand-500/70 bg-brand-500/10 shadow-glow-soft'
                       : 'border-surface-border bg-surface-elevated hover:border-gray-500'
                   }`}
                 >
@@ -140,7 +141,7 @@ export default function Appearance() {
                     {t.name}
                   </span>
                   {active && (
-                    <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-400" />
+                    <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
                   )}
                 </button>
               )
@@ -183,9 +184,9 @@ export default function Appearance() {
                     <button
                       key={g}
                       onClick={() => update({ custom_bg_gradient: g })}
-                      className={`h-12 rounded-xl border-2 transition-all ${
+                      className={`h-12 rounded-xl border-2 transition-all duration-200 hover:scale-105 active:scale-95 ${
                         page.custom_bg_gradient === g
-                          ? 'border-brand-400 scale-105'
+                          ? 'border-brand-400 scale-105 shadow-glow-soft'
                           : 'border-surface-border hover:border-gray-500'
                       }`}
                       style={{ background: g }}

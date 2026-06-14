@@ -21,8 +21,9 @@ import { AdminGuard }   from '@/components/admin/AdminGuard'
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-surface-bg">
-      <div className="w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
+    <div className="relative min-h-screen flex items-center justify-center bg-surface-bg overflow-hidden">
+      <div className="glow-blob top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 bg-brand-500/20 animate-glow-pulse" />
+      <div className="relative w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
   return user ? <>{children}</> : <Navigate to="/login" replace />

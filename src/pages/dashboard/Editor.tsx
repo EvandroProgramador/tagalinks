@@ -133,14 +133,15 @@ export default function Editor() {
   }
 
   if (!page) return (
-    <div className="flex items-center justify-center h-64">
-      <div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
+    <div className="relative flex items-center justify-center h-64 overflow-hidden">
+      <div className="glow-blob top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-500/20 animate-glow-pulse" />
+      <div className="relative w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
 
   return (
     <div className="flex gap-6 h-full">
-      <div className="flex-1 space-y-4 min-w-0">
+      <div className="flex-1 space-y-4 min-w-0 stagger">
         {/* Toolbar */}
         <div className="flex items-center justify-between gap-2 sm:gap-3">
           <div className="min-w-0">
@@ -178,9 +179,9 @@ export default function Editor() {
             <div className="relative flex-shrink-0">
               {page.avatar_url ? (
                 <img src={page.avatar_url} alt="Avatar"
-                     className="w-16 h-16 rounded-full object-cover ring-2 ring-brand-500/40" />
+                     className="w-16 h-16 rounded-full object-cover ring-2 ring-brand-500/40 transition-transform duration-300 hover:scale-105" />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-gradient-tagatech flex items-center justify-center text-2xl font-bold text-white">
+                <div className="w-16 h-16 rounded-full bg-gradient-tagatech flex items-center justify-center text-2xl font-bold text-white shadow-glow-soft">
                   {(page.title || '?')[0].toUpperCase()}
                 </div>
               )}
@@ -317,8 +318,8 @@ export default function Editor() {
           </div>
 
           {items.length === 0 && (
-            <div className="text-center py-10 text-gray-500">
-              <p className="text-3xl mb-2">🔗</p>
+            <div className="text-center py-10 text-gray-500 animate-fade-in">
+              <p className="text-3xl mb-2 inline-block animate-float">🔗</p>
               <p className="text-sm">Ainda não tens links. Adiciona o primeiro!</p>
             </div>
           )}

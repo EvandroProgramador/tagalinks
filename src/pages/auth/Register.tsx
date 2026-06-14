@@ -63,15 +63,18 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-bg flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="relative min-h-screen bg-surface-bg flex items-center justify-center p-4 overflow-hidden">
+      <div className="glow-blob top-[-100px] right-[-60px] w-[360px] h-[360px] bg-brand-600/25 animate-float-slow" />
+      <div className="glow-blob bottom-[-120px] left-[-60px] w-[340px] h-[340px] bg-accent-500/20 animate-float" />
+
+      <div className="relative w-full max-w-md animate-slide-up">
         <div className="text-center mb-8">
           <Logo className="h-[134px] block mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-white">Cria a tua página</h1>
           <p className="text-gray-400 mt-1">Partilha tudo com um único link</p>
         </div>
 
-        <div className="card">
+        <div className="card glass">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label className="label">Nome completo</label>

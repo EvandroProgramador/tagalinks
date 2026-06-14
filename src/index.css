@@ -7,30 +7,64 @@
   html { @apply scroll-smooth; }
   body { @apply bg-surface-bg text-white font-sans antialiased; }
   * { @apply border-surface-border; }
+
+  /* Custom scrollbar — discreet, on-brand */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: #2A2A3A;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3a52; background-clip: padding-box; }
+
+  /* Selection */
+  ::selection { background: rgba(124,58,237,0.35); color: #fff; }
+
+  /* Respect users who prefer less motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-tagatech text-white font-medium px-5 py-2.5 rounded-xl
-           hover:opacity-90 active:scale-[0.98] transition-all duration-150
-           disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply relative bg-gradient-tagatech text-white font-medium px-5 py-2.5 rounded-xl
+           shadow-glow-soft transition-all duration-200 ease-out
+           hover:shadow-glow-brand hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:shadow-none;
   }
   .btn-secondary {
     @apply bg-surface-elevated text-white font-medium px-5 py-2.5 rounded-xl border border-surface-border
-           hover:bg-surface-hover active:scale-[0.98] transition-all duration-150
-           disabled:opacity-50 disabled:cursor-not-allowed;
+           transition-all duration-200 ease-out
+           hover:bg-surface-hover hover:border-brand-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0;
   }
   .btn-ghost {
     @apply text-gray-400 font-medium px-4 py-2 rounded-xl
-           hover:bg-surface-elevated hover:text-white transition-all duration-150;
+           hover:bg-surface-elevated hover:text-white transition-all duration-200;
   }
   .card {
-    @apply bg-surface-card border border-surface-border rounded-2xl p-5;
+    @apply bg-surface-card border border-surface-border rounded-2xl p-5 transition-all duration-300 ease-out;
+  }
+  /* Interactive card: lifts and glows on hover */
+  .card-interactive {
+    @apply card hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover;
+  }
+  /* Frosted-glass surface for floating panels */
+  .glass {
+    @apply border border-white/10 backdrop-blur-xl;
+    background: linear-gradient(160deg, rgba(28,28,39,0.85), rgba(19,19,26,0.7));
   }
   .input {
     @apply w-full bg-surface-elevated border border-surface-border rounded-xl px-4 py-2.5
            text-white placeholder-gray-500 focus:outline-none focus:ring-2
-           focus:ring-brand-500/50 focus:border-brand-500 transition-all duration-150;
+           focus:ring-brand-500/50 focus:border-brand-500 transition-all duration-200;
   }
   .label {
     @apply block text-sm font-medium text-gray-300 mb-1.5;
@@ -39,6 +73,44 @@
     @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium;
   }
   .gradient-text {
-    @apply bg-gradient-tagatech bg-clip-text text-transparent;
+    @apply bg-gradient-tagatech-animated bg-clip-text text-transparent animate-gradient;
+    background-size: 200% auto;
   }
+  /* Gradient hairline border using a mask trick */
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.6), rgba(6,182,212,0.6));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  /* Ambient glow blob for hero/background decoration */
+  .glow-blob {
+    @apply pointer-events-none absolute rounded-full blur-3xl opacity-50;
+  }
+  /* Hover lift for any element */
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out hover:-translate-y-1;
+  }
+  /* Staggered entrance — apply animate-slide-up + a delay class on list items */
+  .stagger > * { animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+  .stagger > *:nth-child(1) { animation-delay: 0.04s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.10s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.16s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.22s; }
+  .stagger > *:nth-child(5) { animation-delay: 0.28s; }
+  .stagger > *:nth-child(6) { animation-delay: 0.34s; }
+  .stagger > *:nth-child(7) { animation-delay: 0.40s; }
+  .stagger > *:nth-child(8) { animation-delay: 0.46s; }
 }
