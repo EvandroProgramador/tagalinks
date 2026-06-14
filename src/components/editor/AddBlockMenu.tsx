@@ -21,7 +21,7 @@ const blocks = [
   { type: 'divider',  icon: Minus,        label: 'Linha',            desc: 'Linha divisória visual' },
 ]
 
-const planOrder: SubscriptionPlan[] = ['free', 'creator', 'business']
+const planOrder: SubscriptionPlan[] = ['free', 'creator']
 
 export function AddBlockMenu({ onSelect, onClose, plan, itemCount }: Props) {
   return (

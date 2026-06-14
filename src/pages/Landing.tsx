@@ -127,7 +127,7 @@ export default function Landing() {
         <section className="px-4 py-16 max-w-2xl mx-auto">
           <h2 className="text-2xl font-bold text-white text-center mb-2">Preços simples</h2>
           <p className="text-gray-400 text-center mb-10">Paga em Kwanza. Cancela quando quiseres.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start stagger">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch stagger">
             {plans.map(({ name, price, period, features: fs, highlight }) => (
               <div key={name} className={`card flex flex-col hover-lift ${
                 highlight

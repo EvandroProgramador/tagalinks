@@ -1,4 +1,4 @@
-export type SubscriptionPlan   = 'free' | 'creator' | 'business'
+export type SubscriptionPlan   = 'free' | 'creator'
 export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'trial'
 export type LinkItemType       = 'link' | 'product' | 'tagashop' | 'whatsapp' | 'social' | 'divider' | 'header' | 'youtube' | 'email' | 'phone' | 'vitrine'
 export type SocialNetwork      = 'instagram' | 'tiktok' | 'youtube' | 'facebook' | 'twitter' | 'linkedin' | 'snapchat' | 'telegram' | 'spotify'

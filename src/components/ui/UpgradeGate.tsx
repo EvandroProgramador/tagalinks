@@ -10,7 +10,7 @@ interface Props {
   featureName?: string
 }
 
-const planOrder: SubscriptionPlan[] = ['free', 'creator', 'business']
+const planOrder: SubscriptionPlan[] = ['free', 'creator']
 
 export function UpgradeGate({ requiredPlan, currentPlan, children, featureName }: Props) {
   const hasAccess = planOrder.indexOf(currentPlan) >= planOrder.indexOf(requiredPlan)

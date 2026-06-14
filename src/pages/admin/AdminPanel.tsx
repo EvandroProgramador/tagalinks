@@ -5,7 +5,7 @@ import { pt } from 'date-fns/locale'
 import {
   Shield, Users, BarChart2, CreditCard, Eye,
   TrendingUp, TrendingDown, RefreshCw, Search, ExternalLink,
-  ChevronDown, Crown, Zap, Globe, Activity,
+  ChevronDown, Zap, Globe, Activity,
   AlertTriangle, CheckCircle, XCircle, Clock, Minus,
 } from 'lucide-react'
 import {
@@ -38,13 +38,12 @@ interface AdminSub extends Subscription {
 }
 
 type Tab         = 'overview' | 'users' | 'analytics' | 'subscriptions'
-type PlanFilter  = 'all' | 'free' | 'creator' | 'business'
+type PlanFilter  = 'all' | 'free' | 'creator'
 type TimeRange   = '7d' | '30d' | '90d'
 
 const PLAN_META: Record<SubscriptionPlan, { label: string; color: string; icon: React.ElementType }> = {
   free:     { label: 'Free',     color: 'text-gray-400 bg-gray-500/15 border-gray-500/20',     icon: Minus   },
   creator:  { label: 'Creator',  color: 'text-brand-300 bg-brand-500/15 border-brand-500/20',  icon: Zap     },
-  business: { label: 'Business', color: 'text-amber-300 bg-amber-500/15 border-amber-500/20',  icon: Crown   },
 }
 
 const SUB_STATUS_META = {
@@ -178,7 +177,7 @@ function OverviewTab({ stats, loading, recentUsers }: {
             <BarChart2 className="w-4 h-4 text-amber-400" /> Distribuição de planos
           </h3>
           <div className="space-y-3">
-            {(['free', 'creator', 'business'] as SubscriptionPlan[]).map((plan) => {
+            {(['free', 'creator'] as SubscriptionPlan[]).map((plan) => {
               const count = planDist[plan] || 0
               const pct   = Math.round((count / total) * 100)
               const m     = PLAN_META[plan]
@@ -194,8 +193,7 @@ function OverviewTab({ stats, loading, recentUsers }: {
                   <div className="h-1.5 bg-surface-elevated rounded-full overflow-hidden">
                     <div className="h-full rounded-full transition-all duration-700"
                          style={{ width: `${pct}%`, background:
-                           plan === 'free' ? '#6B7280' :
-                           plan === 'creator' ? '#7C3AED' : '#F59E0B' }} />
+                           plan === 'free' ? '#6B7280' : '#7C3AED' }} />
                   </div>
                 </div>
               )
@@ -293,7 +291,7 @@ function UsersTab() {
           />
         </div>
         <div className="flex gap-1.5">
-          {(['all', 'free', 'creator', 'business'] as PlanFilter[]).map((p) => (
+          {(['all', 'free', 'creator'] as PlanFilter[]).map((p) => (
             <button key={p} onClick={() => setPlanFilter(p)}
                     className={cn('px-3 py-1.5 rounded-lg text-xs font-medium border transition-all capitalize',
                       planFilter === p
@@ -390,7 +388,7 @@ function UsersTab() {
                           <p className="px-3 py-1.5 text-xs text-gray-600 font-medium uppercase tracking-wider">
                             Alterar plano
                           </p>
-                          {(['free', 'creator', 'business'] as SubscriptionPlan[]).map((p) => (
+                          {(['free', 'creator'] as SubscriptionPlan[]).map((p) => (
                             <button key={p} onClick={() => changePlan(u.id, p)}
                                     disabled={u.plan === p}
                                     className={cn('flex items-center gap-2 w-full px-3 py-2 text-sm transition-colors',

@@ -16,7 +16,6 @@ export function Topbar({ onMenuClick }: TopbarProps) {
   const planColors = {
     free:     'default' as const,
     creator:  'brand' as const,
-    business: 'accent' as const,
   }
 
   const publicUrl = page?.slug ? `https://tagalinks.vercel.app/${page.slug}` : null

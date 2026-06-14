@@ -90,7 +90,7 @@ export default function Upgrade() {
         <p className="text-gray-400 mt-2">Paga em Kwanza via Multicaixa ou AppyPay</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start stagger">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-stretch stagger">
         {(['free', 'creator'] as SubscriptionPlan[]).map((plan) => {
           const isCurrent = currentPlan === plan
           const isCreator = plan === 'creator'
