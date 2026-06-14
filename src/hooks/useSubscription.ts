@@ -24,24 +24,22 @@ export function useSubscription() {
 
   const planLabel: Record<SubscriptionPlan, string> = {
     free:     'Gratuito',
-    creator:  'Creator — 5 000 Kz/mês',
+    creator:  'Creator — 3 900 Kz/mês',
     business: 'Business — 12 000 Kz/mês',
   }
 
   const planFeatures: Record<SubscriptionPlan, string[]> = {
     free: [
-      'Até 5 links',
-      'Vídeo YouTube de apresentação',
+      '3 links',
       'Analytics básico',
-      'Tema TAGATECH padrão',
+      'Tema TAGATECH',
     ],
     creator: [
       'Links ilimitados',
-      'Analytics completo com origens',
-      'Personalização de cores e fontes',
-      'Vídeo YouTube de apresentação',
-      'Produtos TagaShop embutidos',
-      'Subdomínio personalizado',
+      'Vídeo YouTube',
+      'Analytics completo',
+      'Cores e fontes personalizadas',
+      'TagaShop embutido',
     ],
     business: [
       'Tudo do Creator',

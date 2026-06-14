@@ -12,11 +12,9 @@ const features = [
 ]
 
 const plans = [
-  { name: 'Gratuito', price: '0', period: '', features: ['5 links', 'Vídeo YouTube', 'Analytics básico', 'Tema TAGATECH'] },
-  { name: 'Creator',  price: '5 000', period: '/mês', highlight: true,
-    features: ['Links ilimitados', 'Analytics completo', 'Cores e fontes personalizadas', 'TagaShop embutido', 'Subdomínio personalizado'] },
-  { name: 'Business', price: '12 000', period: '/mês',
-    features: ['Tudo do Creator', 'Múltiplas páginas', 'A/B Testing', 'TagaPay', 'Domínio próprio'] },
+  { name: 'Gratuito', price: '0', period: '', features: ['3 links', 'Analytics básico', 'Tema TAGATECH'] },
+  { name: 'Creator',  price: '3 900', period: '/mês', highlight: true,
+    features: ['Links ilimitados', 'Vídeo YouTube', 'Analytics completo', 'Cores e fontes personalizadas', 'TagaShop embutido'] },
 ]
 
 export default function Landing() {
@@ -126,10 +124,10 @@ export default function Landing() {
         </section>
 
         {/* Preços */}
-        <section className="px-4 py-16 max-w-4xl mx-auto">
+        <section className="px-4 py-16 max-w-2xl mx-auto">
           <h2 className="text-2xl font-bold text-white text-center mb-2">Preços simples</h2>
           <p className="text-gray-400 text-center mb-10">Paga em Kwanza. Cancela quando quiseres.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-start stagger">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start stagger">
             {plans.map(({ name, price, period, features: fs, highlight }) => (
               <div key={name} className={`card flex flex-col hover-lift ${
                 highlight

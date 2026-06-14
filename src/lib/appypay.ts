@@ -2,7 +2,7 @@ import type { AppyPayInitResponse, SubscriptionPlan } from '@/types'
 
 const PLAN_PRICES: Record<SubscriptionPlan, number> = {
   free:     0,
-  creator:  5000,
+  creator:  3900,
   business: 12000,
 }
 

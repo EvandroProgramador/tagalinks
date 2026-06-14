@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check, Zap, Building2, QrCode, Copy, CheckCircle } from 'lucide-react'
+import { Check, Zap, QrCode, Copy, CheckCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSubscription } from '@/hooks/useSubscription'
 import type { SubscriptionPlan } from '@/types'
@@ -90,8 +90,8 @@ export default function Upgrade() {
         <p className="text-gray-400 mt-2">Paga em Kwanza via Multicaixa ou AppyPay</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 items-start stagger">
-        {(['free', 'creator', 'business'] as SubscriptionPlan[]).map((plan) => {
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start stagger">
+        {(['free', 'creator'] as SubscriptionPlan[]).map((plan) => {
           const isCurrent = currentPlan === plan
           const isCreator = plan === 'creator'
           return (
@@ -106,13 +106,11 @@ export default function Upgrade() {
               <div className="flex items-center gap-2 mb-1">
                 {plan === 'free'     && <span className="text-gray-400 font-medium">Gratuito</span>}
                 {plan === 'creator'  && <><Zap className="w-4 h-4 text-brand-400" /><span className="text-white font-semibold">Creator</span></>}
-                {plan === 'business' && <><Building2 className="w-4 h-4 text-accent-400" /><span className="text-white font-semibold">Business</span></>}
               </div>
 
               <div className="mb-4">
                 {plan === 'free'     && <p className="text-3xl font-bold text-white">0 Kz</p>}
-                {plan === 'creator'  && <p className="text-3xl font-bold text-white">5 000 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
-                {plan === 'business' && <p className="text-3xl font-bold text-white">12 000 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
+                {plan === 'creator'  && <p className="text-3xl font-bold text-white">3 900 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
               </div>
 
               <ul className="space-y-2 flex-1 mb-5">
