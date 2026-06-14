@@ -136,8 +136,8 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Banner publicitário TagaShop — apenas se ainda não tem loja ligada */}
-      {!profile?.tagashop_api_key && (
+      {/* Banner publicitário TagaShop — apenas depois do perfil carregar e se não tem loja ligada */}
+      {profile && !profile.tagashop_api_key && (
         <div className="animate-slide-up">
           <h2 className="text-sm font-semibold text-gray-300 mb-3">Vende com a TagaShop</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
