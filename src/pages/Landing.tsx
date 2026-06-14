@@ -106,7 +106,7 @@ export default function Landing() {
               <img src="/tagashop/tagashop_semfundo.png" alt="" className="w-4 h-4 object-contain" />
               Powered by TagaShop
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Cria a tua loja com a TagaShop</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">Conecta a tua loja TagaShop</h2>
             <p className="text-gray-400 max-w-xl mx-auto">
               Vende produtos físicos e digitais sem comissões e liga a tua loja directamente ao bio-link.
             </p>
