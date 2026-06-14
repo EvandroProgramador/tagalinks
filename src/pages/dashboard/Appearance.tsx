@@ -325,7 +325,7 @@ export default function Appearance() {
       </div>
 
       {/* Preview ao vivo */}
-      <div className="hidden lg:block w-72 flex-shrink-0">
+      <div className="hidden lg:block w-72 flex-shrink-0 self-start sticky top-0">
         <PagePreview />
       </div>
     </div>
