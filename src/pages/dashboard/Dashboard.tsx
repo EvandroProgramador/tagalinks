@@ -7,7 +7,7 @@ import { useEditorStore } from '@/store/useEditorStore'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { StatsCards } from '@/components/analytics/StatsCards'
 import { Badge } from '@/components/ui/Badge'
-import { TagaShopBanner } from '@/components/tagashop/TagaShopBanner'
+import { TagaShopBannerGrid } from '@/components/tagashop/TagaShopBanner'
 
 export default function Dashboard() {
   const { user, profile } = useAuth()
@@ -140,10 +140,7 @@ export default function Dashboard() {
       {profile && !profile.tagashop_api_key && (
         <div className="animate-slide-up">
           <h2 className="text-sm font-semibold text-gray-300 mb-3">Vende com a TagaShop</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
-            <TagaShopBanner index={0} />
-            <TagaShopBanner index={3} className="hidden sm:block" />
-          </div>
+          <TagaShopBannerGrid count={2} className="[&>*:nth-child(2)]:hidden sm:[&>*:nth-child(2)]:block" />
         </div>
       )}
     </div>
