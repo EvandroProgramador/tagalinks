@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
-import { CheckCircle2, XCircle, RefreshCw, Link2 } from 'lucide-react'
+import { CheckCircle2, XCircle, RefreshCw, Link2, ExternalLink } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useTagaShop } from '@/hooks/useTagaShop'
 import { TagaShopBanner } from '@/components/tagashop/TagaShopBanner'
+
+const TAGASHOP_CONNECT_URL = 'https://www.tagashop.site/dashboard/integracoes/tagalinks'
 
 export default function IntegrarLoja() {
   const { user, profile } = useAuth()
@@ -136,12 +138,21 @@ export default function IntegrarLoja() {
                 Ligar loja TagaShop
               </button>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <p className="text-xs text-gray-400">
-                  No TagaShop, vai a{' '}
-                  <strong className="text-gray-200">Integrações → TagaLinks</strong>
-                  , activa a integração e copia a API Key.
+                  Abre o TagaShop na página <strong className="text-gray-200">Integrações → TagaLinks</strong>,
+                  activa a integração e copia a <strong className="text-gray-200">API Key</strong> gerada.
+                  Depois cola-a aqui em baixo para ligar a tua loja.
                 </p>
+                <a
+                  href={TAGASHOP_CONNECT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary text-sm w-full flex items-center justify-center gap-2 group"
+                >
+                  Abrir TagaShop para obter a chave
+                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
                 <input
                   type="text"
                   className="input font-mono text-sm"
@@ -179,7 +190,18 @@ export default function IntegrarLoja() {
           <ol className="space-y-2 text-sm text-gray-400">
             <li className="flex gap-3">
               <span className="w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
-              Entra no TagaShop e vai a <strong className="text-gray-200">Integrações → TagaLinks</strong>.
+              <span>
+                Entra no TagaShop em{' '}
+                <a
+                  href={TAGASHOP_CONNECT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand-400 hover:text-brand-300 underline underline-offset-2 inline-flex items-center gap-1"
+                >
+                  Integrações → TagaLinks
+                  <ExternalLink className="w-3 h-3" />
+                </a>.
+              </span>
             </li>
             <li className="flex gap-3">
               <span className="w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
