@@ -62,6 +62,27 @@ export default function Landing() {
           </div>
         </section>
 
+        {/* Exemplo de página TagaLinks */}
+        <section className="px-4 py-12 max-w-md mx-auto">
+          <p className="text-center text-xs font-medium text-gray-500 uppercase tracking-wide mb-5 animate-fade-in">
+            Exemplo de uma página TagaLinks
+          </p>
+          <div className="relative mx-auto w-full max-w-[300px] animate-slide-up">
+            {/* Glow por trás do telemóvel */}
+            <div className="glow-blob inset-0 m-auto w-3/4 h-3/4 bg-brand-500/25 animate-float-slow" />
+            {/* Moldura tipo telemóvel */}
+            <div className="relative rounded-[2.2rem] border-[6px] border-surface-border bg-surface-card p-1.5 shadow-glow-brand hover-lift">
+              <img
+                src="/images/IMG_8105.jpg"
+                alt="Exemplo de página TagaLinks — Maria Make-Up"
+                loading="lazy"
+                draggable={false}
+                className="w-full h-auto rounded-[1.7rem] select-none pointer-events-none"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Features */}
         <section id="features" className="px-4 py-16 max-w-5xl mx-auto">
           <h2 className="text-2xl font-bold text-white text-center mb-10">Tudo o que precisas</h2>
