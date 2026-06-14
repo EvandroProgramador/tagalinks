@@ -19,7 +19,7 @@ export function DashboardLayout() {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Topbar onMenuClick={() => setSidebarOpen(true)} />
         {/* keyed by pathname so each route fades in on navigation */}
-        <main key={location.pathname} className="flex-1 overflow-y-auto overscroll-y-contain p-3 sm:p-5 pb-10 sm:pb-12 animate-fade-in">
+        <main key={location.pathname} className="flex-1 overflow-y-auto p-3 sm:p-5 pb-10 sm:pb-12 animate-fade-in">
           <Outlet />
         </main>
       </div>
