@@ -26,7 +26,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   return (
     <aside className={cn(
       'fixed inset-y-0 left-0 z-50 w-64 flex flex-col bg-surface-card border-r border-surface-border transition-transform duration-300',
-      'lg:static lg:z-auto lg:w-56 lg:h-screen lg:flex-shrink-0 lg:translate-x-0',
+      'lg:static lg:z-auto lg:w-56 lg:h-dvh lg:flex-shrink-0 lg:translate-x-0',
       isOpen ? 'translate-x-0' : '-translate-x-full',
     )}>
       <div className="p-4 border-b border-surface-border relative">

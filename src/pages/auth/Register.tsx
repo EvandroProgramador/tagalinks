@@ -63,7 +63,7 @@ export default function Register() {
   }
 
   return (
-    <div className="relative min-h-screen bg-surface-bg flex items-center justify-center p-4 overflow-hidden">
+    <div className="relative min-h-dvh bg-surface-bg flex items-center justify-center p-4 overflow-hidden">
       <div className="glow-blob top-[-100px] right-[-60px] w-[360px] h-[360px] bg-brand-600/25 animate-float-slow" />
       <div className="glow-blob bottom-[-120px] left-[-60px] w-[340px] h-[340px] bg-accent-500/20 animate-float" />
 

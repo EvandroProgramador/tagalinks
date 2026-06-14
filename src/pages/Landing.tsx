@@ -19,7 +19,7 @@ const plans = [
 
 export default function Landing() {
   return (
-    <div className="relative min-h-screen bg-surface-bg overflow-hidden">
+    <div className="relative min-h-dvh bg-surface-bg overflow-hidden">
       {/* Ambient background glows */}
       <div className="glow-blob top-[-120px] left-[-80px] w-[420px] h-[420px] bg-brand-600/30 animate-float-slow" />
       <div className="glow-blob top-[160px] right-[-120px] w-[380px] h-[380px] bg-accent-500/20 animate-float" />

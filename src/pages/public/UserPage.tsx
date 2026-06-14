@@ -38,13 +38,13 @@ export default function UserPage() {
   }, [username])
 
   if (loading) return (
-    <div className="min-h-screen bg-surface-bg flex items-center justify-center">
+    <div className="min-h-dvh bg-surface-bg flex items-center justify-center">
       <div className="w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
 
   if (notFound) return (
-    <div className="min-h-screen bg-surface-bg flex items-center justify-center text-center p-4">
+    <div className="min-h-dvh bg-surface-bg flex items-center justify-center text-center p-4">
       <div>
         <p className="text-4xl mb-4">🔗</p>
         <h1 className="text-xl font-bold text-white mb-2">Página não encontrada</h1>

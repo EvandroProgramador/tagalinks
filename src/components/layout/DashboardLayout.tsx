@@ -8,7 +8,7 @@ export function DashboardLayout() {
   const location = useLocation()
 
   return (
-    <div className="flex h-screen bg-surface-bg overflow-hidden">
+    <div className="flex h-dvh bg-surface-bg overflow-hidden">
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden animate-fade-in"
@@ -19,7 +19,7 @@ export function DashboardLayout() {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Topbar onMenuClick={() => setSidebarOpen(true)} />
         {/* keyed by pathname so each route fades in on navigation */}
-        <main key={location.pathname} className="flex-1 overflow-y-auto p-3 sm:p-5 animate-fade-in">
+        <main key={location.pathname} className="flex-1 overflow-y-auto overscroll-y-contain p-3 sm:p-5 pb-10 sm:pb-12 animate-fade-in">
           <Outlet />
         </main>
       </div>

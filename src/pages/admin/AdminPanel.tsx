@@ -152,10 +152,15 @@ function OverviewTab({ stats, loading, recentUsers }: {
           <div className="space-y-2">
             {recentUsers.slice(0, 8).map((u) => (
               <div key={u.id} className="flex items-center gap-3 py-1.5">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-brand-500 to-cyan-500
-                                flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
-                  {(u.name?.[0] || '?').toUpperCase()}
-                </div>
+                {u.avatar_url ? (
+                  <img src={u.avatar_url} alt={u.name}
+                       className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-brand-500 to-cyan-500
+                                  flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                    {(u.name?.[0] || '?').toUpperCase()}
+                  </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-white truncate">{u.name}</p>
                   <p className="text-xs text-gray-500 truncate">
@@ -337,10 +342,15 @@ function UsersTab() {
                   <tr key={u.id} className="hover:bg-surface-elevated/50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-cyan-600
-                                        flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
-                          {(u.name?.[0] || '?').toUpperCase()}
-                        </div>
+                        {u.avatar_url ? (
+                          <img src={u.avatar_url} alt={u.name}
+                               className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
+                        ) : (
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-cyan-600
+                                          flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                            {(u.name?.[0] || '?').toUpperCase()}
+                          </div>
+                        )}
                         <div className="min-w-0">
                           <p className="font-medium text-white truncate max-w-36">{u.name}</p>
                           <p className="text-xs text-gray-500 truncate max-w-36">{u.email}</p>

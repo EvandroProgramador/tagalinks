@@ -53,7 +53,7 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
         </Helmet>
       )}
 
-      <div className="min-h-screen py-10 px-4" style={{ ...bgStyle, fontFamily: `'${theme.font}', sans-serif` }}>
+      <div className="min-h-dvh py-10 px-4" style={{ ...bgStyle, fontFamily: `'${theme.font}', sans-serif` }}>
         <div className="max-w-md mx-auto">
 
           <div className="text-center mb-6 animate-slide-up">
