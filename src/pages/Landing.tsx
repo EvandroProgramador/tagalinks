@@ -90,7 +90,7 @@ export default function Landing() {
               Vende produtos físicos e digitais sem comissões e liga a tua loja directamente ao bio-link.
             </p>
           </div>
-          <TagaShopBannerGrid />
+          <TagaShopBannerGrid className="[&>*:nth-child(n+3)]:hidden lg:[&>*:nth-child(n+3)]:block" />
           <div className="text-center mt-8">
             <a
               href="https://tagashop.site"
