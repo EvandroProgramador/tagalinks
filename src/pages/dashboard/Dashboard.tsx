@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Edit3, BarChart2, Globe, ExternalLink, Zap, Store, CheckCircle2, XCircle } from 'lucide-react'
+import { Edit3, BarChart2, Globe, ExternalLink, Zap, CheckCircle2, XCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { usePage } from '@/hooks/usePage'
 import { useEditorStore } from '@/store/useEditorStore'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { StatsCards } from '@/components/analytics/StatsCards'
 import { Badge } from '@/components/ui/Badge'
+import { TagaShopBanner } from '@/components/tagashop/TagaShopBanner'
 
 export default function Dashboard() {
   const { user, profile } = useAuth()
@@ -84,9 +85,11 @@ export default function Dashboard() {
         to="/dashboard/integrar-loja"
         className="card-interactive flex items-center gap-4 hover:border-brand-500/50 group animate-slide-up"
       >
-        <div className="p-2.5 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-glow-soft">
-          <Store className="w-5 h-5 text-white" />
-        </div>
+        <img
+          src="/tagashop/tagashop_semfundo.png"
+          alt="TagaShop"
+          className="w-10 h-10 flex-shrink-0 object-contain transition-transform duration-300 group-hover:scale-110"
+        />
         <div className="flex-1 min-w-0">
           <p className="font-medium text-white text-sm">Loja TagaShop</p>
           <p className="text-xs text-gray-500 truncate">
@@ -130,6 +133,17 @@ export default function Dashboard() {
         <div>
           <h2 className="text-sm font-semibold text-gray-300 mb-3">Últimos 7 dias</h2>
           <StatsCards summary={summary} />
+        </div>
+      )}
+
+      {/* Banner publicitário TagaShop — apenas se ainda não tem loja ligada */}
+      {!profile?.tagashop_api_key && (
+        <div className="animate-slide-up">
+          <h2 className="text-sm font-semibold text-gray-300 mb-3">Vende com a TagaShop</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+            <TagaShopBanner index={0} />
+            <TagaShopBanner index={3} className="hidden sm:block" />
+          </div>
         </div>
       )}
     </div>

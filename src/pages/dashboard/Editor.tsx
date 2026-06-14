@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
-import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera, Store, CheckCircle2, XCircle } from 'lucide-react'
+import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera, CheckCircle2, XCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
 import { usePage } from '@/hooks/usePage'
@@ -235,9 +235,11 @@ export default function Editor() {
         {/* Card TagaShop — sempre visível */}
         <div className="card space-y-3">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0">
-              <Store className="w-4 h-4 text-white" />
-            </div>
+            <img
+              src="/tagashop/tagashop_semfundo.png"
+              alt="TagaShop"
+              className="w-8 h-8 flex-shrink-0 object-contain"
+            />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-white">Loja TagaShop</p>
               <p className="text-xs text-gray-400 truncate">

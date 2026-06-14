@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { ExternalLink, Store } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import { YouTubeEmbed } from '@/components/ui/YouTubeEmbed'
 import { SOCIAL_BRAND_ICONS, WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { computeTheme } from '@/lib/theme'
@@ -303,7 +303,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
       <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" onClick={onTrack}
          className="flex items-center gap-3 py-3.5 px-5 font-medium transition-all duration-200 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] w-full"
          style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`, color: '#fff', borderRadius: radius, boxShadow: shadow }}>
-        <Store className="w-5 h-5 flex-shrink-0" />
+        <img src="/tagashop/tagashop_semfundo.png" alt="TagaShop" className="w-6 h-6 flex-shrink-0 object-contain" />
         <span className="flex-1">{item.label}</span>
         <ExternalLink className="w-4 h-4 opacity-70 flex-shrink-0" />
       </a>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Logo } from '@/components/ui/Logo'
 import { ArrowRight, Link2, BarChart2, Palette, Youtube, ShoppingBag, Check } from 'lucide-react'
+import { TagaShopBannerGrid } from '@/components/tagashop/TagaShopBanner'
 
 const features = [
   { icon: Link2,      title: 'Todos os teus links',    desc: 'Partilha redes sociais, produtos, WhatsApp e muito mais num único link.' },
@@ -74,6 +75,32 @@ export default function Landing() {
                 <p className="text-sm text-gray-400">{desc}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* TagaShop — banners publicitários */}
+        <section className="px-4 py-16 max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-500/15 text-brand-300 text-xs font-medium mb-4 border border-brand-500/20">
+              <img src="/tagashop/tagashop_semfundo.png" alt="" className="w-4 h-4 object-contain" />
+              Powered by TagaShop
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-2">Cria a tua loja com a TagaShop</h2>
+            <p className="text-gray-400 max-w-xl mx-auto">
+              Vende produtos físicos e digitais sem comissões e liga a tua loja directamente ao bio-link.
+            </p>
+          </div>
+          <TagaShopBannerGrid />
+          <div className="text-center mt-8">
+            <a
+              href="https://tagashop.site"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary text-sm px-6 py-2.5 inline-flex items-center gap-2 group"
+            >
+              Visitar tagashop.site
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </a>
           </div>
         </section>
 

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
-import { Store, CheckCircle2, XCircle, RefreshCw, Link2 } from 'lucide-react'
+import { CheckCircle2, XCircle, RefreshCw, Link2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useTagaShop } from '@/hooks/useTagaShop'
+import { TagaShopBanner } from '@/components/tagashop/TagaShopBanner'
 
 export default function IntegrarLoja() {
   const { user, profile } = useAuth()
@@ -52,9 +53,11 @@ export default function IntegrarLoja() {
       {/* Descrição */}
       <div className="card group">
         <div className="flex items-start gap-4">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#06B6D4] flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-glow-soft">
-            <Store className="w-5 h-5 text-white" />
-          </div>
+          <img
+            src="/tagashop/tagashop_semfundo.png"
+            alt="TagaShop"
+            className="w-11 h-11 flex-shrink-0 object-contain transition-transform duration-300 group-hover:scale-110"
+          />
           <div>
             <h2 className="text-sm font-semibold text-white mb-1">TagaShop</h2>
             <p className="text-sm text-gray-400">
@@ -193,6 +196,14 @@ export default function IntegrarLoja() {
           </ol>
         </div>
       )}
+
+      {/* Banner publicitário TagaShop */}
+      <div className="space-y-3">
+        <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+          Ainda não tens loja?
+        </p>
+        <TagaShopBanner className="max-w-sm" />
+      </div>
     </div>
   )
 }

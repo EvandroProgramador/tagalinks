@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { RefreshCw, Store, Star } from 'lucide-react'
+import { RefreshCw, Star } from 'lucide-react'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useTagaShop } from '@/hooks/useTagaShop'
 import type { LinkItem, TagaShopProduct } from '@/types'
@@ -44,7 +44,7 @@ export function VitrineBlockEditor({ item, onChange }: Props) {
   if (!isConnected) {
     return (
       <div className="rounded-xl bg-surface-elevated border border-surface-border p-4 text-center space-y-2">
-        <Store className="w-8 h-8 text-gray-500 mx-auto" />
+        <img src="/tagashop/tagashop_semfundo.png" alt="TagaShop" className="w-10 h-10 mx-auto object-contain opacity-60" />
         <p className="text-sm text-gray-400">
           Liga a tua loja TagaShop nas{' '}
           <a href="/dashboard/settings" className="text-brand-400 underline">
