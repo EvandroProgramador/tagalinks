@@ -6,13 +6,15 @@ import {
   Shield, Users, BarChart2, CreditCard, Eye,
   TrendingUp, TrendingDown, RefreshCw, Search, ExternalLink,
   ChevronDown, Zap, Globe, Activity,
-  AlertTriangle, CheckCircle, XCircle, Clock, Minus,
+  AlertTriangle, CheckCircle, XCircle, Clock, Minus, Trash2,
 } from 'lucide-react'
+import { Modal } from '@/components/ui/Modal'
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
 } from 'recharts'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/store/useAuthStore'
 import type { Profile, Subscription, SubscriptionPlan } from '@/types'
 
 /* ─── tipos internos ─── */
@@ -229,12 +231,15 @@ function OverviewTab({ stats, loading, recentUsers }: {
 /* ─── tab: utilizadores ─── */
 
 function UsersTab() {
+  const currentUserId = useAuthStore((s) => s.user?.id)
   const [users, setUsers]       = useState<AdminUser[]>([])
   const [loading, setLoading]   = useState(true)
   const [search, setSearch]     = useState('')
   const [planFilter, setPlanFilter] = useState<PlanFilter>('all')
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const [changing, setChanging] = useState<string | null>(null)
+  const [toDelete, setToDelete] = useState<AdminUser | null>(null)
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     fetchUsers()
@@ -271,6 +276,22 @@ function UsersTab() {
       setUsers((prev) => prev.map((u) => u.id === userId ? { ...u, role } : u))
     }
     setOpenMenu(null)
+  }
+
+  async function deleteUser() {
+    if (!toDelete) return
+    setDeleting(true)
+    const { error } = await supabase.rpc('admin_delete_user', { target_id: toDelete.id })
+    if (error) {
+      toast.error(error.message.includes('CANNOT_DELETE_SELF')
+        ? 'Não podes eliminar a tua própria conta'
+        : 'Erro ao eliminar conta')
+    } else {
+      toast.success('Conta eliminada')
+      setUsers((prev) => prev.filter((u) => u.id !== toDelete.id))
+      setToDelete(null)
+    }
+    setDeleting(false)
   }
 
   const filtered = users.filter((u) => {
@@ -417,6 +438,17 @@ function UsersTab() {
                             <Shield className="w-3.5 h-3.5" />
                             {u.role === 'admin' ? 'Remover admin' : 'Tornar admin'}
                           </button>
+                          {u.id !== currentUserId && (
+                            <>
+                              <div className="my-1 border-t border-surface-border" />
+                              <button onClick={() => { setToDelete(u); setOpenMenu(null) }}
+                                      className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-400
+                                                 hover:bg-red-500/10 transition-colors">
+                                <Trash2 className="w-3.5 h-3.5" />
+                                Eliminar conta
+                              </button>
+                            </>
+                          )}
                         </div>
                       )}
                     </td>
@@ -438,6 +470,43 @@ function UsersTab() {
           </div>
         )}
       </div>
+
+      {/* Confirmação de eliminação */}
+      <Modal open={!!toDelete} onClose={() => !deleting && setToDelete(null)} title="Eliminar conta">
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-red-500/15 border border-red-500/20
+                            flex items-center justify-center flex-shrink-0">
+              <AlertTriangle className="w-5 h-5 text-red-400" />
+            </div>
+            <div className="text-sm text-gray-300">
+              <p>
+                Vais eliminar permanentemente a conta de{' '}
+                <span className="font-semibold text-white">{toDelete?.name}</span>
+                {toDelete?.email && <span className="text-gray-500"> ({toDelete.email})</span>}.
+              </p>
+              <p className="mt-2 text-gray-500">
+                A página, links, analytics e subscrições são removidos e o acesso é revogado.
+                Esta acção não pode ser desfeita.
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end gap-2 pt-1">
+            <button onClick={() => setToDelete(null)} disabled={deleting}
+                    className="btn-ghost text-sm px-4 py-2 disabled:opacity-60">
+              Cancelar
+            </button>
+            <button onClick={deleteUser} disabled={deleting}
+                    className="flex items-center gap-2 text-sm px-4 py-2 rounded-xl bg-red-500/90
+                               hover:bg-red-500 text-white font-medium transition-colors disabled:opacity-60">
+              {deleting
+                ? <span className="w-4 h-4 border-2 border-white/40 border-t-transparent rounded-full animate-spin" />
+                : <Trash2 className="w-4 h-4" />}
+              {deleting ? 'A eliminar…' : 'Eliminar conta'}
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }
