@@ -127,6 +127,16 @@ export const GOOGLE_FONTS = [
   'Playfair Display', // serif elegante
   'Lora',             // serif legível
   'Bebas Neue',       // display bold, all-caps
+  'Pacifico',         // script descontraído, vibe surf
+  'Dancing Script',   // caligrafia fluida, elegante
+  'Caveat',           // manuscrito casual, espontâneo
+  'Lobster',          // script bold, retro
+  'Righteous',        // display redondo, anos 70
+  'Abril Fatface',    // serif dramática, editorial
+  'Sora',             // geométrico moderno, clean
+  'DM Serif Display', // serif fina, sofisticada
+  'Permanent Marker', // marcador, energético
+  'Comfortaa',        // arredondado suave, amigável
 ]
 
 export const THEME_PRESETS = Object.keys(PRESETS)

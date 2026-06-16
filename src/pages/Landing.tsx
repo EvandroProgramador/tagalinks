@@ -13,7 +13,7 @@ const features = [
 
 const plans = [
   { name: 'Gratuito', price: '0', period: '', features: ['3 links', 'Analytics básico', 'Tema TAGATECH'] },
-  { name: 'Creator',  price: '3 900', period: '/mês', highlight: true,
+  { name: 'Creator',  price: '2 900', period: '/mês', highlight: true,
     features: ['Links ilimitados', 'Vídeo YouTube', 'Analytics completo', 'Cores e fontes personalizadas', 'TagaShop embutido'] },
 ]
 

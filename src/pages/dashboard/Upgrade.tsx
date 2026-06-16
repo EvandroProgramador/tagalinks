@@ -110,7 +110,7 @@ export default function Upgrade() {
 
               <div className="mb-4">
                 {plan === 'free'     && <p className="text-3xl font-bold text-white">0 Kz</p>}
-                {plan === 'creator'  && <p className="text-3xl font-bold text-white">3 900 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
+                {plan === 'creator'  && <p className="text-3xl font-bold text-white">2 900 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
               </div>
 
               <ul className="space-y-2 flex-1 mb-5">
