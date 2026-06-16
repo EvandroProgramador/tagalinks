@@ -24,7 +24,7 @@ export function useSubscription() {
 
   const planLabel: Record<SubscriptionPlan, string> = {
     free:     'Gratuito',
-    creator:  'Creator — 3 900 Kz/mês',
+    creator:  'Creator — 2 900 Kz/mês',
   }
 
   const planFeatures: Record<SubscriptionPlan, string[]> = {

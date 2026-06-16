@@ -1,8 +1,9 @@
-import { ExternalLink, Bell, Copy, Check, Menu } from 'lucide-react'
+import { ExternalLink, Copy, Check, Menu } from 'lucide-react'
 import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useEditorStore } from '@/store/useEditorStore'
 import { Badge } from '@/components/ui/Badge'
+import { NotificationsBell } from '@/components/layout/NotificationsBell'
 
 interface TopbarProps {
   onMenuClick?: () => void
@@ -74,9 +75,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
             {profile.plan}
           </Badge>
         )}
-        <button className="relative p-2 rounded-xl text-gray-500 hover:text-white hover:bg-surface-elevated transition-all hover:scale-105 active:scale-95">
-          <Bell className="w-4 h-4" />
-        </button>
+        <NotificationsBell />
       </div>
     </header>
   )

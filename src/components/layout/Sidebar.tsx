@@ -7,9 +7,9 @@ import { cn } from '@/lib/utils'
 const nav = [
   { to: '/dashboard',                 icon: LayoutDashboard, label: 'Início',            end: true },
   { to: '/dashboard/editor',          icon: Edit3,           label: 'Editor' },
-  { to: '/dashboard/analytics',       icon: BarChart2,       label: 'Analytics' },
   { to: '/dashboard/appearance',      icon: Palette,         label: 'Aparência' },
   { to: '/dashboard/integrar-loja',   icon: Store,           label: 'Integrar com a loja' },
+  { to: '/dashboard/analytics',       icon: BarChart2,       label: 'Analytics' },
   { to: '/dashboard/settings',        icon: Settings,        label: 'Definições' },
   { to: '/dashboard/upgrade',         icon: Zap,             label: 'Upgrade',            highlight: true },
 ]
