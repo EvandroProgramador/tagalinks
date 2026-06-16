@@ -44,7 +44,7 @@ export default function Login() {
         </div>
 
         <div className="card glass">
-          <GoogleButton label="Entrar com Google" />
+          <GoogleButton label="Entrar com Google" intent="login" />
 
           <div className="flex items-center gap-3 my-5">
             <div className="h-px flex-1 bg-white/10" />

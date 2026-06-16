@@ -44,17 +44,15 @@ export default function Register() {
       const userId = authData.user?.id
       if (!userId) { toast.error('Erro ao criar conta'); return }
 
-      const { error: profileErr } = await supabase.from('profiles').upsert({
-        id: userId, name: data.name, email: data.email,
-        phone: data.phone, username: data.username,
-        plan: 'free', role: 'user',
+      const { error: profileErr } = await supabase.rpc('register_profile', {
+        p_name: data.name, p_username: data.username, p_phone: data.phone || null,
       })
-      if (profileErr) { toast.error(profileErr.message); return }
-
-      await supabase.from('link_pages').insert({
-        profile_id: userId, slug: data.username,
-        title: data.name, published: false,
-      })
+      if (profileErr) {
+        toast.error(profileErr.message.includes('USERNAME_TAKEN')
+          ? 'Este nome de utilizador já está ocupado'
+          : profileErr.message)
+        return
+      }
 
       toast.success('Conta criada! Bem-vindo ao TagaLinks!')
       navigate('/dashboard/editor')
@@ -76,7 +74,7 @@ export default function Register() {
         </div>
 
         <div className="card glass">
-          <GoogleButton label="Criar conta com Google" />
+          <GoogleButton label="Criar conta com Google" intent="register" />
 
           <div className="flex items-center gap-3 my-5">
             <div className="h-px flex-1 bg-white/10" />

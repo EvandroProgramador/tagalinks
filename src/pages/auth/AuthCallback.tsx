@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
-import { ensureProfile } from '@/lib/auth'
+import { ensureProfile, profileExists, consumeGoogleIntent } from '@/lib/auth'
 import { Logo } from '@/components/ui/Logo'
 import toast from 'react-hot-toast'
 
@@ -12,6 +12,7 @@ export default function AuthCallback() {
     let active = true
 
     async function finish() {
+      const intent = consumeGoogleIntent()
       const { data, error } = await supabase.auth.getSession()
       const user = data.session?.user
 
@@ -19,6 +20,16 @@ export default function AuthCallback() {
         if (active) {
           toast.error('Não foi possível concluir o login. Tenta novamente.')
           navigate('/login', { replace: true })
+        }
+        return
+      }
+
+      // No login não criamos conta: se o email não tem perfil, barramos.
+      if (intent === 'login' && !(await profileExists(user.id))) {
+        await supabase.auth.signOut()
+        if (active) {
+          toast.error('Não existe nenhuma conta com este email. Cria uma conta primeiro.')
+          navigate('/register', { replace: true })
         }
         return
       }

@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { signInWithGoogle } from '@/lib/auth'
+import { signInWithGoogle, type GoogleIntent } from '@/lib/auth'
 import toast from 'react-hot-toast'
 
-export function GoogleButton({ label = 'Continuar com Google' }: { label?: string }) {
+export function GoogleButton({
+  label = 'Continuar com Google',
+  intent,
+}: { label?: string; intent: GoogleIntent }) {
   const [loading, setLoading] = useState(false)
 
   async function onClick() {
     setLoading(true)
-    const { error } = await signInWithGoogle()
+    const { error } = await signInWithGoogle(intent)
     if (error) {
       toast.error(error.message)
       setLoading(false)
