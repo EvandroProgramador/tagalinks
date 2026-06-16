@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import Landing          from '@/pages/Landing'
 import Login            from '@/pages/auth/Login'
 import Register         from '@/pages/auth/Register'
+import AuthCallback     from '@/pages/auth/AuthCallback'
 import Dashboard        from '@/pages/dashboard/Dashboard'
 import Editor           from '@/pages/dashboard/Editor'
 import Analytics        from '@/pages/dashboard/Analytics'
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/"         element={<Landing />} />
           <Route path="/login"    element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           <Route path="/dashboard" element={<AuthGuard><DashboardLayout /></AuthGuard>}>
             <Route index             element={<Dashboard />} />

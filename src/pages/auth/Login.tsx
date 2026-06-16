@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { supabase } from '@/lib/supabase'
 import { Logo } from '@/components/ui/Logo'
+import { GoogleButton } from '@/components/auth/GoogleButton'
 import toast from 'react-hot-toast'
 import { Eye, EyeOff } from 'lucide-react'
 
@@ -43,6 +44,14 @@ export default function Login() {
         </div>
 
         <div className="card glass">
+          <GoogleButton label="Entrar com Google" />
+
+          <div className="flex items-center gap-3 my-5">
+            <div className="h-px flex-1 bg-white/10" />
+            <span className="text-xs text-gray-500">ou com e-mail</span>
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label className="label">E-mail</label>
