@@ -30,6 +30,15 @@ export default function Landing() {
         <nav className="flex items-center justify-between px-5 py-4 max-w-5xl mx-auto animate-fade-in">
           <Logo className="h-[114px]" />
           <div className="flex items-center gap-3">
+            <a
+              href="https://www.youtube.com/@tagatech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost text-sm hidden sm:inline-flex items-center gap-1.5"
+            >
+              <Youtube className="w-4 h-4" />
+              Tutorial
+            </a>
             <Link to="/login" className="btn-ghost text-sm">Entrar</Link>
             <Link to="/register" className="btn-primary text-sm">Começar grátis</Link>
           </div>
@@ -175,8 +184,17 @@ export default function Landing() {
         </section>
 
         {/* Footer */}
-        <footer className="text-center text-xs text-gray-600 py-6 border-t border-surface-border">
-          © {new Date().getFullYear()} TagaLinks · Parte do ecossistema TAGATECH Angola
+        <footer className="text-center text-xs text-gray-600 py-6 border-t border-surface-border space-y-3">
+          <a
+            href="https://www.youtube.com/@tagatech"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-gray-500 hover:text-brand-300 transition-colors"
+          >
+            <Youtube className="w-4 h-4" />
+            Ver tutoriais no YouTube
+          </a>
+          <p>© {new Date().getFullYear()} TagaLinks · Parte do ecossistema TAGATECH Angola</p>
         </footer>
       </div>
     </div>

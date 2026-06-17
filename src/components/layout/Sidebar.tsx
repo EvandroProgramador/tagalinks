@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Edit3, BarChart2, Palette, Settings, Zap, LogOut, Shield, Store, X } from 'lucide-react'
+import { LayoutDashboard, Edit3, BarChart2, Palette, Settings, Zap, LogOut, Shield, Store, X, Youtube } from 'lucide-react'
 import { Logo } from '@/components/ui/Logo'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils'
@@ -65,6 +65,16 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             )}
           </NavLink>
         ))}
+        <a
+          href="https://www.youtube.com/@tagatech"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClose}
+          className="group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-400 hover:bg-surface-elevated hover:text-white hover:translate-x-0.5 transition-all duration-200"
+        >
+          <Youtube className="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-hover:scale-110" />
+          Tutorial
+        </a>
         {isAdmin && (
           <>
             <div className="my-2 border-t border-surface-border" />
