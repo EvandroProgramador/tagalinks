@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Logo } from '@/components/ui/Logo'
-import { ArrowRight, Link2, BarChart2, Palette, Youtube, ShoppingBag, Check } from 'lucide-react'
+import { ArrowRight, Link2, BarChart2, Palette, ShoppingBag, Check } from 'lucide-react'
 import { TagaShopBannerGrid } from '@/components/tagashop/TagaShopBanner'
+import { YouTubeIcon } from '@/components/ui/BrandIcons'
 
 const features = [
   { icon: Link2,      title: 'Todos os teus links',    desc: 'Partilha redes sociais, produtos, WhatsApp e muito mais num único link.' },
-  { icon: Youtube,    title: 'Vídeo de apresentação',  desc: 'Incorpora um vídeo YouTube no topo da tua página. Sem custo extra.' },
+  { icon: YouTubeIcon, title: 'Vídeo de apresentação', desc: 'Incorpora um vídeo YouTube no topo da tua página. Sem custo extra.' },
   { icon: BarChart2,  title: 'Analytics integrado',    desc: 'Vê de onde vêm as visitas e quais os links mais clicados.' },
   { icon: Palette,    title: 'Personalização total',   desc: 'Personaliza cores, fontes e fundo para combinar com a tua marca.' },
   { icon: ShoppingBag,title: 'Produtos TagaShop',      desc: 'Integra a tua loja TagaShop directamente na bio.' },
@@ -36,7 +37,7 @@ export default function Landing() {
               rel="noopener noreferrer"
               className="btn-ghost text-sm hidden sm:inline-flex items-center gap-1.5"
             >
-              <Youtube className="w-4 h-4" />
+              <YouTubeIcon className="w-4 h-4" />
               Tutorial
             </a>
             <Link to="/login" className="btn-ghost text-sm">Entrar</Link>
@@ -191,7 +192,7 @@ export default function Landing() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-gray-500 hover:text-brand-300 transition-colors"
           >
-            <Youtube className="w-4 h-4" />
+            <YouTubeIcon className="w-4 h-4" />
             Ver tutoriais no YouTube
           </a>
           <p>© {new Date().getFullYear()} TagaLinks · Parte do ecossistema TAGATECH Angola</p>

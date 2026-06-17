@@ -1,4 +1,5 @@
-import { X, Link2, Youtube, MessageCircle, Share2, Type, Minus, ShoppingBag, Store, Mail, Phone } from 'lucide-react'
+import { X, Link2, MessageCircle, Share2, Type, Minus, ShoppingBag, Store, Mail, Phone } from 'lucide-react'
+import { YouTubeIcon } from '@/components/ui/BrandIcons'
 import type { SubscriptionPlan } from '@/types'
 
 interface Props {
@@ -12,7 +13,7 @@ const blocks = [
   { type: 'link',     icon: Link2,       label: 'Link',             desc: 'Link genérico para qualquer URL' },
   { type: 'social',   icon: Share2,       label: 'Rede social',      desc: 'Instagram, TikTok, YouTube…' },
   { type: 'whatsapp', icon: MessageCircle,label: 'WhatsApp',         desc: 'Botão de contacto directo' },
-  { type: 'youtube',  icon: Youtube,      label: 'Vídeo YouTube',    desc: 'Player embutido na página' },
+  { type: 'youtube',  icon: YouTubeIcon,  label: 'Vídeo YouTube',    desc: 'Player embutido na página' },
   { type: 'vitrine',  icon: Store,        label: 'Vitrine',          desc: 'Grid de produtos do TagaShop',   plan: 'creator' as SubscriptionPlan },
   { type: 'product',  icon: ShoppingBag,  label: 'Produto TagaShop', desc: 'Produto individual da tua loja', plan: 'creator' as SubscriptionPlan },
   { type: 'email',    icon: Mail,         label: 'E-mail',           desc: 'Link mailto directo' },
