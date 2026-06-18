@@ -35,7 +35,7 @@ export function useSubscription() {
     ],
     creator: [
       'Links ilimitados',
-      'Vídeo YouTube',
+      'Vídeo de apresentação',
       'Analytics completo',
       'Cores e fontes personalizadas',
       'TagaShop embutido',
