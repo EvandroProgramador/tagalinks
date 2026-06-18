@@ -19,7 +19,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
     creator:  'brand' as const,
   }
 
-  const publicUrl = page?.slug ? `https://tagalinks.vercel.app/${page.slug}` : null
+  const publicUrl = page?.slug ? `https://tagalinks.website/${page.slug}` : null
 
   function handleCopy() {
     if (!publicUrl) return
@@ -47,7 +47,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
             >
               <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
               <span className="font-mono text-xs truncate hidden sm:inline">
-                tagalinks.vercel.app/<span className="text-brand-300 group-hover:text-accent-300 transition-colors">{page!.slug}</span>
+                tagalinks.website/<span className="text-brand-300 group-hover:text-accent-300 transition-colors">{page!.slug}</span>
               </span>
             </a>
             <button

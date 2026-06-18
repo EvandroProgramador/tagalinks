@@ -150,7 +150,7 @@ export default function Editor() {
         <div className="flex items-center justify-between gap-2 sm:gap-3">
           <div className="min-w-0">
             <h1 className="font-display text-xl sm:text-2xl font-bold text-white leading-tight">Editor de página</h1>
-            <p className="font-mono text-xs text-gray-400 truncate">tagalinks.ao/<span className="text-brand-300">{page.slug}</span></p>
+            <p className="font-mono text-xs text-gray-400 truncate">tagalinks.website/<span className="text-brand-300">{page.slug}</span></p>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer"

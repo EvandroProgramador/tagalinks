@@ -48,7 +48,7 @@ export default function UserPage() {
       <div>
         <p className="text-4xl mb-4">🔗</p>
         <h1 className="font-display text-2xl font-bold text-white mb-2">Página não encontrada</h1>
-        <p className="text-gray-400 text-sm">O link <strong className="font-mono text-white">tagalinks.ao/{username}</strong> não existe.</p>
+        <p className="text-gray-400 text-sm">O link <strong className="font-mono text-white">tagalinks.website/{username}</strong> não existe.</p>
         <a href="/" className="inline-block mt-6 btn-primary px-6 py-2">
           Criar a minha página
         </a>

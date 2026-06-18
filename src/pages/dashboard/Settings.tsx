@@ -148,7 +148,7 @@ export default function Settings() {
           <div>
             <label className="label">Nome de utilizador</label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-xs">tagalinks.ao/</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-xs">tagalinks.website/</span>
               <input className="input pl-[6.5rem] font-mono text-sm" {...register('username', {
                 pattern: { value: /^[a-zA-Z0-9_-]{3,30}$/, message: 'Formato inválido' }
               })} />

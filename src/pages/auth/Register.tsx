@@ -91,7 +91,7 @@ export default function Register() {
               <label className="label">Nome de utilizador</label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-xs">
-                  tagalinks.ao/
+                  tagalinks.website/
                 </span>
                 <input className="input pl-[6.5rem] font-mono text-sm" placeholder="kizomba_beats"
                        {...register('username', {

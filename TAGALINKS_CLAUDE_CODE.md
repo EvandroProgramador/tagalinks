@@ -1747,7 +1747,7 @@ export function PublicPage({ page, items, plan }: Props) {
           {/* Rodapé */}
           <p className="text-center text-xs mt-8 opacity-40" style={{ color: theme.subtext }}>
             feito com{' '}
-            <a href="https://tagalinks.ao" className="underline" style={{ color: theme.primary }}>
+            <a href="https://tagalinks.website" className="underline" style={{ color: theme.primary }}>
               TagaLinks
             </a>
           </p>
@@ -2043,7 +2043,7 @@ export default function Register() {
               <label className="label">Nome de utilizador</label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
-                  tagalinks.ao/
+                  tagalinks.website/
                 </span>
                 <input className="input pl-28" placeholder="kizomba_beats"
                        {...register('username', {
@@ -2155,7 +2155,7 @@ export default function UserPage() {
       <div>
         <p className="text-4xl mb-4">🔗</p>
         <h1 className="text-xl font-bold text-white mb-2">Página não encontrada</h1>
-        <p className="text-gray-400 text-sm">O link <strong>tagalinks.ao/{username}</strong> não existe.</p>
+        <p className="text-gray-400 text-sm">O link <strong>tagalinks.website/{username}</strong> não existe.</p>
         <a href="/" className="inline-block mt-6 btn-primary px-6 py-2">
           Criar a minha página
         </a>
@@ -2256,7 +2256,7 @@ export default function Editor() {
         <div className="flex items-center justify-between gap-3">
           <div>
             <h1 className="text-lg font-semibold text-white">Editor de página</h1>
-            <p className="text-sm text-gray-400">tagalinks.ao/{page.slug}</p>
+            <p className="text-sm text-gray-400">tagalinks.website/{page.slug}</p>
           </div>
           <div className="flex items-center gap-2">
             <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer"
@@ -2596,7 +2596,7 @@ VITE_SUPABASE_URL=https://XXXXXXXXXX.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 # App
-VITE_APP_URL=https://tagalinks.ao
+VITE_APP_URL=https://tagalinks.website
 
 # AppyPay (Angola)
 VITE_APPYPAY_MERCHANT_ID=TAGATECH_PROD

@@ -121,7 +121,7 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-gray-500" />
-            <span className="font-mono text-sm text-gray-400">tagalinks.ao/<span className="text-brand-300">{page.slug}</span></span>
+            <span className="font-mono text-sm text-gray-400">tagalinks.website/<span className="text-brand-300">{page.slug}</span></span>
           </div>
           {!page.published && (
             <p className="text-xs text-yellow-400/70 mt-2">

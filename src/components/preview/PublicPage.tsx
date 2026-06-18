@@ -93,7 +93,7 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
 
           <p className="text-center font-mono text-[0.62rem] uppercase tracking-[0.25em] mt-9 opacity-50" style={{ color: theme.subtext }}>
             feito com{' '}
-            <a href="https://tagalinks.ao" style={{ color: theme.primary }}>
+            <a href="https://tagalinks.website" style={{ color: theme.primary }}>
               TagaLinks
             </a>
           </p>
