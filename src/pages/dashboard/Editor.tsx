@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
-import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera, CheckCircle2, XCircle } from 'lucide-react'
+import { Plus, Eye, EyeOff, Save, Globe, ExternalLink, Camera, CheckCircle2, XCircle, Lock } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/useAuthStore'
 import { usePage } from '@/hooks/usePage'
@@ -265,8 +266,22 @@ export default function Editor() {
             )}
           </div>
 
-          {!profile?.tagashop_api_key && (
-            <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Integração TagaShop">
+          {!profile?.tagashop_api_key && profile?.plan === 'free' && (
+            <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-surface-elevated/50 px-3 py-2.5">
+              <div className="w-8 h-8 rounded-full bg-brand-500/20 flex items-center justify-center flex-shrink-0">
+                <Lock className="w-4 h-4 text-brand-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium text-white">Integração TagaShop requer plano Creator</p>
+                <Link to="/dashboard/upgrade" className="text-xs text-brand-400 hover:text-brand-300 underline">
+                  Fazer upgrade
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {!profile?.tagashop_api_key && profile?.plan !== 'free' && (
+            <>
               {!showApiInput ? (
                 <button
                   type="button"
@@ -306,7 +321,7 @@ export default function Editor() {
                   </div>
                 </div>
               )}
-            </UpgradeGate>
+            </>
           )}
         </div>
 
