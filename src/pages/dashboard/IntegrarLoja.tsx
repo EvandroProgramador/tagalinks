@@ -5,6 +5,7 @@ import { CheckCircle2, XCircle, RefreshCw, Link2, ExternalLink } from 'lucide-re
 import toast from 'react-hot-toast'
 import { useTagaShop } from '@/hooks/useTagaShop'
 import { TagaShopBanner } from '@/components/tagashop/TagaShopBanner'
+import { UpgradeGate } from '@/components/ui/UpgradeGate'
 
 const TAGASHOP_CONNECT_URL = 'https://www.tagashop.site/dashboard/integracoes/tagalinks'
 
@@ -72,6 +73,7 @@ export default function IntegrarLoja() {
       </div>
 
       {/* Estado da ligação */}
+      <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Integração TagaShop">
       <div className="card space-y-4">
         <div className="flex items-center gap-3">
           <h3 className="eyebrow flex-1">Estado da ligação</h3>
@@ -182,6 +184,7 @@ export default function IntegrarLoja() {
           </div>
         )}
       </div>
+      </UpgradeGate>
 
       {/* Como funciona */}
       {!storeConnected && (

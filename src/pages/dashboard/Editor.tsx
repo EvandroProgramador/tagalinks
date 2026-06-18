@@ -69,6 +69,10 @@ export default function Editor() {
       toast.error('Blocos TagaShop requerem plano Creator. Faz upgrade!')
       return
     }
+    if (type === 'youtube' && profile?.plan === 'free') {
+      toast.error('O bloco Vídeo YouTube requer plano Creator. Faz upgrade!')
+      return
+    }
     const newItem = await addItem(page.id, type, items.length)
     if (newItem) {
       if (type === 'vitrine' && profile?.tagashop_slug) {
@@ -262,7 +266,7 @@ export default function Editor() {
           </div>
 
           {!profile?.tagashop_api_key && (
-            <>
+            <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Integração TagaShop">
               {!showApiInput ? (
                 <button
                   type="button"
@@ -302,7 +306,7 @@ export default function Editor() {
                   </div>
                 </div>
               )}
-            </>
+            </UpgradeGate>
           )}
         </div>
 
@@ -312,7 +316,7 @@ export default function Editor() {
             <h2 className="eyebrow">
               Links{' '}
               <span className="text-gray-500 font-normal">
-                ({items.length}{profile?.plan === 'free' ? '/5' : ''})
+                ({items.length}{profile?.plan === 'free' ? '/3' : ''})
               </span>
             </h2>
             <button onClick={() => setShowAddMenu(true)}
