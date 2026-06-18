@@ -133,9 +133,8 @@ export default function Editor() {
   }
 
   if (!page) return (
-    <div className="relative flex items-center justify-center h-64 overflow-hidden">
-      <div className="glow-blob top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-500/20 animate-glow-pulse" />
-      <div className="relative w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
+    <div className="flex items-center justify-center h-64">
+      <div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
 
@@ -145,8 +144,8 @@ export default function Editor() {
         {/* Toolbar */}
         <div className="flex items-center justify-between gap-2 sm:gap-3">
           <div className="min-w-0">
-            <h1 className="text-base sm:text-lg font-semibold text-white leading-tight">Editor de página</h1>
-            <p className="text-xs sm:text-sm text-gray-400 truncate">tagalinks.ao/{page.slug}</p>
+            <h1 className="font-display text-xl sm:text-2xl font-bold text-white leading-tight">Editor de página</h1>
+            <p className="font-mono text-xs text-gray-400 truncate">tagalinks.ao/<span className="text-brand-300">{page.slug}</span></p>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer"
@@ -172,7 +171,7 @@ export default function Editor() {
 
         {/* Perfil rápido */}
         <div className="card space-y-3">
-          <h2 className="text-sm font-semibold text-gray-300">Perfil</h2>
+          <h2 className="eyebrow">Perfil</h2>
 
           {/* Avatar upload */}
           <div className="flex items-center gap-4">
@@ -216,7 +215,7 @@ export default function Editor() {
         {/* Vídeo de apresentação */}
         <div className="card space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-300">Vídeo de apresentação</h2>
+            <h2 className="eyebrow">Vídeo de apresentação</h2>
             <span className="badge bg-brand-500/20 text-brand-300 text-xs">YouTube</span>
           </div>
           <input className="input" placeholder="https://youtube.com/watch?v=..."
@@ -307,7 +306,7 @@ export default function Editor() {
         {/* Links */}
         <div className="card space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-300">
+            <h2 className="eyebrow">
               Links{' '}
               <span className="text-gray-500 font-normal">
                 ({items.length}{profile?.plan === 'free' ? '/5' : ''})
@@ -321,7 +320,7 @@ export default function Editor() {
 
           {items.length === 0 && (
             <div className="text-center py-10 text-gray-500 animate-fade-in">
-              <p className="text-3xl mb-2 inline-block animate-float">🔗</p>
+              <p className="text-3xl mb-2 inline-block">🔗</p>
               <p className="text-sm">Ainda não tens links. Adiciona o primeiro!</p>
             </div>
           )}

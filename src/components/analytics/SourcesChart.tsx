@@ -17,7 +17,7 @@ export function SourcesChart({ sources }: Props) {
 
   return (
     <div className="card">
-      <h3 className="text-sm font-semibold text-gray-300 mb-4">Origens de tráfego</h3>
+      <h3 className="eyebrow mb-4">Origens de tráfego</h3>
       <ResponsiveContainer width="100%" height={200}>
         <PieChart>
           <Pie data={data} cx="50%" cy="50%" innerRadius={55} outerRadius={80} paddingAngle={3} dataKey="value">

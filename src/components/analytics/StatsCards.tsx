@@ -44,13 +44,14 @@ export function StatsCards({ summary }: Props) {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 stagger">
       {cards.map(({ icon: Icon, label, value, sub, color, bg }) => (
-        <div key={label} className="card-interactive group">
-          <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110`}>
+        <div key={label} className="group relative overflow-hidden card-interactive pl-6">
+          <span className="absolute left-0 top-0 h-full w-[3px] bg-gradient-edge origin-center scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+          <div className={`w-9 h-9 rounded-lg ${bg} flex items-center justify-center mb-4`}>
             <Icon className={`w-4 h-4 ${color}`} />
           </div>
-          <p className="text-2xl font-bold text-white">{value}</p>
-          <p className="text-sm text-gray-400 mt-0.5">{label}</p>
-          {sub && <p className="text-xs text-gray-600 mt-0.5 truncate">{sub}</p>}
+          <p className="font-display text-3xl font-bold text-white leading-none tracking-tight">{value}</p>
+          <p className="eyebrow mt-2">{label}</p>
+          {sub && <p className="text-xs text-gray-600 mt-1.5 truncate">{sub}</p>}
         </div>
       ))}
     </div>

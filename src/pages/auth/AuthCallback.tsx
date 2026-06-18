@@ -50,12 +50,11 @@ export default function AuthCallback() {
   }, [navigate])
 
   return (
-    <div className="relative min-h-dvh flex flex-col items-center justify-center bg-surface-bg overflow-hidden gap-6">
-      <div className="glow-blob top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 bg-brand-500/20 animate-glow-pulse" />
-      <Logo className="h-[110px] block relative" />
-      <div className="relative flex items-center gap-3 text-gray-400">
+    <div className="min-h-dvh flex flex-col items-center justify-center bg-surface-bg gap-6">
+      <Logo className="h-[110px] block" />
+      <div className="flex items-center gap-3 text-gray-400">
         <div className="w-5 h-5 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
-        A concluir o login...
+        <span className="font-mono text-xs uppercase tracking-[0.2em]">A concluir o login</span>
       </div>
     </div>
   )

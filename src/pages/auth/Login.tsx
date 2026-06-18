@@ -32,24 +32,22 @@ export default function Login() {
   }
 
   return (
-    <div className="relative min-h-dvh bg-surface-bg flex items-center justify-center p-4 overflow-hidden">
-      <div className="glow-blob top-[-100px] left-[-60px] w-[360px] h-[360px] bg-brand-600/25 animate-float-slow" />
-      <div className="glow-blob bottom-[-120px] right-[-60px] w-[340px] h-[340px] bg-accent-500/20 animate-float" />
-
-      <div className="relative w-full max-w-md animate-slide-up">
+    <div className="min-h-dvh bg-surface-bg flex items-center justify-center p-4">
+      <div className="w-full max-w-md animate-slide-up">
         <div className="text-center mb-8">
           <Logo className="h-[134px] block mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-white">Bem-vindo de volta</h1>
+          <h1 className="font-display text-3xl font-bold text-white">Bem-vindo de volta</h1>
           <p className="text-gray-400 mt-1">Entra na tua conta TagaLinks</p>
         </div>
 
-        <div className="card glass">
+        <div className="relative card overflow-hidden">
+          <span className="absolute top-0 left-0 right-0 h-px bg-gradient-seam" />
           <GoogleButton label="Entrar com Google" intent="login" />
 
           <div className="flex items-center gap-3 my-5">
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-gray-500">ou com e-mail</span>
-            <div className="h-px flex-1 bg-white/10" />
+            <span className="h-px flex-1 bg-surface-border" />
+            <span className="eyebrow">ou com e-mail</span>
+            <span className="h-px flex-1 bg-surface-border" />
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

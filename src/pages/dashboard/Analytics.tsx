@@ -27,7 +27,7 @@ export default function Analytics() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between animate-slide-up">
-        <h1 className="text-xl font-bold text-white">Analytics</h1>
+        <h1 className="font-display text-3xl font-bold text-white">Analytics</h1>
         <select
           value={days}
           onChange={(e) => setDays(Number(e.target.value))}
@@ -55,18 +55,18 @@ export default function Analytics() {
 
           {/* Top links */}
           <div className="card animate-slide-up">
-            <h3 className="text-sm font-semibold text-gray-300 mb-4">Links mais clicados</h3>
+            <h3 className="eyebrow mb-4">Links mais clicados</h3>
             {summary.top_links.length === 0 ? (
               <p className="text-sm text-gray-500 text-center py-4">Ainda sem cliques registados</p>
             ) : (
               <div className="space-y-2">
                 {summary.top_links.map((link, i) => (
                   <div key={link.id} className="group flex items-center gap-3 rounded-lg -mx-2 px-2 py-1 transition-colors hover:bg-surface-elevated/50">
-                    <span className="text-xs text-gray-600 w-4">{i + 1}</span>
+                    <span className="font-mono text-xs text-gray-600 w-5">{String(i + 1).padStart(2, '0')}</span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
                         <p className="text-sm text-white truncate">{link.label}</p>
-                        <span className="text-xs text-gray-400 flex-shrink-0">{link.clicks} cliques</span>
+                        <span className="font-mono text-xs text-gray-400 flex-shrink-0">{link.clicks} cliques</span>
                       </div>
                       <div className="h-1.5 bg-surface-elevated rounded-full overflow-hidden">
                         <div
@@ -83,7 +83,7 @@ export default function Analytics() {
         </>
       ) : (
         <div className="text-center py-10 text-gray-500 animate-fade-in">
-          <p className="text-3xl mb-2 inline-block animate-float">📊</p>
+          <p className="text-3xl mb-2 inline-block">📊</p>
           <p className="text-sm">Ainda não há dados. Publica a tua página primeiro!</p>
         </div>
       )}

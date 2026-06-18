@@ -50,7 +50,7 @@ export default function IntegrarLoja() {
 
   return (
     <div className="max-w-2xl space-y-6 stagger">
-      <h1 className="text-xl font-bold text-white">Integrar com a loja</h1>
+      <h1 className="font-display text-3xl font-bold text-white">Integrar com a loja</h1>
 
       {/* Descrição */}
       <div className="card group">
@@ -58,10 +58,10 @@ export default function IntegrarLoja() {
           <img
             src="/tagashop/tagashop_semfundo.png"
             alt="TagaShop"
-            className="w-11 h-11 flex-shrink-0 object-contain transition-transform duration-300 group-hover:scale-110"
+            className="w-11 h-11 flex-shrink-0 object-contain"
           />
           <div>
-            <h2 className="text-sm font-semibold text-white mb-1">TagaShop</h2>
+            <h2 className="font-display text-lg font-bold text-white mb-1">TagaShop</h2>
             <p className="text-sm text-gray-400">
               Liga a tua loja TagaShop ao bio-link para mostrar produtos automaticamente
               através do bloco <strong className="text-gray-200">Vitrine</strong>. Os teus
@@ -74,7 +74,7 @@ export default function IntegrarLoja() {
       {/* Estado da ligação */}
       <div className="card space-y-4">
         <div className="flex items-center gap-3">
-          <h3 className="text-sm font-semibold text-white flex-1">Estado da ligação</h3>
+          <h3 className="eyebrow flex-1">Estado da ligação</h3>
           {storeConnected ? (
             <span className="flex items-center gap-1 text-xs text-green-400 bg-green-500/10 px-2 py-1 rounded-full flex-shrink-0">
               <CheckCircle2 className="w-3 h-3" /> Ligado
@@ -89,7 +89,7 @@ export default function IntegrarLoja() {
         {storeConnected ? (
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-sm text-gray-300 bg-surface-elevated
-                            rounded-xl px-3 py-2.5">
+                            rounded-lg px-3 py-2.5">
               <Link2 className="w-4 h-4 text-brand-400 flex-shrink-0" />
               <span className="truncate">
                 {profile?.tagashop_store_name || profile?.tagashop_slug || 'Loja ligada'}
@@ -186,10 +186,10 @@ export default function IntegrarLoja() {
       {/* Como funciona */}
       {!storeConnected && (
         <div className="card space-y-3">
-          <h3 className="text-sm font-semibold text-white">Como funciona</h3>
-          <ol className="space-y-2 text-sm text-gray-400">
+          <h3 className="eyebrow">Como funciona</h3>
+          <ol className="space-y-2.5 text-sm text-gray-400">
             <li className="flex gap-3">
-              <span className="w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+              <span className="font-mono text-xs text-brand-300 flex-shrink-0 mt-0.5 w-5">01</span>
               <span>
                 Entra no TagaShop em{' '}
                 <a
@@ -204,15 +204,15 @@ export default function IntegrarLoja() {
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+              <span className="font-mono text-xs text-brand-300 flex-shrink-0 mt-0.5 w-5">02</span>
               Activa a integração e copia a API Key gerada.
             </li>
             <li className="flex gap-3">
-              <span className="w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+              <span className="font-mono text-xs text-brand-300 flex-shrink-0 mt-0.5 w-5">03</span>
               Cola a API Key aqui e clica em <strong className="text-gray-200">Ligar loja</strong>.
             </li>
             <li className="flex gap-3">
-              <span className="w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+              <span className="font-mono text-xs text-brand-300 flex-shrink-0 mt-0.5 w-5">04</span>
               Adiciona um bloco <strong className="text-gray-200">Vitrine</strong> no Editor para mostrar os teus produtos.
             </li>
           </ol>
@@ -221,9 +221,7 @@ export default function IntegrarLoja() {
 
       {/* Banner publicitário TagaShop */}
       <div className="space-y-3">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-          Ainda não tens loja?
-        </p>
+        <p className="eyebrow">Ainda não tens loja?</p>
         <TagaShopBanner className="max-w-sm" />
       </div>
     </div>

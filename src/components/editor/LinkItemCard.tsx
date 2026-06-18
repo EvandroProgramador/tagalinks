@@ -262,7 +262,7 @@ function LinkFields({ item, update }: { item: LinkItem; update: (f: Partial<Link
 function BtnCustomization({ item, update }: { item: LinkItem; update: (f: Partial<LinkItem>) => void }) {
   return (
     <div className="space-y-3 pt-1 border-t border-surface-border">
-      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Personalização do botão</p>
+      <p className="eyebrow">Personalização do botão</p>
 
       {/* Estilo */}
       <div>

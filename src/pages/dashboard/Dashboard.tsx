@@ -27,11 +27,11 @@ export default function Dashboard() {
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-3 animate-slide-up">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold text-white">
-            Olá, <span className="gradient-text">{profile?.name?.split(' ')[0] || 'Criador'}</span>!
+          <h1 className="font-display text-3xl font-bold text-white">
+            Olá, <span className="gradient-text">{profile?.name?.split(' ')[0] || 'Criador'}</span>
           </h1>
-          <p className="text-sm text-gray-400 mt-0.5 flex items-center gap-1.5">
-            <span className={`w-1.5 h-1.5 rounded-full ${page?.published ? 'bg-green-400 animate-pulse' : 'bg-gray-500'}`} />
+          <p className="text-sm text-gray-400 mt-1 flex items-center gap-1.5">
+            <span className={`w-1.5 h-1.5 rounded-full ${page?.published ? 'bg-green-400' : 'bg-gray-500'}`} />
             {page?.published ? 'A tua página está publicada' : 'A tua página ainda não está publicada'}
           </p>
         </div>
@@ -47,35 +47,38 @@ export default function Dashboard() {
       {/* Acções rápidas */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 stagger">
         <Link to="/dashboard/editor"
-              className="card-interactive flex items-center gap-4 hover:border-brand-500/50 group">
-          <div className="w-10 h-10 rounded-xl bg-brand-500/15 flex items-center justify-center transition-all duration-300 group-hover:bg-brand-500/25 group-hover:scale-110">
-            <Edit3 className="w-5 h-5 text-brand-400" />
+              className="group relative overflow-hidden card-interactive flex items-center gap-4 pl-6">
+          <span className="absolute left-0 top-0 h-full w-[3px] bg-gradient-edge origin-center scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+          <div className="w-10 h-10 rounded-lg bg-brand-500/15 flex items-center justify-center transition-colors group-hover:bg-brand-500/25">
+            <Edit3 className="w-5 h-5 text-brand-300" />
           </div>
           <div>
             <p className="font-medium text-white text-sm">Editar página</p>
-            <p className="text-xs text-gray-500">{items.length} link{items.length !== 1 ? 's' : ''}</p>
+            <p className="font-mono text-xs text-gray-500">{items.length} link{items.length !== 1 ? 's' : ''}</p>
           </div>
         </Link>
 
         <Link to="/dashboard/analytics"
-              className="card-interactive flex items-center gap-4 hover:border-accent-500/50 group">
-          <div className="w-10 h-10 rounded-xl bg-accent-500/15 flex items-center justify-center transition-all duration-300 group-hover:bg-accent-500/25 group-hover:scale-110">
+              className="group relative overflow-hidden card-interactive flex items-center gap-4 pl-6">
+          <span className="absolute left-0 top-0 h-full w-[3px] bg-gradient-edge origin-center scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+          <div className="w-10 h-10 rounded-lg bg-accent-500/15 flex items-center justify-center transition-colors group-hover:bg-accent-500/25">
             <BarChart2 className="w-5 h-5 text-accent-400" />
           </div>
           <div>
             <p className="font-medium text-white text-sm">Analytics</p>
-            <p className="text-xs text-gray-500">{summary?.total_views || 0} visitas (7d)</p>
+            <p className="font-mono text-xs text-gray-500">{summary?.total_views || 0} visitas · 7d</p>
           </div>
         </Link>
 
         <Link to="/dashboard/upgrade"
-              className="card-interactive flex items-center gap-4 hover:border-yellow-500/50 group">
-          <div className="w-10 h-10 rounded-xl bg-yellow-500/15 flex items-center justify-center transition-all duration-300 group-hover:bg-yellow-500/25 group-hover:scale-110">
+              className="group relative overflow-hidden card-interactive flex items-center gap-4 pl-6">
+          <span className="absolute left-0 top-0 h-full w-[3px] bg-yellow-400 origin-center scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+          <div className="w-10 h-10 rounded-lg bg-yellow-500/15 flex items-center justify-center transition-colors group-hover:bg-yellow-500/25">
             <Zap className="w-5 h-5 text-yellow-400" />
           </div>
           <div>
             <p className="font-medium text-white text-sm">Upgrade</p>
-            <p className="text-xs text-gray-500 capitalize">{profile?.plan || 'free'}</p>
+            <p className="font-mono text-xs text-gray-500 capitalize">{profile?.plan || 'free'}</p>
           </div>
         </Link>
       </div>
@@ -111,14 +114,14 @@ export default function Dashboard() {
       {page && (
         <div className="card animate-slide-up">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-300">Estado da página</h2>
+            <h2 className="eyebrow">Estado da página</h2>
             <Badge variant={page.published ? 'success' : 'default'}>
               {page.published ? 'Publicada' : 'Rascunho'}
             </Badge>
           </div>
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-gray-500" />
-            <span className="text-sm text-gray-400">tagalinks.ao/{page.slug}</span>
+            <span className="font-mono text-sm text-gray-400">tagalinks.ao/<span className="text-brand-300">{page.slug}</span></span>
           </div>
           {!page.published && (
             <p className="text-xs text-yellow-400/70 mt-2">
@@ -131,7 +134,7 @@ export default function Dashboard() {
       {/* Stats rápidas */}
       {summary && (
         <div>
-          <h2 className="text-sm font-semibold text-gray-300 mb-3">Últimos 7 dias</h2>
+          <h2 className="eyebrow mb-3">Últimos 7 dias</h2>
           <StatsCards summary={summary} />
         </div>
       )}
@@ -139,7 +142,7 @@ export default function Dashboard() {
       {/* Banner publicitário TagaShop — apenas depois do perfil carregar e se não tem loja ligada */}
       {profile && !profile.tagashop_api_key && (
         <div className="animate-slide-up">
-          <h2 className="text-sm font-semibold text-gray-300 mb-3">Vende com a TagaShop</h2>
+          <h2 className="eyebrow mb-3">Vende com a TagaShop</h2>
           <TagaShopBannerGrid count={2} className="[&>*:nth-child(2)]:hidden sm:[&>*:nth-child(2)]:block" />
         </div>
       )}

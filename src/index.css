@@ -1,12 +1,31 @@
+/* Chrome da app: Bricolage Grotesque (display) · Hanken Grotesk (body) · Space Mono (dados/labels) */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+/* Fontes escolhíveis pelo utilizador na página pública */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Bebas+Neue&family=Pacifico&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Lobster&family=Righteous&family=Abril+Fatface&family=Sora:wght@400;500;600;700&family=DM+Serif+Display&family=Permanent+Marker&family=Comfortaa:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Keyframe da assinatura cinética — declarado em CSS puro para nunca ser purgado */
+@keyframes assemble {
+  0%   { transform: translateY(10px) scale(0.98); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
 @layer base {
   html { @apply scroll-smooth; }
   body { @apply bg-surface-bg text-white font-sans antialiased; }
   * { @apply border-surface-border; }
+
+  /* Display headings carry the personality — Bricolage, tight tracking */
+  h1, h2, h3 { @apply font-display tracking-tight; }
+
+  /* Visible keyboard focus everywhere (quality floor) */
+  :focus-visible {
+    outline: 2px solid rgba(124,58,237,0.8);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 
   /* Custom scrollbar — discreet, on-brand */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -33,53 +52,86 @@
 }
 
 @layer components {
+  /* ── Buttons: confident, flat, gradient primary ───────────────────── */
   .btn-primary {
-    @apply relative bg-gradient-tagatech text-white font-medium px-5 py-2.5 rounded-xl
-           shadow-glow-soft transition-all duration-200 ease-out
-           hover:shadow-glow-brand hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:shadow-none;
+    @apply relative inline-flex items-center justify-center gap-2 bg-gradient-tagatech text-white font-semibold
+           px-5 py-2.5 rounded-lg shadow-[0_2px_18px_-8px_rgba(124,58,237,0.7)] transition-all duration-200 ease-out
+           hover:brightness-110 hover:shadow-[0_6px_26px_-8px_rgba(124,58,237,0.75)] active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100;
   }
   .btn-secondary {
-    @apply bg-surface-elevated text-white font-medium px-5 py-2.5 rounded-xl border border-surface-border
-           transition-all duration-200 ease-out
-           hover:bg-surface-hover hover:border-brand-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 bg-transparent text-white font-medium px-5 py-2.5 rounded-lg
+           border border-surface-border transition-all duration-200 ease-out
+           hover:bg-surface-elevated hover:border-brand-500/50 active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-ghost {
-    @apply text-gray-400 font-medium px-4 py-2 rounded-xl
+    @apply inline-flex items-center justify-center gap-2 text-gray-400 font-medium px-4 py-2 rounded-lg
            hover:bg-surface-elevated hover:text-white transition-all duration-200;
   }
+
+  /* ── Surfaces ──────────────────────────────────────────────────────── */
   .card {
-    @apply bg-surface-card border border-surface-border rounded-2xl p-5 transition-all duration-300 ease-out;
+    @apply bg-surface-card border border-surface-border rounded-xl p-5 transition-all duration-200 ease-out;
   }
-  /* Interactive card: lifts and glows on hover */
   .card-interactive {
-    @apply card hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover;
+    @apply card hover:border-brand-500/40 hover:bg-surface-elevated;
   }
-  /* Frosted-glass surface for floating panels */
   .glass {
     @apply border border-white/10 backdrop-blur-xl;
     background: linear-gradient(160deg, rgba(28,28,39,0.85), rgba(19,19,26,0.7));
   }
+
+  /* ── Signature: the tile — left accent edge that grows on hover ────── */
+  .tile {
+    @apply relative flex items-center gap-3 w-full overflow-hidden rounded-xl
+           bg-surface-card border border-surface-border pl-5 pr-4 py-3.5 text-left
+           transition-all duration-200 ease-out
+           hover:border-brand-500/40 hover:bg-surface-elevated;
+  }
+  .tile::before {
+    content: '';
+    @apply absolute left-0 top-0 h-full w-[3px] bg-gradient-edge;
+    transform: scaleY(0.35);
+    transform-origin: center;
+    transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+  }
+  .tile:hover::before,
+  .tile[data-active='true']::before { transform: scaleY(1); }
+  /* Trailing arrow nudges on hover */
+  .tile-arrow { @apply transition-transform duration-200; }
+  .tile:hover .tile-arrow { transform: translate(2px, -2px); }
+
+  /* ── Structure: mono eyebrow + gradient seam ───────────────────────── */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-gray-500;
+  }
+  .seam {
+    @apply h-px w-full bg-gradient-seam;
+  }
+
+  /* ── Forms ─────────────────────────────────────────────────────────── */
   .input {
-    @apply w-full bg-surface-elevated border border-surface-border rounded-xl px-4 py-2.5
-           text-white placeholder-gray-500 focus:outline-none focus:ring-2
-           focus:ring-brand-500/50 focus:border-brand-500 transition-all duration-200;
+    @apply w-full bg-surface-elevated border border-surface-border rounded-lg px-4 py-2.5
+           text-white placeholder-gray-600 focus:outline-none focus:ring-2
+           focus:ring-brand-500/40 focus:border-brand-500 transition-all duration-200;
   }
   .label {
-    @apply block text-sm font-medium text-gray-300 mb-1.5;
+    @apply block font-mono text-xs uppercase tracking-[0.14em] text-gray-400 mb-2;
   }
+
+  /* ── Badge: sharp, mono ────────────────────────────────────────────── */
   .badge {
-    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium;
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md font-mono text-[0.7rem] uppercase tracking-wider font-medium;
   }
+
+  /* Static gradient text — restraint, no perpetual animation */
   .gradient-text {
-    @apply bg-gradient-tagatech-animated bg-clip-text text-transparent animate-gradient;
-    background-size: 200% auto;
+    @apply bg-gradient-tagatech bg-clip-text text-transparent;
   }
+
   /* Gradient hairline border using a mask trick */
-  .gradient-border {
-    position: relative;
-  }
+  .gradient-border { position: relative; }
   .gradient-border::before {
     content: '';
     position: absolute;
@@ -103,14 +155,14 @@
   .hover-lift {
     @apply transition-transform duration-300 ease-out hover:-translate-y-1;
   }
-  /* Staggered entrance — apply animate-slide-up + a delay class on list items */
-  .stagger > * { animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
-  .stagger > *:nth-child(1) { animation-delay: 0.04s; }
-  .stagger > *:nth-child(2) { animation-delay: 0.10s; }
-  .stagger > *:nth-child(3) { animation-delay: 0.16s; }
-  .stagger > *:nth-child(4) { animation-delay: 0.22s; }
-  .stagger > *:nth-child(5) { animation-delay: 0.28s; }
-  .stagger > *:nth-child(6) { animation-delay: 0.34s; }
-  .stagger > *:nth-child(7) { animation-delay: 0.40s; }
-  .stagger > *:nth-child(8) { animation-delay: 0.46s; }
+  /* Kinetic assembly — tiles settle into place in a quick orchestrated stagger */
+  .stagger > * { animation: assemble 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+  .stagger > *:nth-child(1) { animation-delay: 0.03s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.08s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.13s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.18s; }
+  .stagger > *:nth-child(5) { animation-delay: 0.23s; }
+  .stagger > *:nth-child(6) { animation-delay: 0.28s; }
+  .stagger > *:nth-child(7) { animation-delay: 0.33s; }
+  .stagger > *:nth-child(8) { animation-delay: 0.38s; }
 }

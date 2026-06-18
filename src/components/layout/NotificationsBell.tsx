@@ -74,7 +74,7 @@ export function NotificationsBell() {
       <button
         onClick={() => setOpen((o) => !o)}
         title="Atividade recente"
-        className="relative p-2 rounded-xl text-gray-500 hover:text-white hover:bg-surface-elevated transition-all hover:scale-105 active:scale-95"
+        className="relative p-2 rounded-lg text-gray-500 hover:text-white hover:bg-surface-elevated transition-all active:scale-95"
       >
         <Bell className="w-4 h-4" />
         {hasUnseen && (
@@ -85,8 +85,8 @@ export function NotificationsBell() {
       {open && (
         <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-surface-card border border-surface-border rounded-xl shadow-2xl overflow-hidden z-50 animate-slide-up">
           <div className="px-4 py-3 border-b border-surface-border">
-            <p className="text-sm font-semibold text-white">Atividade</p>
-            <p className="text-xs text-gray-500">Últimos 7 dias</p>
+            <p className="font-display text-base font-bold text-white">Atividade</p>
+            <p className="eyebrow mt-0.5">Últimos 7 dias</p>
           </div>
 
           <div className="max-h-80 overflow-y-auto">

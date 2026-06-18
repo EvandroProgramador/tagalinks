@@ -92,9 +92,8 @@ export default function Appearance() {
   }
 
   if (!page) return (
-    <div className="relative flex justify-center py-10 overflow-hidden">
-      <div className="glow-blob top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-500/20 animate-glow-pulse" />
-      <div className="relative w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
+    <div className="flex justify-center py-10">
+      <div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
 
@@ -104,7 +103,7 @@ export default function Appearance() {
 
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-white">Aparência</h1>
+          <h1 className="font-display text-3xl font-bold text-white">Aparência</h1>
           <button onClick={handleSave} disabled={!changed || saving}
                   className="btn-primary text-sm flex items-center gap-1.5">
             <Save className="w-4 h-4" />
@@ -114,7 +113,7 @@ export default function Appearance() {
 
         {/* Temas */}
         <div className="card space-y-4">
-          <h2 className="text-sm font-semibold text-gray-300">Tema</h2>
+          <h2 className="eyebrow">Tema</h2>
           <div className="grid grid-cols-3 gap-2">
             {THEME_PRESETS_META.map((t) => {
               const active = page.theme_preset === t.id
@@ -152,7 +151,7 @@ export default function Appearance() {
         {/* Fundo */}
         <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Fundo personalizado">
           <div className="card space-y-4">
-            <h2 className="text-sm font-semibold text-gray-300">Tipo de fundo</h2>
+            <h2 className="eyebrow">Tipo de fundo</h2>
 
             <div className="flex gap-2">
               {(['solid', 'gradient'] as const).map((type) => (
@@ -207,7 +206,7 @@ export default function Appearance() {
         {/* Cores */}
         <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Cores personalizadas">
           <div className="card space-y-4">
-            <h2 className="text-sm font-semibold text-gray-300">Cores</h2>
+            <h2 className="eyebrow">Cores</h2>
             <BtnPreview page={page} plan={profile?.plan || 'free'} />
             <ColorPicker label="Cor primária (botões)"
               value={page.custom_primary_color || '#7C3AED'}
@@ -224,7 +223,7 @@ export default function Appearance() {
         {/* Botões */}
         <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Personalização de botões">
           <div className="card space-y-5">
-            <h2 className="text-sm font-semibold text-gray-300">Botões</h2>
+            <h2 className="eyebrow">Botões</h2>
 
             <BtnPreview page={page} plan={profile?.plan || 'free'} />
 
@@ -301,7 +300,7 @@ export default function Appearance() {
         {/* Fonte */}
         <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Fonte personalizada">
           <div className="card space-y-3">
-            <h2 className="text-sm font-semibold text-gray-300">Fonte</h2>
+            <h2 className="eyebrow">Fonte</h2>
             <BtnPreview page={page} plan={profile?.plan || 'free'} />
             <div className="grid grid-cols-2 gap-2">
               {GOOGLE_FONTS.map((f) => (

@@ -40,54 +40,68 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         </button>
       </div>
 
-      <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
-        {nav.map(({ to, icon: Icon, label, end, highlight }) => (
-          <NavLink
-            key={to} to={to} end={end}
+      <nav className="flex-1 p-3 overflow-y-auto">
+        <p className="eyebrow px-3 mb-2">Menu</p>
+        <div className="space-y-0.5">
+          {nav.map(({ to, icon: Icon, label, end, highlight }) => (
+            <NavLink
+              key={to} to={to} end={end}
+              onClick={onClose}
+              className={({ isActive }) => cn(
+                'group relative flex items-center gap-3 overflow-hidden pl-4 pr-3 py-2.5 rounded-lg text-sm transition-all duration-200',
+                isActive
+                  ? 'bg-surface-elevated text-white font-medium'
+                  : highlight
+                    ? 'text-brand-300 hover:bg-brand-500/10'
+                    : 'text-gray-400 hover:bg-surface-elevated hover:text-white',
+              )}
+            >
+              {({ isActive }) => (
+                <>
+                  {/* Aresta de acento — assinatura: cresce no hover, cheia quando activo */}
+                  <span className={cn(
+                    'absolute left-0 top-0 h-full w-[3px] bg-gradient-edge origin-center transition-transform duration-300',
+                    isActive ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-50',
+                  )} />
+                  <Icon className="w-4 h-4 flex-shrink-0" />
+                  {label}
+                </>
+              )}
+            </NavLink>
+          ))}
+          <a
+            href="https://www.youtube.com/@tagatech"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={onClose}
-            className={({ isActive }) => cn(
-              'group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
-              isActive
-                ? 'bg-brand-500/15 text-brand-300 font-medium'
-                : highlight
-                  ? 'text-brand-400 hover:bg-brand-500/10'
-                  : 'text-gray-400 hover:bg-surface-elevated hover:text-white hover:translate-x-0.5',
-            )}
+            className="group relative flex items-center gap-3 overflow-hidden pl-4 pr-3 py-2.5 rounded-lg text-sm text-gray-400 hover:bg-surface-elevated hover:text-white transition-all duration-200"
           >
-            {({ isActive }) => (
-              <>
-                <span className={cn(
-                  'absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full bg-gradient-tagatech transition-all duration-300',
-                  isActive ? 'h-5 opacity-100' : 'h-0 opacity-0',
-                )} />
-                <Icon className="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-hover:scale-110" />
-                {label}
-              </>
-            )}
-          </NavLink>
-        ))}
-        <a
-          href="https://www.youtube.com/@tagatech"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onClose}
-          className="group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-400 hover:bg-surface-elevated hover:text-white hover:translate-x-0.5 transition-all duration-200"
-        >
-          <YouTubeIcon className="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-hover:scale-110" />
-          Tutorial
-        </a>
+            <span className="absolute left-0 top-0 h-full w-[3px] bg-gradient-edge origin-center scale-y-0 group-hover:scale-y-50 transition-transform duration-300" />
+            <YouTubeIcon className="w-4 h-4 flex-shrink-0" />
+            Tutorial
+          </a>
+        </div>
+
         {isAdmin && (
           <>
-            <div className="my-2 border-t border-surface-border" />
+            <p className="eyebrow px-3 mt-5 mb-2">Admin</p>
             <NavLink to="/dashboard/admin" onClick={onClose}
               className={({ isActive }) => cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all',
+                'group relative flex items-center gap-3 overflow-hidden pl-4 pr-3 py-2.5 rounded-lg text-sm transition-all',
                 isActive
                   ? 'bg-amber-500/15 text-amber-300 font-medium'
                   : 'text-amber-500/70 hover:bg-amber-500/10 hover:text-amber-300',
               )}>
-              <Shield className="w-4 h-4 flex-shrink-0" />
-              Admin
+              {({ isActive }) => (
+                <>
+                  <span className={cn(
+                    'absolute left-0 top-0 h-full w-[3px] bg-amber-400 origin-center transition-transform duration-300',
+                    isActive ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-50',
+                  )} />
+                  <Shield className="w-4 h-4 flex-shrink-0" />
+                  Admin
+                </>
+              )}
             </NavLink>
           </>
         )}
@@ -95,23 +109,23 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
 
       <div className="p-3 border-t border-surface-border">
         {profile && (
-          <div className="flex items-center gap-2 px-3 py-2 mb-1">
+          <div className="flex items-center gap-2.5 px-2 py-2 mb-1">
             {profile.avatar_url ? (
               <img src={profile.avatar_url} alt={profile.name}
-                   className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
+                   className="w-8 h-8 rounded-lg object-cover flex-shrink-0" />
             ) : (
-              <div className="w-7 h-7 rounded-full bg-gradient-tagatech flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-gradient-tagatech flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
                 {profile.name?.[0]?.toUpperCase() || '?'}
               </div>
             )}
             <div className="flex-1 min-w-0">
               <p className="text-xs font-medium text-white truncate">{profile.name}</p>
-              <p className="text-xs text-gray-500 truncate">@{profile.username}</p>
+              <p className="font-mono text-[0.7rem] text-gray-500 truncate">@{profile.username}</p>
             </div>
           </div>
         )}
         <button onClick={signOut}
-                className="flex items-center gap-3 px-3 py-2 w-full rounded-xl text-sm text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all">
+                className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all">
           <LogOut className="w-4 h-4" /> Sair
         </button>
       </div>

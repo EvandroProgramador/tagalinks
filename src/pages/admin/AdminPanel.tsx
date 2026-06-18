@@ -74,9 +74,9 @@ function StatCard({
   icon: React.ElementType; iconColor: string; trend?: number | null; loading?: boolean
 }) {
   return (
-    <div className="group bg-surface-card border border-surface-border rounded-2xl p-5 flex flex-col gap-3 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover">
+    <div className="group bg-surface-card border border-surface-border rounded-xl p-5 flex flex-col gap-3 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">{label}</span>
+        <span className="eyebrow">{label}</span>
         <span className={cn('w-8 h-8 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110', iconColor)}>
           <Icon className="w-4 h-4" />
         </span>
@@ -84,7 +84,7 @@ function StatCard({
       {loading ? (
         <div className="h-8 w-24 bg-surface-elevated rounded-lg animate-pulse" />
       ) : (
-        <p className="text-2xl font-bold text-white">{value}</p>
+        <p className="font-display text-3xl font-bold text-white tracking-tight">{value}</p>
       )}
       <div className="flex items-center justify-between">
         {sub && <p className="text-xs text-gray-500">{sub}</p>}
@@ -147,8 +147,8 @@ function OverviewTab({ stats, loading, recentUsers }: {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Registos recentes */}
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5">
-          <h3 className="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
+        <div className="bg-surface-card border border-surface-border rounded-xl p-5">
+          <h3 className="eyebrow mb-4 flex items-center gap-2">
             <Activity className="w-4 h-4 text-brand-400" /> Registos recentes
           </h3>
           <div className="space-y-2">
@@ -179,8 +179,8 @@ function OverviewTab({ stats, loading, recentUsers }: {
         </div>
 
         {/* Distribuição de planos */}
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5">
-          <h3 className="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
+        <div className="bg-surface-card border border-surface-border rounded-xl p-5">
+          <h3 className="eyebrow mb-4 flex items-center gap-2">
             <BarChart2 className="w-4 h-4 text-amber-400" /> Distribuição de planos
           </h3>
           <div className="space-y-3">
@@ -210,13 +210,13 @@ function OverviewTab({ stats, loading, recentUsers }: {
           {/* Métricas rápidas */}
           <div className="mt-5 pt-4 border-t border-surface-border grid grid-cols-2 gap-3">
             <div className="text-center">
-              <p className="text-xl font-bold text-white">
+              <p className="font-display tracking-tight text-xl font-bold text-white">
                 {stats ? Math.round((stats.publishedPages / Math.max(stats.totalUsers, 1)) * 100) : 0}%
               </p>
               <p className="text-xs text-gray-500 mt-0.5">têm página publicada</p>
             </div>
             <div className="text-center">
-              <p className="text-xl font-bold text-white">
+              <p className="font-display tracking-tight text-xl font-bold text-white">
                 {stats ? Math.round((stats.activeSubs / Math.max(stats.totalUsers, 1)) * 100) : 0}%
               </p>
               <p className="text-xs text-gray-500 mt-0.5">são pagantes</p>
@@ -333,17 +333,17 @@ function UsersTab() {
       </div>
 
       {/* Tabela */}
-      <div className="bg-surface-card border border-surface-border rounded-2xl overflow-hidden">
+      <div className="bg-surface-card border border-surface-border rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border">
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Utilizador</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Plano</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Página</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Registo</th>
+                <th className="text-left px-4 py-3 eyebrow">Utilizador</th>
+                <th className="text-left px-4 py-3 eyebrow">Username</th>
+                <th className="text-left px-4 py-3 eyebrow">Plano</th>
+                <th className="text-left px-4 py-3 eyebrow">Página</th>
+                <th className="text-left px-4 py-3 eyebrow">Role</th>
+                <th className="text-left px-4 py-3 eyebrow">Registo</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -587,19 +587,19 @@ function AnalyticsTab() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-white">{totalViews.toLocaleString('pt-PT')}</p>
+            <p className="font-display tracking-tight text-2xl font-bold text-white">{totalViews.toLocaleString('pt-PT')}</p>
             <p className="text-xs text-gray-500">visualizações</p>
           </div>
           <div className="w-px h-10 bg-surface-border" />
           <div className="text-center">
-            <p className="text-2xl font-bold text-cyan-400">{totalClicks.toLocaleString('pt-PT')}</p>
+            <p className="font-display tracking-tight text-2xl font-bold text-cyan-400">{totalClicks.toLocaleString('pt-PT')}</p>
             <p className="text-xs text-gray-500">cliques</p>
           </div>
           {totalViews > 0 && (
             <>
               <div className="w-px h-10 bg-surface-border" />
               <div className="text-center">
-                <p className="text-2xl font-bold text-brand-300">
+                <p className="font-display tracking-tight text-2xl font-bold text-brand-300">
                   {Math.round((totalClicks / totalViews) * 100)}%
                 </p>
                 <p className="text-xs text-gray-500">CTR médio</p>
@@ -621,8 +621,8 @@ function AnalyticsTab() {
       </div>
 
       {/* Gráfico de área */}
-      <div className="bg-surface-card border border-surface-border rounded-2xl p-5">
-        <h3 className="text-sm font-semibold text-gray-300 mb-4">Visualizações e cliques ao longo do tempo</h3>
+      <div className="bg-surface-card border border-surface-border rounded-xl p-5">
+        <h3 className="eyebrow mb-4">Visualizações e cliques ao longo do tempo</h3>
         {loading ? (
           <div className="h-52 flex items-center justify-center">
             <div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
@@ -659,8 +659,8 @@ function AnalyticsTab() {
       </div>
 
       {/* Top páginas */}
-      <div className="bg-surface-card border border-surface-border rounded-2xl p-5">
-        <h3 className="text-sm font-semibold text-gray-300 mb-4">Top páginas por visualizações</h3>
+      <div className="bg-surface-card border border-surface-border rounded-xl p-5">
+        <h3 className="eyebrow mb-4">Top páginas por visualizações</h3>
         {loading ? (
           <div className="space-y-2">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -726,24 +726,24 @@ function SubsTab() {
     <div className="space-y-6">
       {/* KPIs */}
       <div className="grid grid-cols-3 gap-4 stagger">
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover">
-          <p className="text-2xl font-bold text-white">{activeSubs.length}</p>
+        <div className="bg-surface-card border border-surface-border rounded-xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-card-hover">
+          <p className="font-display tracking-tight text-2xl font-bold text-white">{activeSubs.length}</p>
           <p className="text-xs text-gray-500 mt-1">Subscrições activas</p>
         </div>
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-card-hover">
-          <p className="text-2xl font-bold text-amber-400">{kz(totalRevenue)}</p>
+        <div className="bg-surface-card border border-surface-border rounded-xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-card-hover">
+          <p className="font-display tracking-tight text-2xl font-bold text-amber-400">{kz(totalRevenue)}</p>
           <p className="text-xs text-gray-500 mt-1">Receita recorrente</p>
         </div>
-        <div className="bg-surface-card border border-surface-border rounded-2xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-green-500/40 hover:shadow-card-hover">
-          <p className="text-2xl font-bold text-green-400">{kz(monthRevenue)}</p>
+        <div className="bg-surface-card border border-surface-border rounded-xl p-5 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:border-green-500/40 hover:shadow-card-hover">
+          <p className="font-display tracking-tight text-2xl font-bold text-green-400">{kz(monthRevenue)}</p>
           <p className="text-xs text-gray-500 mt-1">Últimos 30 dias</p>
         </div>
       </div>
 
       {/* Tabela */}
-      <div className="bg-surface-card border border-surface-border rounded-2xl overflow-hidden">
+      <div className="bg-surface-card border border-surface-border rounded-xl overflow-hidden">
         <div className="flex items-center justify-between px-4 py-3 border-b border-surface-border">
-          <h3 className="text-sm font-semibold text-gray-300">Histórico de subscrições</h3>
+          <h3 className="eyebrow">Histórico de subscrições</h3>
           <button onClick={fetchSubs} className="btn-ghost p-1.5" title="Actualizar">
             <RefreshCw className={cn('w-4 h-4', loading && 'animate-spin')} />
           </button>
@@ -752,12 +752,12 @@ function SubsTab() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border">
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Utilizador</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Plano</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Período</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Ref. AppyPay</th>
+                <th className="text-left px-4 py-3 eyebrow">Utilizador</th>
+                <th className="text-left px-4 py-3 eyebrow">Plano</th>
+                <th className="text-left px-4 py-3 eyebrow">Valor</th>
+                <th className="text-left px-4 py-3 eyebrow">Estado</th>
+                <th className="text-left px-4 py-3 eyebrow">Período</th>
+                <th className="text-left px-4 py-3 eyebrow">Ref. AppyPay</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">
@@ -886,7 +886,7 @@ export default function AdminPanel() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold text-white">Painel Admin</h1>
+              <h1 className="font-display text-2xl font-bold text-white">Painel Admin</h1>
               <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-500/20
                                border border-amber-500/30 text-amber-300 uppercase tracking-wider">
                 Admin Mode

@@ -32,16 +32,16 @@ export default function Upgrade() {
     return (
       <div className="max-w-md mx-auto animate-scale-in">
         <div className="card text-center space-y-5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-tagatech mx-auto flex items-center justify-center shadow-glow-soft animate-glow-pulse">
+          <div className="w-14 h-14 rounded-xl bg-gradient-tagatech mx-auto flex items-center justify-center shadow-glow-soft">
             <QrCode className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">Pagamento via AppyPay</h2>
+            <h2 className="font-display text-2xl font-bold text-white">Pagamento via AppyPay</h2>
             <p className="text-gray-400 text-sm mt-1">Plano {planLabel[selected]}</p>
           </div>
 
-          <div className="bg-surface-elevated rounded-xl p-4 space-y-3 text-left">
-            <p className="text-xs text-gray-500 uppercase tracking-wide">Referência de pagamento</p>
+          <div className="bg-surface-elevated rounded-lg p-4 space-y-3 text-left">
+            <p className="eyebrow">Referência de pagamento</p>
             <div className="flex items-center gap-3">
               <code className="text-2xl font-mono font-bold text-white tracking-widest flex-1">
                 {payData.reference}
@@ -66,11 +66,11 @@ export default function Upgrade() {
           {payData.qr_code && (
             <div>
               <p className="text-xs text-gray-400 mb-2">Ou paga via Multicaixa Express</p>
-              <img src={payData.qr_code} alt="QR Code" className="w-40 h-40 mx-auto rounded-xl" />
+              <img src={payData.qr_code} alt="QR Code" className="w-40 h-40 mx-auto rounded-lg" />
             </div>
           )}
 
-          <div className="text-xs text-gray-500 bg-surface-elevated rounded-xl p-3">
+          <div className="text-xs text-gray-500 bg-surface-elevated rounded-lg p-3">
             Após o pagamento, o teu plano é actualizado automaticamente em segundos.
             Podes pagar no ATM, Homebanking ou app do teu banco com a referência acima.
           </div>
@@ -86,7 +86,7 @@ export default function Upgrade() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-8 animate-slide-up">
-        <h1 className="text-2xl font-bold text-white">Escolhe o teu <span className="gradient-text">plano</span></h1>
+        <h1 className="font-display text-3xl font-bold text-white">Escolhe o teu <span className="gradient-text">plano</span></h1>
         <p className="text-gray-400 mt-2">Paga em Kwanza via Multicaixa ou AppyPay</p>
       </div>
 
@@ -96,27 +96,28 @@ export default function Upgrade() {
           const isCreator = plan === 'creator'
           return (
             <div key={plan}
-                 className={`card relative flex flex-col hover-lift ${isCreator ? 'border-brand-500/50 shadow-glow-soft md:-translate-y-2 hover:shadow-glow-brand' : 'hover:border-brand-500/30'}`}>
+                 className={`card relative overflow-hidden flex flex-col ${isCreator ? 'border-brand-500/50' : ''}`}>
+              {isCreator && <span className="absolute left-0 top-0 h-full w-[3px] bg-gradient-edge" />}
               {isCreator && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="badge bg-gradient-tagatech text-white text-xs px-3 py-1">Mais popular</span>
+                <div className="absolute top-4 right-4">
+                  <span className="badge bg-gradient-tagatech text-white">Mais popular</span>
                 </div>
               )}
 
-              <div className="flex items-center gap-2 mb-1">
-                {plan === 'free'     && <span className="text-gray-400 font-medium">Gratuito</span>}
-                {plan === 'creator'  && <><Zap className="w-4 h-4 text-brand-400" /><span className="text-white font-semibold">Creator</span></>}
+              <div className="flex items-center gap-2 mb-2">
+                {plan === 'free'     && <span className="eyebrow">Gratuito</span>}
+                {plan === 'creator'  && <><Zap className="w-3.5 h-3.5 text-brand-300" /><span className="eyebrow text-brand-300">Creator</span></>}
               </div>
 
-              <div className="mb-4">
-                {plan === 'free'     && <p className="text-3xl font-bold text-white">0 Kz</p>}
-                {plan === 'creator'  && <p className="text-3xl font-bold text-white">2 900 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
+              <div className="mb-5">
+                {plan === 'free'     && <p className="font-mono text-4xl font-bold text-white tracking-tight">0 <span className="text-base font-normal text-gray-400">Kz</span></p>}
+                {plan === 'creator'  && <p className="font-mono text-4xl font-bold text-white tracking-tight">2 900 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
               </div>
 
-              <ul className="space-y-2 flex-1 mb-5">
+              <ul className="space-y-2.5 flex-1 mb-6">
                 {planFeatures[plan].map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
-                    <Check className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                  <li key={f} className="flex items-start gap-2.5 text-sm text-gray-300">
+                    <Check className="w-4 h-4 text-accent-400 flex-shrink-0 mt-0.5" />
                     {f}
                   </li>
                 ))}

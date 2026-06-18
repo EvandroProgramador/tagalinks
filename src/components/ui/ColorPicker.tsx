@@ -24,7 +24,7 @@ export function ColorPicker({ value, onChange, label, presets = DEFAULT_PRESETS 
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="w-10 h-10 rounded-xl border-2 border-surface-border hover:border-brand-500 transition-colors flex-shrink-0"
+          className="w-10 h-10 rounded-lg border-2 border-surface-border hover:border-brand-500 transition-colors flex-shrink-0"
           style={{ background: value }}
         />
         <input
@@ -37,7 +37,7 @@ export function ColorPicker({ value, onChange, label, presets = DEFAULT_PRESETS 
       </div>
 
       {open && (
-        <div className="mt-2 p-3 bg-surface-elevated rounded-xl border border-surface-border">
+        <div className="mt-2 p-3 bg-surface-elevated rounded-lg border border-surface-border">
           <div className="grid grid-cols-6 gap-2 mb-3">
             {presets.map((c) => (
               <button

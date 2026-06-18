@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, ArrowUpRight } from 'lucide-react'
 import { YouTubeEmbed } from '@/components/ui/YouTubeEmbed'
 import { SOCIAL_BRAND_ICONS, WhatsAppIcon } from '@/components/ui/BrandIcons'
 import { computeTheme } from '@/lib/theme'
@@ -56,22 +56,26 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
       <div className="min-h-dvh py-10 px-4" style={{ ...bgStyle, fontFamily: `'${theme.font}', sans-serif` }}>
         <div className="max-w-md mx-auto">
 
-          <div className="text-center mb-6 animate-slide-up">
-            {page.avatar_url ? (
-              <img src={page.avatar_url} alt={page.title}
-                   className="w-20 h-20 rounded-full mx-auto mb-3 object-cover ring-2 transition-transform duration-300 hover:scale-105"
-                   style={{ outline: `2px solid ${theme.primary}`, outlineOffset: '2px' }} />
-            ) : (
-              <div className="w-20 h-20 rounded-full mx-auto mb-3 flex items-center justify-center text-3xl font-bold"
-                   style={{ background: theme.primary, color: '#fff' }}>
-                {(page.title || '?')[0].toUpperCase()}
-              </div>
-            )}
+          <div className="text-center mb-7 animate-slide-up">
+            {/* Anel de gradiente com as cores do tema — assinatura editorial */}
+            <div className="w-[5.5rem] h-[5.5rem] rounded-full mx-auto mb-4 p-[2.5px]"
+                 style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.accent})` }}>
+              {page.avatar_url ? (
+                <img src={page.avatar_url} alt={page.title}
+                     className="w-full h-full rounded-full object-cover transition-transform duration-300 hover:scale-[1.03]"
+                     style={{ border: `3px solid ${theme.bg}` }} />
+              ) : (
+                <div className="w-full h-full rounded-full flex items-center justify-center text-3xl font-bold"
+                     style={{ background: theme.primary, color: '#fff', border: `3px solid ${theme.bg}` }}>
+                  {(page.title || '?')[0].toUpperCase()}
+                </div>
+              )}
+            </div>
             {page.title && (
-              <h1 className="text-xl font-bold" style={{ color: theme.text }}>{page.title}</h1>
+              <h1 className="text-2xl font-bold tracking-tight" style={{ color: theme.text, fontFamily: 'inherit' }}>{page.title}</h1>
             )}
             {page.bio && (
-              <p className="text-sm mt-1 leading-relaxed" style={{ color: theme.subtext }}>{page.bio}</p>
+              <p className="text-sm mt-2 leading-relaxed max-w-xs mx-auto" style={{ color: theme.subtext }}>{page.bio}</p>
             )}
           </div>
 
@@ -87,9 +91,9 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
             ))}
           </div>
 
-          <p className="text-center text-xs mt-8 opacity-40" style={{ color: theme.subtext }}>
+          <p className="text-center font-mono text-[0.62rem] uppercase tracking-[0.25em] mt-9 opacity-50" style={{ color: theme.subtext }}>
             feito com{' '}
-            <a href="https://tagalinks.ao" className="underline" style={{ color: theme.primary }}>
+            <a href="https://tagalinks.ao" style={{ color: theme.primary }}>
               TagaLinks
             </a>
           </p>
@@ -153,7 +157,7 @@ function VitrineBlock({ item, theme }: { item: LinkItem; theme: any }) {
 
   if (loading) {
     return (
-      <div className="rounded-2xl py-6 text-center" style={{ background: 'rgba(255,255,255,0.05)' }}>
+      <div className="rounded-xl py-6 text-center" style={{ background: 'rgba(255,255,255,0.05)' }}>
         <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
              style={{ borderColor: theme.primary, borderTopColor: 'transparent' }} />
       </div>
@@ -361,7 +365,7 @@ function LinkBlock({ item, theme, plan, onTrack }:
        className="group flex items-center justify-between py-3.5 px-5 font-medium transition-all duration-200 hover:opacity-95 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] w-full"
        style={baseStyle}>
       <span>{item.label}</span>
-      <ExternalLink className="w-4 h-4 opacity-60 transition-transform group-hover:translate-x-0.5" />
+      <ArrowUpRight className="w-4 h-4 opacity-60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
     </a>
   )
 }

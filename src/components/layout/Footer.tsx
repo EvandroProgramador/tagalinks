@@ -1,7 +1,9 @@
 export function Footer() {
   return (
-    <footer className="text-center text-xs text-gray-600 py-4 border-t border-surface-border">
-      © {new Date().getFullYear()} TagaLinks · TAGATECH Angola
+    <footer className="py-5 border-t border-surface-border">
+      <p className="eyebrow text-center text-gray-600">
+        © {new Date().getFullYear()} TagaLinks — TAGATECH Angola
+      </p>
     </footer>
   )
 }

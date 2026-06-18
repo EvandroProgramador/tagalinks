@@ -34,7 +34,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
           onClick={onMenuClick}
-          className="lg:hidden flex-shrink-0 p-2 rounded-xl text-gray-500 hover:text-white hover:bg-surface-elevated transition-all"
+          className="lg:hidden flex-shrink-0 p-2 rounded-lg text-gray-500 hover:text-white hover:bg-surface-elevated transition-all"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -43,10 +43,12 @@ export function Topbar({ onMenuClick }: TopbarProps) {
             <a
               href={publicUrl}
               target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors min-w-0"
+              className="group flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors min-w-0"
             >
               <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
-              <span className="truncate hidden sm:inline">tagalinks.vercel.app/{page!.slug}</span>
+              <span className="font-mono text-xs truncate hidden sm:inline">
+                tagalinks.vercel.app/<span className="text-brand-300 group-hover:text-accent-300 transition-colors">{page!.slug}</span>
+              </span>
             </a>
             <button
               onClick={handleCopy}

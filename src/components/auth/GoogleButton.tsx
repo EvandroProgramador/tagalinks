@@ -23,7 +23,7 @@ export function GoogleButton({
       type="button"
       onClick={onClick}
       disabled={loading}
-      className="w-full py-3 flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 text-white font-medium hover:bg-white/10 transition disabled:opacity-60"
+      className="w-full py-3 flex items-center justify-center gap-3 rounded-lg border border-surface-border bg-surface-elevated text-white font-medium hover:bg-surface-hover hover:border-brand-500/40 transition disabled:opacity-60"
     >
       {loading ? (
         <span className="w-5 h-5 border-2 border-white/40 border-t-transparent rounded-full animate-spin" />

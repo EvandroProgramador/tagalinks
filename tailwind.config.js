@@ -38,12 +38,16 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Bricolage Grotesque', 'Hanken Grotesk', 'system-ui', 'sans-serif'],
+        sans:    ['Hanken Grotesk', 'system-ui', 'sans-serif'],
+        mono:    ['Space Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       backgroundImage: {
         'gradient-tagatech': 'linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%)',
         'gradient-tagatech-subtle': 'linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(6,182,212,0.15) 100%)',
         'gradient-tagatech-animated': 'linear-gradient(120deg, #7C3AED 0%, #06B6D4 50%, #7C3AED 100%)',
+        'gradient-edge': 'linear-gradient(180deg, #7C3AED 0%, #06B6D4 100%)',
+        'gradient-seam': 'linear-gradient(90deg, #7C3AED 0%, #06B6D4 55%, rgba(6,182,212,0) 100%)',
         'shimmer': 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%)',
       },
       boxShadow: {
@@ -57,6 +61,7 @@ export default {
         'slide-up':    'slideUp 0.45s cubic-bezier(0.16,1,0.3,1) both',
         'scale-in':    'scaleIn 0.35s cubic-bezier(0.16,1,0.3,1) both',
         'slide-right': 'slideRight 0.4s cubic-bezier(0.16,1,0.3,1) both',
+        'assemble':    'assemble 0.5s cubic-bezier(0.16,1,0.3,1) both',
         'pulse-slow':  'pulse 3s cubic-bezier(0.4,0,0.6,1) infinite',
         'float':       'float 6s ease-in-out infinite',
         'float-slow':  'float 9s ease-in-out infinite',
@@ -69,6 +74,7 @@ export default {
         slideUp:    { '0%': { transform: 'translateY(14px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
         scaleIn:    { '0%': { transform: 'scale(0.96)', opacity: '0' }, '100%': { transform: 'scale(1)', opacity: '1' } },
         slideRight: { '0%': { transform: 'translateX(-14px)', opacity: '0' }, '100%': { transform: 'translateX(0)', opacity: '1' } },
+        assemble:   { '0%': { transform: 'translateY(10px) scale(0.98)', opacity: '0' }, '100%': { transform: 'translateY(0) scale(1)', opacity: '1' } },
         float:      { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-18px)' } },
         gradientShift: { '0%,100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
         shimmer:    { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },

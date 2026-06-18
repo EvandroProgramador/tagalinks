@@ -28,9 +28,9 @@ export function AddBlockMenu({ onSelect, onClose, plan, itemCount }: Props) {
   return (
     <div className="fixed inset-0 z-40 flex items-end sm:items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative bg-surface-card border border-surface-border rounded-2xl w-full max-w-sm shadow-2xl animate-slide-up">
+      <div className="relative bg-surface-card border border-surface-border rounded-xl w-full max-w-sm shadow-2xl animate-scale-in">
         <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-surface-border">
-          <h3 className="text-base font-semibold text-white">Adicionar bloco</h3>
+          <h3 className="font-display text-lg font-bold text-white">Adicionar bloco</h3>
           <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
             <X className="w-5 h-5" />
           </button>

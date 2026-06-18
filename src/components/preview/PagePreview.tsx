@@ -11,7 +11,7 @@ export function PagePreview() {
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="flex items-center gap-2 text-xs text-gray-500">
+      <div className="flex items-center gap-2 eyebrow">
         <Smartphone className="w-3.5 h-3.5" />
         Preview mobile
       </div>

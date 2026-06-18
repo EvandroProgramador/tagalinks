@@ -103,11 +103,11 @@ export default function Settings() {
 
   return (
     <div className="max-w-2xl space-y-6 stagger">
-      <h1 className="text-xl font-bold text-white">Definições</h1>
+      <h1 className="font-display text-3xl font-bold text-white">Definições</h1>
 
       {/* Perfil */}
       <div className="card">
-        <h2 className="text-sm font-semibold text-gray-300 mb-4">Perfil</h2>
+        <h2 className="eyebrow mb-4">Perfil</h2>
 
         {/* Avatar da conta */}
         <div className="flex items-center gap-4 mb-5 pb-5 border-b border-surface-border">
@@ -148,8 +148,8 @@ export default function Settings() {
           <div>
             <label className="label">Nome de utilizador</label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">tagalinks.ao/</span>
-              <input className="input pl-28" {...register('username', {
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-xs">tagalinks.ao/</span>
+              <input className="input pl-[6.5rem] font-mono text-sm" {...register('username', {
                 pattern: { value: /^[a-zA-Z0-9_-]{3,30}$/, message: 'Formato inválido' }
               })} />
             </div>
@@ -172,7 +172,7 @@ export default function Settings() {
       <div className="card">
         <div className="flex items-center gap-2 mb-4">
           <KeyRound className="w-4 h-4 text-gray-400" />
-          <h2 className="text-sm font-semibold text-gray-300">Alterar password</h2>
+          <h2 className="eyebrow">Alterar password</h2>
         </div>
         <form onSubmit={handlePw(onChangePassword)} className="space-y-4">
           <div>
@@ -227,7 +227,7 @@ export default function Settings() {
 
       {/* Zona perigosa */}
       <div className="card border-red-500/20">
-        <h2 className="text-sm font-semibold text-red-400 mb-3">Zona perigosa</h2>
+        <h2 className="eyebrow text-red-400 mb-3">Zona perigosa</h2>
         <p className="text-xs text-gray-500 mb-3">
           Eliminar a conta remove todos os teus dados permanentemente. Esta acção não pode ser revertida.
         </p>
