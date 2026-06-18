@@ -13,7 +13,7 @@ const blocks = [
   { type: 'link',     icon: Link2,       label: 'Link',             desc: 'Link genérico para qualquer URL' },
   { type: 'social',   icon: Share2,       label: 'Rede social',      desc: 'Instagram, TikTok, YouTube…' },
   { type: 'whatsapp', icon: MessageCircle,label: 'WhatsApp',         desc: 'Botão de contacto directo' },
-  { type: 'youtube',  icon: YouTubeIcon,  label: 'Vídeo YouTube',    desc: 'Player embutido na página', plan: 'creator' as SubscriptionPlan },
+  { type: 'youtube',  icon: YouTubeIcon,  label: 'Vídeo de apresentação',    desc: 'Player embutido na página', plan: 'creator' as SubscriptionPlan },
   { type: 'vitrine',  icon: Store,        label: 'Vitrine',          desc: 'Grid de produtos do TagaShop',   plan: 'creator' as SubscriptionPlan },
   { type: 'product',  icon: ShoppingBag,  label: 'Produto TagaShop', desc: 'Produto individual da tua loja', plan: 'creator' as SubscriptionPlan },
   { type: 'email',    icon: Mail,         label: 'E-mail',           desc: 'Link mailto directo' },

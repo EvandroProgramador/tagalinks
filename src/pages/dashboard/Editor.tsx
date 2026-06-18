@@ -71,7 +71,7 @@ export default function Editor() {
       return
     }
     if (type === 'youtube' && profile?.plan === 'free') {
-      toast.error('O bloco Vídeo YouTube requer plano Creator. Faz upgrade!')
+      toast.error('O bloco Vídeo de apresentação requer plano Creator. Faz upgrade!')
       return
     }
     const newItem = await addItem(page.id, type, items.length)
