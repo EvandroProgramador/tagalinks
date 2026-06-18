@@ -11,6 +11,7 @@ import { supabase } from '@/lib/supabase'
 import { LinkItemCard } from '@/components/editor/LinkItemCard'
 import { AddBlockMenu } from '@/components/editor/AddBlockMenu'
 import { PagePreview } from '@/components/preview/PagePreview'
+import { UpgradeGate } from '@/components/ui/UpgradeGate'
 import toast from 'react-hot-toast'
 
 export default function Editor() {
@@ -60,12 +61,12 @@ export default function Editor() {
   async function handleAddBlock(type: string) {
     if (!page) return
     setShowAddMenu(false)
-    if (profile?.plan === 'free' && items.length >= 5) {
-      toast.error('Plano gratuito: máximo 5 links. Faz upgrade para Creator!')
+    if (profile?.plan === 'free' && items.length >= 3) {
+      toast.error('Plano gratuito: máximo 3 links. Faz upgrade para Creator!')
       return
     }
-    if (type === 'vitrine' && profile?.plan === 'free') {
-      toast.error('O bloco Vitrine requer plano Creator. Faz upgrade!')
+    if ((type === 'vitrine' || type === 'product') && profile?.plan === 'free') {
+      toast.error('Blocos TagaShop requerem plano Creator. Faz upgrade!')
       return
     }
     const newItem = await addItem(page.id, type, items.length)
@@ -213,23 +214,25 @@ export default function Editor() {
         </div>
 
         {/* Vídeo de apresentação */}
-        <div className="card space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="eyebrow">Vídeo de apresentação</h2>
-            <span className="badge bg-brand-500/20 text-brand-300 text-xs">YouTube</span>
+        <UpgradeGate requiredPlan="creator" currentPlan={profile?.plan || 'free'} featureName="Vídeo de apresentação">
+          <div className="card space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="eyebrow">Vídeo de apresentação</h2>
+              <span className="badge bg-brand-500/20 text-brand-300 text-xs">YouTube</span>
+            </div>
+            <input className="input" placeholder="https://youtube.com/watch?v=..."
+                   value={page.youtube_url || ''}
+                   onChange={(e) => { setPage({ ...page, youtube_url: e.target.value }); setDirty(true) }} />
+            {page.youtube_url && (
+              <input className="input text-sm" placeholder="Legenda do vídeo (opcional)"
+                     value={page.youtube_title || ''}
+                     onChange={(e) => { setPage({ ...page, youtube_title: e.target.value }); setDirty(true) }} />
+            )}
+            <p className="text-xs text-gray-500">
+              Aparece no topo da página, antes dos links. Ideal para apresentação pessoal.
+            </p>
           </div>
-          <input className="input" placeholder="https://youtube.com/watch?v=..."
-                 value={page.youtube_url || ''}
-                 onChange={(e) => { setPage({ ...page, youtube_url: e.target.value }); setDirty(true) }} />
-          {page.youtube_url && (
-            <input className="input text-sm" placeholder="Legenda do vídeo (opcional)"
-                   value={page.youtube_title || ''}
-                   onChange={(e) => { setPage({ ...page, youtube_title: e.target.value }); setDirty(true) }} />
-          )}
-          <p className="text-xs text-gray-500">
-            Aparece no topo da página, antes dos links. Ideal para apresentação pessoal.
-          </p>
-        </div>
+        </UpgradeGate>
 
         {/* Card TagaShop — sempre visível */}
         <div className="card space-y-3">

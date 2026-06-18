@@ -79,7 +79,7 @@ export function PublicPage({ page, items, plan, preview = false }: Props) {
             )}
           </div>
 
-          {page.youtube_url && (
+          {page.youtube_url && plan !== 'free' && (
             <div className="mb-4">
               <YouTubeEmbed url={page.youtube_url} title={page.youtube_title} />
             </div>

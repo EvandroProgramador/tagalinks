@@ -39,7 +39,7 @@ export function AddBlockMenu({ onSelect, onClose, plan, itemCount }: Props) {
         <div className="p-3 space-y-1 max-h-[60vh] overflow-y-auto">
           {blocks.map(({ type, icon: Icon, label, desc, plan: reqPlan }) => {
             const locked = reqPlan && planOrder.indexOf(plan) < planOrder.indexOf(reqPlan)
-            const limitReached = plan === 'free' && itemCount >= 5
+            const limitReached = plan === 'free' && itemCount >= 3
 
             return (
               <button
