@@ -2,21 +2,28 @@ import { useState } from 'react'
 import { Check, Zap, QrCode, Copy, CheckCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSubscription } from '@/hooks/useSubscription'
-import type { SubscriptionPlan } from '@/types'
+import type { BillingPeriod, SubscriptionPlan } from '@/types'
 import toast from 'react-hot-toast'
+
+const PERIODS: BillingPeriod[] = ['monthly', 'quarterly', 'annual']
 
 export default function Upgrade() {
   const { profile }  = useAuth()
-  const { loading, payData, startUpgrade, planLabel, planFeatures } = useSubscription()
+  const {
+    loading, payData, startUpgrade, planLabel, planFeatures,
+    periodLabel, periodSuffix, creatorPrice, creatorMonthly, creatorDiscount,
+  } = useSubscription()
   const [copied, setCopied]    = useState(false)
   const [selected, setSelected] = useState<SubscriptionPlan | null>(null)
+  const [period, setPeriod]    = useState<BillingPeriod>('monthly')
 
   const currentPlan = profile?.plan || 'free'
+  const fmt = (n: number) => new Intl.NumberFormat('pt-PT').format(n)
 
   async function handleUpgrade(plan: SubscriptionPlan) {
     if (!profile?.id) return
     setSelected(plan)
-    const data = await startUpgrade(profile.id, plan)
+    const data = await startUpgrade(profile.id, plan, period)
     if (!data) setSelected(null)
   }
 
@@ -37,7 +44,7 @@ export default function Upgrade() {
           </div>
           <div>
             <h2 className="font-display text-2xl font-bold text-white">Pagamento via AppyPay</h2>
-            <p className="text-gray-400 text-sm mt-1">Plano {planLabel[selected]}</p>
+            <p className="text-gray-400 text-sm mt-1">Plano {planLabel[selected]} · {periodLabel[period]}</p>
           </div>
 
           <div className="bg-surface-elevated rounded-lg p-4 space-y-3 text-left">
@@ -90,6 +97,30 @@ export default function Upgrade() {
         <p className="text-gray-400 mt-2">Paga em Kwanza via Multicaixa ou AppyPay</p>
       </div>
 
+      <div className="flex justify-center mb-8 animate-slide-up">
+        <div className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-xl bg-surface-elevated border border-surface-border">
+          {PERIODS.map((p) => {
+            const discount = creatorDiscount(p)
+            const active = period === p
+            return (
+              <button
+                key={p}
+                onClick={() => setPeriod(p)}
+                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  active ? 'bg-gradient-tagatech text-white shadow-glow-soft' : 'text-gray-400 hover:text-white'
+                }`}>
+                {periodLabel[p]}
+                {discount > 0 && (
+                  <span className={`ml-1.5 text-[10px] font-mono ${active ? 'text-white/80' : 'text-accent-400'}`}>
+                    -{discount}%
+                  </span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-stretch stagger">
         {(['free', 'creator'] as SubscriptionPlan[]).map((plan) => {
           const isCurrent = currentPlan === plan
@@ -110,8 +141,19 @@ export default function Upgrade() {
               </div>
 
               <div className="mb-5">
-                {plan === 'free'     && <p className="font-mono text-4xl font-bold text-white tracking-tight">0 <span className="text-base font-normal text-gray-400">Kz</span></p>}
-                {plan === 'creator'  && <p className="font-mono text-4xl font-bold text-white tracking-tight">2 900 <span className="text-base font-normal text-gray-400">Kz/mês</span></p>}
+                {plan === 'free' && <p className="font-mono text-4xl font-bold text-white tracking-tight">0 <span className="text-base font-normal text-gray-400">Kz</span></p>}
+                {plan === 'creator' && (
+                  <>
+                    <p className="font-mono text-4xl font-bold text-white tracking-tight">
+                      {fmt(creatorPrice(period))} <span className="text-base font-normal text-gray-400">Kz{periodSuffix[period]}</span>
+                    </p>
+                    {period !== 'monthly' && (
+                      <p className="text-xs text-accent-400 mt-1.5">
+                        ≈ {fmt(creatorMonthly(period))} Kz/mês · poupa {creatorDiscount(period)}%
+                      </p>
+                    )}
+                  </>
+                )}
               </div>
 
               <ul className="space-y-2.5 flex-1 mb-6">

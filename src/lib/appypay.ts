@@ -1,15 +1,23 @@
-import type { AppyPayInitResponse, SubscriptionPlan } from '@/types'
+import type { AppyPayInitResponse, BillingPeriod, SubscriptionPlan } from '@/types'
 
-const PLAN_PRICES: Record<SubscriptionPlan, number> = {
-  free:     0,
-  creator:  2900,
+export const CREATOR_PRICES: Record<BillingPeriod, number> = {
+  monthly:   2900,
+  quarterly: 7800,
+  annual:    27900,
+}
+
+const PERIOD_DESCRIPTION: Record<BillingPeriod, string> = {
+  monthly:   '1 mês',
+  quarterly: '3 meses',
+  annual:    '1 ano',
 }
 
 export async function initAppyPayPayment(
   profileId: string,
   plan: SubscriptionPlan,
+  period: BillingPeriod,
 ): Promise<AppyPayInitResponse> {
-  const amount = PLAN_PRICES[plan]
+  const amount = plan === 'free' ? 0 : CREATOR_PRICES[period]
   const merchantId = import.meta.env.VITE_APPYPAY_MERCHANT_ID
   const apiUrl     = import.meta.env.VITE_APPYPAY_API_URL
 
@@ -20,10 +28,11 @@ export async function initAppyPayPayment(
       merchant_id:  merchantId,
       amount,
       currency:     'AOA',
-      description:  `TagaLinks ${plan} — 1 mês`,
+      description:  `TagaLinks ${plan} — ${PERIOD_DESCRIPTION[period]}`,
       metadata: {
         profile_id: profileId,
         plan,
+        period,
         product: 'tagalinks',
       },
       webhook_url:  `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/appypay-webhook`,

@@ -16,15 +16,22 @@ serve(async (req) => {
     })
   }
 
-  const { profile_id, plan } = metadata || {}
+  const { profile_id, plan, period } = metadata || {}
   if (!profile_id || !plan) {
     return new Response(JSON.stringify({ error: 'missing metadata' }), {
       status: 400, headers: { 'Content-Type': 'application/json' },
     })
   }
 
+  const PERIOD_DAYS: Record<string, number> = {
+    monthly:   30,
+    quarterly: 90,
+    annual:    365,
+  }
+  const days = PERIOD_DAYS[period as string] ?? 30
+
   const period_start = new Date()
-  const period_end   = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+  const period_end   = new Date(Date.now() + days * 24 * 60 * 60 * 1000)
 
   await supabase.from('subscriptions').insert({
     profile_id, plan,
