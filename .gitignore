@@ -28,3 +28,6 @@ dist-ssr
 .env.local
 .env.production
 supabase/.temp/
+
+# Supabase database backups (contêm dados reais — nunca committar)
+supabase/backups/
